@@ -1,0 +1,14 @@
+<div *ngIf="meal" class="container mt-3">
+  <div class="card">
+    <div class="card-header card-title">
+      {{meal.title}}
+    </div>
+    <div class="card-body">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">{{meal.description}}</li>
+        <li class="list-group-item">{{meal.date | date}}</li>
+        <li class="list-group-item">Cook name: {{meal.cook.name}}</li>
+      </ul>
+    </div>
+  </div>
+</div>

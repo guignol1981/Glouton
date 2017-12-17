@@ -1,0 +1,38 @@
+<div class="container mt-3">
+    <div class="card">
+        <div class="card-header">
+            Register
+        </div>
+        <div class="card-body">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" formControlName="name" placeholder="Your name"
+                           aria-describedby="nameHelper">
+                    <small id="nameHelper" class="form-text text-muted">Your full name</small>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" class="form-control" id="email" formControlName="email" placeholder="Your email"
+                           aria-describedby="emailHelper">
+                    <small id="emailHelper" class="form-text text-muted">Your email</small>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="text" class="form-control" id="password" formControlName="password"
+                           placeholder="Your password"
+                           aria-describedby="passwordHelper">
+                    <small id="passwordHelper" class="form-text text-muted">Your password</small>
+                </div>
+                <div class="form-inline">
+                    <div class="form-group">
+                        <button class="btn btn-primary">Submit</button>
+                    </div>
+                    <div class="form-group ml-3">
+                        <button (click)="goToLogin()" class="btn btn-secondary">Already a member</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
