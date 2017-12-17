@@ -34,7 +34,9 @@ export class MealFormComponent implements OnInit {
                 this.form = new FormGroup({
                     title: new FormControl(),
                     description: new FormControl(),
-                    date: new FormControl()
+                    date: new FormControl(),
+                    minParticipants: new FormControl(),
+                    maxParticipants: new FormControl()
                 });
             }
         );

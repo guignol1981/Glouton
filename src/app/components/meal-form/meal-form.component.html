@@ -18,6 +18,28 @@
             <input type="date" class="form-control" id="date" formControlName="date" aria-describedby="dateHelper">
             <small id="dateHelper" class="form-text text-muted">The date you will deliver this meal</small>
         </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="minParticipants">Minimum of participants</label>
+                    <input type="number" class="form-control" id="minParticipants" formControlName="minParticipants"
+                           aria-describedby="minParticipantsHelper">
+                    <small id="minParticipantsHelper" class="form-text text-muted">The minimum participants you need to
+                        cook this meal
+                    </small>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="maxParticipants">Maximum of participants</label>
+                    <input type="number" class="form-control" id="maxParticipants" formControlName="maxParticipants"
+                           aria-describedby="maxParticipantsHelper">
+                    <small id="maxParticipantsHelper" class="form-text text-muted">The minimum participants you need to
+                        cook this meal
+                    </small>
+                </div>
+            </div>
+        </div>
         <button class="btn btn-primary">Submit</button>
     </form>
 </div>
