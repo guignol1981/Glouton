@@ -14,7 +14,7 @@ export class DashboardComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (! this.authenticationService.isLoggedIn()) {
+        if (!this.authenticationService.isLoggedIn()) {
             this.router.navigate(['login']);
             return;
         }

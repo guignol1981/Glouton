@@ -1,40 +1,41 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {AuthenticationService} from "../../services/authentication.service";
 import {Router} from "@angular/router";
 import {User} from "../../models/user/user";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  form: FormGroup;
+    form: FormGroup;
 
-  constructor(private authenticationService: AuthenticationService,
-              private router: Router) { }
-
-  ngOnInit() {
-    if (this.authenticationService.isLoggedIn()) {
-      this.router.navigate(['dashboard']);
-      return;
+    constructor(private authenticationService: AuthenticationService,
+                private router: Router) {
     }
 
-    this.form = new FormGroup({
-      email: new FormControl(),
-      password: new FormControl()
-    });
-  }
+    ngOnInit() {
+        if (this.authenticationService.isLoggedIn()) {
+            this.router.navigate(['dashboard']);
+            return;
+        }
 
-  onSubmit() {
-    let user = <User>this.form.value;
-    this.authenticationService.login(user)
-        .then(() => this.router.navigate(['dashboard']));
-  }
+        this.form = new FormGroup({
+            email: new FormControl(),
+            password: new FormControl()
+        });
+    }
 
-  goToRegister() {
-    this.router.navigate(['register']);
-  }
+    onSubmit() {
+        let user = <User>this.form.value;
+        this.authenticationService.login(user)
+            .then(() => this.router.navigate(['dashboard']));
+    }
+
+    goToRegister() {
+        this.router.navigate(['register']);
+    }
 
 }

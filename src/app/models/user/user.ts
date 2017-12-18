@@ -3,5 +3,6 @@ export class User {
     public email: string;
     public password: string;
 
-    constructor(public _id: string = null) {}
+    constructor(public _id: string = null) {
+    }
 }

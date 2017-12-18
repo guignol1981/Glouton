@@ -7,29 +7,31 @@ import {UserService} from "../../models/user/user.service";
 import {MealService} from "../../models/meal/meal.service";
 
 @Component({
-  selector: 'app-meal-card',
-  templateUrl: './meal-card.component.html',
-  styleUrls: ['./meal-card.component.css']
+    selector: 'app-meal-card',
+    templateUrl: './meal-card.component.html',
+    styleUrls: ['./meal-card.component.css']
 })
 export class MealCardComponent implements OnInit {
-  @Input() meal: Meal;
-  user: User;
-  constructor(private router: Router,
-              private userService: UserService,
-              private mealService: MealService) { }
+    @Input() meal: Meal;
+    user: User;
 
-  ngOnInit() {
-    this.userService.getProfile()
-        .then(data => this.user = data);
-  }
+    constructor(private router: Router,
+                private userService: UserService,
+                private mealService: MealService) {
+    }
 
-  joinMeal() {
-    this.mealService.join(this.meal, this.user)
-        .then(data => console.log('joined!'));
-  }
+    ngOnInit() {
+        this.userService.getProfile()
+            .then(data => this.user = data);
+    }
 
-  goToMealDetails () {
-    this.router.navigate(['/meal-details/' + this.meal._id]);
-  }
+    joinMeal() {
+        this.mealService.join(this.meal, this.user)
+            .then(data => console.log('joined!'));
+    }
+
+    goToMealDetails() {
+        this.router.navigate(['/meal-details/' + this.meal._id]);
+    }
 
 }
