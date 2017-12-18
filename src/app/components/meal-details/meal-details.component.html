@@ -5,9 +5,10 @@
     </div>
     <div class="card-body">
       <ul class="list-group list-group-flush">
-        <li class="list-group-item">{{meal.description}}</li>
-        <li class="list-group-item">{{meal.date | date}}</li>
+        <li class="list-group-item">Description: {{meal.description}}</li>
+        <li class="list-group-item">Delivery date: {{meal.date | date}}</li>
         <li class="list-group-item">Cook name: {{meal.cook.name}}</li>
+        <li class="list-group-item">Participants count: {{meal.participants.length}}/{{meal.minParticipants}}</li>
       </ul>
     </div>
   </div>

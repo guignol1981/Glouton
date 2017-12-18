@@ -6,7 +6,9 @@ let mealSchema = new Schema({
 	title: String,
 	description: String,
 	date: Date,
-	cook: User.userSchema
+	cook: {type: Schema.Types.ObjectId, ref: 'User'},
+	minParticipants: Number,
+	participants: [{type: Schema.Types.ObjectId, ref: 'User'}]
 });
 
 let Meal = mongoose.model('Meal', mealSchema);

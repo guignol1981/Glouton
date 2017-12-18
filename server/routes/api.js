@@ -7,7 +7,7 @@ let auth = jwt({
 });
 let ctrlProfile = require('../controllers/profile');
 let ctrlAuth = require('../controllers/authentications');
-let Meal = require('../models/meal/meal');
+let ctrlMeal = require('../controllers/meal-controller');
 
 // profile
 router.get('/profile', auth, ctrlProfile.profileRead);
@@ -16,41 +16,10 @@ router.get('/profile', auth, ctrlProfile.profileRead);
 router.post('/register', ctrlAuth.register);
 router.post('/login', ctrlAuth.login);
 
-router.get('/meals/:id', (req, res) => {
-	let id = req.params.id;
-
-	Meal.findById(id, (err, meal) => {
-		if (err) {
-			throw err;
-		}
-
-		res.send(meal);
-	});
-});
-
-router.get('/meals', (req, res) => {
-	Meal.find({}, (err, meals) => {
-		if (err) {
-			throw err;
-		}
-		res.send(meals);
-	});
-});
-
-router.post('/meals', (req, res) => {
-	let meal = new Meal({
-		title: req.body.title,
-		description: req.body.description,
-		date: req.body.date,
-		cook: req.body.cook
-	});
-
-	meal.save((err, meal) => {
-		if (err) {
-			throw err;
-		}
-		res.send(meal);
-	});
-});
+//meals
+router.get('/meals/:id', ctrlMeal.get);
+router.get('/meals', ctrlMeal.getAll);
+router.post('/meals', ctrlMeal.create);
+router.put('/meals/join/:id', ctrlMeal.join);
 
 module.exports = router;

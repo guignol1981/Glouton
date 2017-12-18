@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Http, Response, Headers} from "@angular/http";
 import {Meal} from "./meal";
+import {User} from "../user/user";
 
 @Injectable()
 export class MealService {
@@ -29,6 +30,19 @@ export class MealService {
             return this.put(model);
         }
         return this.post(model);
+    }
+
+    join(meal: Meal, user: User): Promise<Meal> {
+        const headers = new Headers();
+        const url = `${this.apiEndPoint}/join/${meal['_id']}`;
+
+        headers.append('Content-Type', 'application/json');
+
+        return this.http
+            .put(url, JSON.stringify(user), {headers: headers})
+            .toPromise()
+            .then((response: Response) => response.json())
+            .catch(this.handleError);
     }
 
     private post(model: Meal): Promise<Meal> {

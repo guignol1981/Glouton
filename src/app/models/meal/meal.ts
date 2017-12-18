@@ -5,8 +5,7 @@ export class Meal {
     public cook: User;
     public date: Date;
     public minParticipants: number;
-    public maxParticipants: number;
-    public participants: User[];
+    public participants: User[] = [];
 
     constructor(public _id: string = null) {
     }

@@ -8,6 +8,7 @@ let app = express();
 let port = process.env.PORT || '3000';
 
 require('./server/models/user/user');
+require('./server/models/meal/meal');
 require('./server/configs/passport');
 
 let api = require('./server/routes/api');

@@ -35,20 +35,16 @@ export class MealFormComponent implements OnInit {
                     title: new FormControl(),
                     description: new FormControl(),
                     date: new FormControl(),
-                    minParticipants: new FormControl(),
-                    maxParticipants: new FormControl()
+                    minParticipants: new FormControl()
                 });
             }
         );
     }
 
     onSubmit() {
-        let meal = new Meal();
-        meal.title = this.form.get('title').value;
-        meal.description = this.form.get('description').value;
-        meal.date = this.form.get('date').value;
+        let meal = <Meal>this.form.value;
+        meal.participants = [];
         meal.cook = this.user;
-
         this.mealService.save(meal)
             .then(
                 data => console.log(data)

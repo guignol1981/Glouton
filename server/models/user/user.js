@@ -39,5 +39,4 @@ userSchema.methods.generateJwt = function() {
 	}, "MY_SECRET"); // DO NOT KEEP YOUR SECRET IN THE CODE!
 };
 
-module.exports.userSchema = userSchema;
 mongoose.model('User', userSchema);

@@ -3,7 +3,7 @@
     <h4 class="card-title text-truncate">{{meal.title}}</h4>
     <p class="card-text text-truncate">{{meal.description}}</p>
     <p class="card-text">{{meal.date | date}}</p>
-    <a href="#" class="card-link">Join</a>
+    <a *ngIf="user" (click)="joinMeal()" class="card-link">Join</a>
     <a (click)="goToMealDetails()" class="card-link">Details</a>
   </div>
 </div>
