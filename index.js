@@ -7,8 +7,6 @@ let passport = require('passport');
 let app = express();
 let port = process.env.PORT || '3000';
 
-require('./server/models/user/user');
-require('./server/models/meal/meal');
 require('./server/configs/passport');
 
 let api = require('./server/routes/api');
@@ -23,6 +21,13 @@ app.use('/api', api);
 
 app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname, 'dist/index.html'));
+});
+
+app.use(function (err, req, res) {
+	if (err.name === 'UnauthorizedError') {
+		res.status(401);
+		res.json({"message" : err.name + ": " + err.message});
+	}
 });
 
 app.set('port', port);

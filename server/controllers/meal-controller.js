@@ -1,55 +1,34 @@
 let passport = require('passport');
-let mongoose = require('mongoose');
-let User = mongoose.model('User');
-let Meal = mongoose.model('Meal');
+let Meal = require('../models/meal/meal');
 
 module.exports.getAll = function (req, res) {
-	Meal.find({}, (err, meals) => {
-		if (err) {
-			throw err;
-		}
-		res.send(meals);
-	});
+	Meal.find({})
+		.populate('cook')	
+		.populate('participants')
+		.exec((err, meals) => {
+			res.send(meals);
+		});
 };
 
 module.exports.get = function (req, res) {
 	let id = req.params.id;
 
-	Meal.findById(id, (err, meal) => {
-		if (err) {
-			throw err;
-		}
-
+	Meal.findById(id)
+		.populate('cook')
+		.populate('participants')
+		.exec((err, meal) => {
 		res.send(meal);
 	});
 };
 
 module.exports.create = function (req, res) {
-	let meal = new Meal({
-		title: req.body.title,
-		description: req.body.description,
-		date: req.body.date,
-		minParticipants: req.body.minParticipants
-	});
+	let meal = new Meal(req.body);
 
-	User.findById(req.body.cook['_id'], (err, user) => {
-		meal.cook = user._id;
-
-		let participantIds = [];
-		req.body.participants.forEach(function (participant) {
-			participantIds.push(participant._id);
-		});
-
-		User.find({_id: {"$in": participantIds}}, (err, users) => {
-			meal.participants = users;
-
-			meal.save((err, meal) => {
-				if (err) {
-					throw err;
-				}
-				res.send(meal);
-			});
-		});
+	meal.save((err, meal) => {
+		if (err) {
+			throw err;
+		}
+		res.send(meal);
 	});
 };
 
@@ -57,14 +36,12 @@ module.exports.join = function (req, res) {
 	let mealId = req.params.id;
 
 	Meal.findById(mealId, (err, meal) => {
-		User.findById(req.body._id, (err, user) => {
-			meal.participants.push(user);
-			meal.save((err, meal) => {
-				if (err) {
-					throw err;
-				}
-				res.send(meal);
-			});
+		meal.participants.push(req.body);
+		meal.save((err, meal) => {
+			if (err) {
+				throw err;
+			}
+			res.send(meal);
 		});
 	});
 };

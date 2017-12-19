@@ -16,6 +16,7 @@ import {LoginComponent} from './components/login/login.component';
 import {AuthenticationService} from "./services/authentication.service";
 import {ProfileComponent} from './components/profile/profile.component';
 import {UserService} from "./models/user/user.service";
+import {CanActivateViaAuthGuardService} from "./services/can-activate-via-auth-guard.service";
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import {UserService} from "./models/user/user.service";
     providers: [
         MealService,
         AuthenticationService,
-        UserService
+        UserService,
+        CanActivateViaAuthGuardService
     ],
     bootstrap: [AppComponent]
 })

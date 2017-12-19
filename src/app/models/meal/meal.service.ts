@@ -2,24 +2,34 @@ import {Injectable} from '@angular/core';
 import {Http, Response, Headers} from "@angular/http";
 import {Meal} from "./meal";
 import {User} from "../user/user";
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Injectable()
 export class MealService {
 
     apiEndPoint = 'api/meals';
 
-    constructor(private http: Http) {
+    constructor(private authenticationService: AuthenticationService,
+                private http: Http) {
     }
 
     get(id: string): Promise<Meal> {
-        return this.http.get(this.apiEndPoint + '/' + id)
+        let headers = new Headers({
+            Authorization: 'Bearer ' + this.authenticationService.getToken()
+        });
+
+        return this.http.get(this.apiEndPoint + '/' + id, {headers: headers})
             .toPromise()
             .then((response: Response) => response.json())
             .catch(this.handleError);
     }
 
     getAll(): Promise<Meal[]> {
-        return this.http.get(this.apiEndPoint, {})
+        let headers = new Headers({
+            Authorization: 'Bearer ' + this.authenticationService.getToken()
+        });
+
+        return this.http.get(this.apiEndPoint, {headers: headers})
             .toPromise()
             .then((response: Response) => response.json())
             .catch(this.handleError);
@@ -33,10 +43,11 @@ export class MealService {
     }
 
     join(meal: Meal, user: User): Promise<Meal> {
-        const headers = new Headers();
         const url = `${this.apiEndPoint}/join/${meal['_id']}`;
-
-        headers.append('Content-Type', 'application/json');
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + this.authenticationService.getToken()
+        });
 
         return this.http
             .put(url, JSON.stringify(user), {headers: headers})
@@ -46,8 +57,9 @@ export class MealService {
     }
 
     private post(model: Meal): Promise<Meal> {
-        const headers = new Headers({
-                'Content-Type': 'application/json'
+        let headers = new Headers({
+                'Content-Type': 'application/json',
+                 Authorization: 'Bearer ' + this.authenticationService.getToken()
             }
         );
 
@@ -59,10 +71,13 @@ export class MealService {
     }
 
     private put(model: Meal) {
-        const headers = new Headers();
         const url = `${this.apiEndPoint}/${model['_id']}`;
 
-        headers.append('Content-Type', 'application/json');
+        let headers = new Headers({
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + this.authenticationService.getToken()
+            }
+        );
 
         return this.http
             .put(url, JSON.stringify(model), {headers: headers})

@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthenticationService} from "../../services/authentication.service";
 import {UserService} from "../../models/user/user.service";
-import {Router} from "@angular/router";
 import {User} from "../../models/user/user";
 
 @Component({
@@ -12,16 +10,10 @@ import {User} from "../../models/user/user";
 export class ProfileComponent implements OnInit {
     user: User;
 
-    constructor(private authenticationService: AuthenticationService,
-                private userService: UserService,
-                private router: Router) {
+    constructor(private userService: UserService) {
     }
 
     ngOnInit() {
-        if (!this.authenticationService.isLoggedIn()) {
-            this.router.navigate(['login']);
-        }
-
         this.userService.getProfile()
             .then(data => this.user = data);
     }
