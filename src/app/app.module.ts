@@ -17,6 +17,7 @@ import {AuthenticationService} from "./services/authentication.service";
 import {ProfileComponent} from './components/profile/profile.component';
 import {UserService} from "./models/user/user.service";
 import {CanActivateViaAuthGuardService} from "./services/can-activate-via-auth-guard.service";
+import { LunchBoxComponent } from './components/lunch-box/lunch-box.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import {CanActivateViaAuthGuardService} from "./services/can-activate-via-auth-g
         MealDetailsComponent,
         RegisterComponent,
         LoginComponent,
-        ProfileComponent
+        ProfileComponent,
+        LunchBoxComponent
     ],
     imports: [
         BrowserModule,

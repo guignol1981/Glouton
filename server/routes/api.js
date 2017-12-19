@@ -10,12 +10,12 @@ let ctrlProfile = require('../controllers/profile');
 let ctrlAuth = require('../controllers/authentications');
 let ctrlMeal = require('../controllers/meal-controller');
 
-// user
 router.post('/register', ctrlAuth.register);
 router.post('/login', ctrlAuth.login);
 router.get('/profile', auth, ctrlProfile.profileRead);
 
 //meals
+router.get('/meals/joined', auth, ctrlMeal.getJoined);
 router.get('/meals/:id', auth, ctrlMeal.get);
 router.get('/meals', auth, ctrlMeal.getAll);
 router.post('/meals', auth, ctrlMeal.create);

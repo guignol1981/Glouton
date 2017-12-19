@@ -26,10 +26,23 @@ export class MealService {
 
     getAll(): Promise<Meal[]> {
         let headers = new Headers({
+            'Content-Type': 'application/json',
             Authorization: 'Bearer ' + this.authenticationService.getToken()
         });
 
         return this.http.get(this.apiEndPoint, {headers: headers})
+            .toPromise()
+            .then((response: Response) => response.json())
+            .catch(this.handleError);
+    }
+
+    getJoined(): Promise<Meal[]> {
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + this.authenticationService.getToken()
+        });
+
+        return this.http.get(this.apiEndPoint + '/joined', {headers: headers})
             .toPromise()
             .then((response: Response) => response.json())
             .catch(this.handleError);
@@ -72,7 +85,6 @@ export class MealService {
 
     private put(model: Meal) {
         const url = `${this.apiEndPoint}/${model['_id']}`;
-
         let headers = new Headers({
                 'Content-Type': 'application/json',
                 Authorization: 'Bearer ' + this.authenticationService.getToken()

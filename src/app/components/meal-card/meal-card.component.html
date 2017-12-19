@@ -1,9 +1,13 @@
-<div *ngIf="meal" class="card" style="width: 20rem; min-height: 200px;">
+<div *ngIf="meal && user" class="card" style="width: 20rem; min-height: 200px;">
+    <img style="height: 280px; width: auto" class="card-img-top"
+         [attr.src]="meal.imageUrl"
+         alt="Card image cap">
     <div class="card-body">
         <h4 class="card-title text-truncate">{{meal.title}}</h4>
         <p class="card-text text-truncate">{{meal.description}}</p>
         <p class="card-text">{{meal.date | date}}</p>
-        <a *ngIf="user" (click)="joinMeal()" class="card-link">Join</a>
+        <a *ngIf="! asJoined()" (click)="joinMeal()" class="card-link">Join</a>
+        <span *ngIf="asJoined()" class="card-link">Joined</span>
         <a (click)="goToMealDetails()" class="card-link">Details</a>
     </div>
 </div>

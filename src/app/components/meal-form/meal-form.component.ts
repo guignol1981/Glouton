@@ -34,6 +34,7 @@ export class MealFormComponent implements OnInit {
                 this.form = new FormGroup({
                     title: new FormControl(),
                     description: new FormControl(),
+                    imageUrl: new FormControl(),
                     date: new FormControl(),
                     minParticipants: new FormControl()
                 });

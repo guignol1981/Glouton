@@ -25,9 +25,21 @@ export class MealCardComponent implements OnInit {
             .then(data => this.user = data);
     }
 
+    asJoined() {
+        let asJoined = false;
+
+        this.meal.participants.forEach((participant) => {
+            if (participant._id === this.user._id) {
+                asJoined = true;
+            }
+        });
+
+        return asJoined;
+    }
+
     joinMeal() {
         this.mealService.join(this.meal, this.user)
-            .then(data => console.log('joined!'));
+            .then(data => this.meal = data);
     }
 
     goToMealDetails() {

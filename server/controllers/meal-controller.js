@@ -1,14 +1,5 @@
-let passport = require('passport');
+let User = require('../models/user/user');
 let Meal = require('../models/meal/meal');
-
-module.exports.getAll = function (req, res) {
-	Meal.find({})
-		.populate('cook')	
-		.populate('participants')
-		.exec((err, meals) => {
-			res.send(meals);
-		});
-};
 
 module.exports.get = function (req, res) {
 	let id = req.params.id;
@@ -17,8 +8,36 @@ module.exports.get = function (req, res) {
 		.populate('cook')
 		.populate('participants')
 		.exec((err, meal) => {
-		res.send(meal);
-	});
+			res.send(meal);
+		});
+};
+
+module.exports.getAll = function (req, res) {
+	Meal.find({})
+		.populate('cook')
+		.populate('participants')
+		.exec((err, meals) => {
+			res.send(meals);
+		});
+};
+
+module.exports.getJoined = function (req, res) {
+	let userId = req.payload._id;
+	let joined = [];
+
+	Meal.find({})
+		.populate('cook')
+		.populate('participants')
+		.exec((err, meals) => {
+			meals.forEach((meal) => {
+				meal.participants.forEach((participant) => {
+					if (participant.id === userId) {
+						joined.push(meal);
+					}
+				});
+			});
+			res.send(joined);
+		});
 };
 
 module.exports.create = function (req, res) {
@@ -35,13 +54,31 @@ module.exports.create = function (req, res) {
 module.exports.join = function (req, res) {
 	let mealId = req.params.id;
 
-	Meal.findById(mealId, (err, meal) => {
-		meal.participants.push(req.body);
-		meal.save((err, meal) => {
-			if (err) {
-				throw err;
+	Meal.findById(mealId)
+		.populate('cook')
+		.populate('participants')
+		.exec((err, meal) => {
+			let exist = false;
+			let userId = req.payload._id;
+
+			meal.participants.forEach((participant) => {
+				if (participant._id == userId) {
+					exist = true;
+				}
+			});
+
+			if (exist) {
+				res.status(500).json({msg: 'user already joined this meal'});
+				return;
 			}
-			res.send(meal);
+
+			meal.participants.push(userId);
+			meal.save((err, meal) => {
+				if (err) {
+					throw err;
+				}
+
+				res.send(meal);
+			});
 		});
-	});
 };

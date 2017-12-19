@@ -6,10 +6,9 @@ let mongoose = require('mongoose');
 let passport = require('passport');
 let app = express();
 let port = process.env.PORT || '3000';
+let api = require('./server/routes/api');
 
 require('./server/configs/passport');
-
-let api = require('./server/routes/api');
 
 mongoose.connect('mongodb://localhost/lunch-box');
 
@@ -17,6 +16,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use(passport.initialize());
+
 app.use('/api', api);
 
 app.get('*', (req, res) => {

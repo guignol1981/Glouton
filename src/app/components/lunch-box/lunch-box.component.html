@@ -1,0 +1,20 @@
+<div class="container mt-3">
+    <ul class="list-group">
+        <div class="mt-3" *ngFor="let meal of meals">
+            {{meal.date | date}}
+            <li class="list-group-item">
+                <div>
+                    <div>
+                        Meal: {{meal.title}}
+                    </div>
+                    <div>
+                        Cook: {{meal.cook.name}}
+                    </div>
+                    <div>
+                        <a class="link" role="button" (click)="goToMealDetails(meal)">details</a>
+                    </div>
+                </div>
+            </li>
+        </div>
+    </ul>
+</div>
