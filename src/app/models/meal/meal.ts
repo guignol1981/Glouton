@@ -5,7 +5,9 @@ export class Meal {
     public imageUrl: string;
     public cook: User;
     public date: Date;
+    public limitDate: Date;
     public minParticipants: number;
+    public maxParticipants: number;
     public participants: User[] = [];
 
     constructor(public _id: string = null) {

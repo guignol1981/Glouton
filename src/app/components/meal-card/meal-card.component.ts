@@ -2,9 +2,10 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Meal} from "../../models/meal/meal";
 import {Router} from "@angular/router";
 import {User} from "../../models/user/user";
-import {AuthenticationService} from "../../services/authentication.service";
 import {UserService} from "../../models/user/user.service";
 import {MealService} from "../../models/meal/meal.service";
+import {MealImageService} from "../../services/meal-image.service";
+
 
 @Component({
     selector: 'app-meal-card',
@@ -17,7 +18,8 @@ export class MealCardComponent implements OnInit {
 
     constructor(private router: Router,
                 private userService: UserService,
-                private mealService: MealService) {
+                private mealService: MealService,
+                public imageService: MealImageService) {
     }
 
     ngOnInit() {
@@ -37,6 +39,10 @@ export class MealCardComponent implements OnInit {
         return asJoined;
     }
 
+    isCook() {
+        return (this.meal.cook._id === this.user._id)
+    }
+
     joinMeal() {
         this.mealService.join(this.meal, this.user)
             .then(data => this.meal = data);
@@ -44,6 +50,10 @@ export class MealCardComponent implements OnInit {
 
     goToMealDetails() {
         this.router.navigate(['/meal-details/' + this.meal._id]);
+    }
+
+    editMeal() {
+        this.router.navigate([`/suggest/${this.meal._id}`]);
     }
 
 }

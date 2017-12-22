@@ -5,7 +5,9 @@
         </div>
         <div class="card-body">
             <ul class="list-group list-group-flush">
-                <img style="height: auto; width: 300px;" [attr.src]="meal.imageUrl" alt="meal img">
+                <img style="height: auto; width: 300px;"
+                     [src]="imageService.getMealImageApiEndPoint() + '/' + meal._id"
+                     alt="meal img">
                 <li class="list-group-item">Description: {{meal.description}}</li>
                 <li class="list-group-item">Delivery date: {{meal.date | date}}</li>
                 <li class="list-group-item">Cook name: {{meal.cook.name}}</li>

@@ -1,13 +1,28 @@
-<div *ngIf="meal && user" class="card" style="width: 20rem; min-height: 200px;">
-    <img style="height: 280px; width: auto" class="card-img-top"
-         [attr.src]="meal.imageUrl"
+<div *ngIf="meal && user" class="card" style="width: 20rem; min-height: 150px;">
+    <img style="height: 200px; width: auto;" class="card-img-top img-fluid"
+         [src]="imageService.getMealImageApiEndPoint() + '/' + meal._id"
          alt="Card image cap">
-    <div class="card-body">
-        <h4 class="card-title text-truncate">{{meal.title}}</h4>
-        <p class="card-text text-truncate">{{meal.description}}</p>
-        <p class="card-text">{{meal.date | date}}</p>
-        <a *ngIf="! asJoined()" (click)="joinMeal()" class="card-link">Join</a>
-        <span *ngIf="asJoined()" class="card-link">Joined</span>
-        <a (click)="goToMealDetails()" class="card-link">Details</a>
+    <ul class="list-group">
+        <li class="list-group-item">
+            <p class="card-text text-truncate">{{meal.title}}</p>
+        </li>
+        <li class="list-group-item">
+            <p class="card-text">{{meal.date | date}}</p>
+        </li>
+        <li class="list-group-item">
+            <p class="card-text">Participants{{meal.participants.length}}/{{meal.minParticipants}}</p>
+        </li>
+    </ul>
+    <div class="card-footer">
+        <div class="row">
+            <div *ngIf="! isCook()" class="col">
+                <a *ngIf="! asJoined()" (click)="joinMeal()" class="card-link">Join</a>
+                <span *ngIf="asJoined()" class="card-link">Joined</span>
+            </div>
+            <div *ngIf="isCook()" class="col">
+                <i (click)="editMeal()" class="fa fa-pencil-square" aria-hidden="true"></i>
+            </div>
+            <div (click)="goToMealDetails()" class="card-link col text-right">Details</div>
+        </div>
     </div>
 </div>

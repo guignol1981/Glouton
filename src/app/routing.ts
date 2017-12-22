@@ -14,6 +14,7 @@ const appRoutes: Routes = [
     {path: 'register', component: RegisterComponent},
     {path: 'dashboard', component: DashboardComponent, canActivate: [CanActivateViaAuthGuardService]},
     {path: 'suggest', component: MealFormComponent, canActivate: [CanActivateViaAuthGuardService]},
+    {path: 'suggest/:id', component: MealFormComponent, canActivate: [CanActivateViaAuthGuardService]},
     {path: 'profile', component: ProfileComponent, canActivate: [CanActivateViaAuthGuardService]},
     {path: 'lunch-box', component: LunchBoxComponent, canActivate: [CanActivateViaAuthGuardService]},
     {path: 'meal-details/:id', component: MealDetailsComponent, canActivate: [CanActivateViaAuthGuardService]},

@@ -18,6 +18,8 @@ import {ProfileComponent} from './components/profile/profile.component';
 import {UserService} from "./models/user/user.service";
 import {CanActivateViaAuthGuardService} from "./services/can-activate-via-auth-guard.service";
 import { LunchBoxComponent } from './components/lunch-box/lunch-box.component';
+import {ImageUploadModule} from "angular2-image-upload";
+import {MealImageService} from "./services/meal-image.service";
 
 
 @NgModule({
@@ -38,13 +40,15 @@ import { LunchBoxComponent } from './components/lunch-box/lunch-box.component';
         BrowserModule,
         ReactiveFormsModule,
         HttpModule,
-        routing
+        routing,
+        ImageUploadModule.forRoot()
     ],
     providers: [
         MealService,
         AuthenticationService,
         UserService,
-        CanActivateViaAuthGuardService
+        CanActivateViaAuthGuardService,
+        MealImageService
     ],
     bootstrap: [AppComponent]
 })

@@ -7,9 +7,11 @@ let mealSchema = new Schema({
 	description: String,
 	imageUrl: String,
 	date: Date,
+	limitDate: Date,
 	limitDateToJoin: Date,
 	cook: {type: Schema.Types.ObjectId, ref: 'User'},
 	minParticipants: Number,
+	maxParticipants: Number,
 	participants: [{type: Schema.Types.ObjectId, ref: 'User'}],
 }, {usePushEach: true});
 
