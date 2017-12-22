@@ -1,0 +1,22 @@
+
+img,
+.overlay {
+    transition: .3s all;
+}
+
+.meal-img .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    opacity: 0;
+}
+
+.meal-img:hover .overlay {
+    opacity: 1;
+}
+
+

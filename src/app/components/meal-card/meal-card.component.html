@@ -1,29 +1,37 @@
 <!--<div *ngIf="meal && user" class="card" style="width: 20rem; min-height: 150px;">-->
 <div *ngIf="meal && user" class="card border-0">
-    <img style="height: 200px; width: auto;" class="card-img-top img-fluid"
-         [src]="imageService.getMealImageApiEndPoint() + '/' + meal._id"
-         alt="Card image cap">
+    <div class="meal-img">
+        <img class="card-img-top img-fluid"
+             [src]="imageService.getMealImageApiEndPoint() + '/' + meal._id"
+             alt="Card image cap">
+        <div class="overlay">
+            <div class="position-absolute card-options">
+                <span *ngIf="! isCook()">
+                    <button *ngIf="! asJoined()" (click)="joinMeal()" class="btn btn-outline-light">Join</button>
+                    <button *ngIf="asJoined()" (click)="leaveMeal()" class="btn btn-outline-light">Leave</button>
+                </span>
+                <span *ngIf="isCook()">
+                        <button (click)="editMeal()" class="btn btn-outline-light">Edit</button>
+                </span>
+                <span>
+                    <button (click)="goToMealDetails()" class="btn btn-outline-light">Details</button>
+                </span>
+            </div>
+        </div>
+    </div>
     <ul class="list-group">
-        <li class="list-group-item border-0">
-            <p class="card-text text-truncate">{{meal.title}}</p>
+        <li class="list-group-item border-0 p-0">
+            <p class="card-text text-truncate font-weight-bold">{{meal.title}}</p>
         </li>
-        <li class="list-group-item border-0">
-            <p class="card-text">{{meal.date | date}}</p>
-        </li>
-        <li class="list-group-item border-0">
-            <p class="card-text">Participants {{meal.participants.length}}/{{meal.minParticipants}}</p>
-        </li>
-        <li class="list-group-item border-0">
-            <span *ngIf="! isCook()">
-                <button *ngIf="! asJoined()" (click)="joinMeal()" class="btn btn-primary">Join</button>
-                <button *ngIf="asJoined()" (click)="leaveMeal()" class="btn btn-warning">Leave</button>
-            </span>
-            <span *ngIf="isCook()">
-                    <button (click)="editMeal()" class="btn btn-secondary m-2">Edit</button>
-            </span>
-            <span>
-                <button (click)="goToMealDetails()" class="btn btn-info m-2">Details</button>
-            </span>
+        <li class="list-group-item border-0 p-0">
+            <div class="row">
+                <div class="col">
+                    <p class="card-text">{{meal.date | date}}</p>
+                </div>
+                <div class="col">
+                    <span *ngIf="asJoined()" class="float-right badge badge-info">joined</span>
+                </div>
+            </div>
         </li>
     </ul>
 </div>
