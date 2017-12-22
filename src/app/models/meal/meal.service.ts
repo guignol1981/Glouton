@@ -3,6 +3,7 @@ import {Http, Response, Headers} from "@angular/http";
 import {Meal} from "./meal";
 import {User} from "../user/user";
 import {AuthenticationService} from "../../services/authentication.service";
+import {UserService} from "../user/user.service";
 
 @Injectable()
 export class MealService {
@@ -10,6 +11,7 @@ export class MealService {
     apiEndPoint = 'api/meals';
 
     constructor(private authenticationService: AuthenticationService,
+                private userService: UserService,
                 private http: Http) {
     }
 
@@ -55,7 +57,7 @@ export class MealService {
         return this.post(model);
     }
 
-    join(meal: Meal, user: User): Promise<Meal> {
+    join(meal: Meal): Promise<Meal> {
         const url = `${this.apiEndPoint}/join/${meal['_id']}`;
         let headers = new Headers({
             'Content-Type': 'application/json',
@@ -63,7 +65,20 @@ export class MealService {
         });
 
         return this.http
-            .put(url, JSON.stringify(user), {headers: headers})
+            .put(url, JSON.stringify(this.userService.getProfile()), {headers: headers})
+            .toPromise()
+            .then((response: Response) => response.json())
+            .catch(this.handleError);
+    }
+
+    leave(meal: Meal) {
+        let url = `${this.apiEndPoint}/leave/${meal['_id']}`;
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + this.authenticationService.getToken()
+        });
+
+        return this.http.put(url, JSON.stringify(this.userService.getProfile()), {headers: headers})
             .toPromise()
             .then((response: Response) => response.json())
             .catch(this.handleError);

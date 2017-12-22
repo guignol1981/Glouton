@@ -1,13 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewContainerRef} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MealService} from "../../models/meal/meal.service";
 import {Meal} from "../../models/meal/meal";
 import {AuthenticationService} from "../../services/authentication.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../models/user/user.service";
 import {User} from "../../models/user/user";
 import {MealImageService} from "../../services/meal-image.service";
 import {FileHolder} from "angular2-image-upload";
+import {ToastsManager} from "ng2-toastr";
 
 @Component({
     selector: 'app-meal-form',
@@ -23,7 +24,9 @@ export class MealFormComponent implements OnInit {
                 public authenticationService: AuthenticationService,
                 private userService: UserService,
                 public imageService: MealImageService,
-                private activatedRoute: ActivatedRoute) {
+                private activatedRoute: ActivatedRoute,
+                public toastr: ToastsManager, vcr: ViewContainerRef) {
+        this.toastr.setRootViewContainerRef(vcr);
     }
 
     ngOnInit() {
@@ -73,13 +76,15 @@ export class MealFormComponent implements OnInit {
 
         this.mealService.save(meal)
             .then(
-                data => console.log(data)
+                data => {
+                    this.toastr.success('Meal created!', 'Success!');
+                }
             );
     }
 
     displayFormControlValidationMessage(formControlName: string) {
         let formControl = this.form.get(formControlName);
-        return ! formControl.valid && ! formControl.pristine;
+        return !formControl.valid && !formControl.pristine;
     }
 
 }

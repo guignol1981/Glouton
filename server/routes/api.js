@@ -22,9 +22,10 @@ router.get('/profile', auth, ctrlProfile.profileRead);
 router.get('/meals/joined', auth, ctrlMeal.getJoined);
 router.get('/meals/:id', auth, ctrlMeal.get);
 router.put('/meals/:id', auth, ctrlMeal.update);
+router.put('/meals/join/:id', auth, ctrlMeal.join);
+router.put('/meals/leave/:id', auth, ctrlMeal.leave);
 router.get('/meals', auth, ctrlMeal.getAll);
 router.post('/meals', auth, ctrlMeal.create);
-router.put('/meals/join/:id', auth, ctrlMeal.join);
 
 //images
 router.get('/images/meal/:id', ctrlMealImage.get);

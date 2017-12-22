@@ -20,6 +20,8 @@ import {CanActivateViaAuthGuardService} from "./services/can-activate-via-auth-g
 import { LunchBoxComponent } from './components/lunch-box/lunch-box.component';
 import {ImageUploadModule} from "angular2-image-upload";
 import {MealImageService} from "./services/meal-image.service";
+import {ToastModule} from "ng2-toastr";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 
 @NgModule({
@@ -41,7 +43,9 @@ import {MealImageService} from "./services/meal-image.service";
         ReactiveFormsModule,
         HttpModule,
         routing,
-        ImageUploadModule.forRoot()
+        BrowserAnimationsModule,
+        ImageUploadModule.forRoot(),
+        ToastModule.forRoot()
     ],
     providers: [
         MealService,

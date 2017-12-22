@@ -113,3 +113,28 @@ module.exports.join = function (req, res) {
 			});
 		});
 };
+
+module.exports.leave = function (req, res) {
+	let mealId = req.params.id;
+
+	Meal.findById(mealId)
+		.populate('cook')
+		.exec((err, meal) => {
+			let userId = req.payload._id;
+
+			let index = meal.participants.indexOf(userId);
+			if (index === -1) {
+				res.status(500).json({msg: 'user dit not already joined this meal'});
+				return;
+			}
+
+			meal.participants.splice(index, 1);
+			meal.save((err, meal) => {
+				if (err) {
+					throw err;
+				}
+
+				res.send(meal);
+			});
+		});
+};

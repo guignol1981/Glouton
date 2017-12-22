@@ -1,10 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewContainerRef} from '@angular/core';
 import {Meal} from "../../models/meal/meal";
 import {Router} from "@angular/router";
 import {User} from "../../models/user/user";
 import {UserService} from "../../models/user/user.service";
 import {MealService} from "../../models/meal/meal.service";
 import {MealImageService} from "../../services/meal-image.service";
+import {ToastsManager} from "ng2-toastr";
 
 
 @Component({
@@ -19,7 +20,9 @@ export class MealCardComponent implements OnInit {
     constructor(private router: Router,
                 private userService: UserService,
                 private mealService: MealService,
-                public imageService: MealImageService) {
+                public imageService: MealImageService,
+                public toastr: ToastsManager, vcr: ViewContainerRef) {
+        this.toastr.setRootViewContainerRef(vcr);
     }
 
     ngOnInit() {
@@ -44,8 +47,19 @@ export class MealCardComponent implements OnInit {
     }
 
     joinMeal() {
-        this.mealService.join(this.meal, this.user)
-            .then(data => this.meal = data);
+        this.mealService.join(this.meal)
+            .then(data => {
+                this.meal = data;
+                this.toastr.success('Meal Joined!', 'Success!');
+            });
+    }
+
+    leaveMeal() {
+        this.mealService.leave(this.meal)
+            .then(data => {
+                this.meal = data;
+                this.toastr.success('Left meal!', 'Success!');
+            });
     }
 
     goToMealDetails() {

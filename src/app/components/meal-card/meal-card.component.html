@@ -1,4 +1,5 @@
-<div *ngIf="meal && user" class="card" style="width: 20rem; min-height: 150px;">
+<!--<div *ngIf="meal && user" class="card" style="width: 20rem; min-height: 150px;">-->
+<div *ngIf="meal && user" class="card">
     <img style="height: 200px; width: auto;" class="card-img-top img-fluid"
          [src]="imageService.getMealImageApiEndPoint() + '/' + meal._id"
          alt="Card image cap">
@@ -10,19 +11,19 @@
             <p class="card-text">{{meal.date | date}}</p>
         </li>
         <li class="list-group-item">
-            <p class="card-text">Participants{{meal.participants.length}}/{{meal.minParticipants}}</p>
+            <p class="card-text">Participants {{meal.participants.length}}/{{meal.minParticipants}}  ({{meal.maxParticipants}} max)</p>
         </li>
         <li class="list-group-item">
-            <div class="row">
-                <div *ngIf="! isCook()" class="col">
-                    <a *ngIf="! asJoined()" (click)="joinMeal()" class="card-link">Join</a>
-                    <span *ngIf="asJoined()" class="card-link">Joined</span>
-                </div>
-                <div *ngIf="isCook()" class="col">
-                    <i (click)="editMeal()" class="fa fa-pencil-square" aria-hidden="true"></i>
-                </div>
-                <div (click)="goToMealDetails()" class="card-link col text-right">Details</div>
-            </div>
+            <span *ngIf="! isCook()">
+                <button *ngIf="! asJoined()" (click)="joinMeal()" class="btn btn-primary">Join</button>
+                <button *ngIf="asJoined()" (click)="leaveMeal()" class="btn btn-warning">Leave</button>
+            </span>
+            <span *ngIf="isCook()">
+                    <button (click)="editMeal()" class="btn btn-secondary m-2">Edit</button>
+            </span>
+            <span>
+                <button (click)="goToMealDetails()" class="btn btn-info m-2">Details</button>
+            </span>
         </li>
     </ul>
 </div>
