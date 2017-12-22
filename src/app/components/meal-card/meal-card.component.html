@@ -12,17 +12,17 @@
         <li class="list-group-item">
             <p class="card-text">Participants{{meal.participants.length}}/{{meal.minParticipants}}</p>
         </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div *ngIf="! isCook()" class="col">
+                    <a *ngIf="! asJoined()" (click)="joinMeal()" class="card-link">Join</a>
+                    <span *ngIf="asJoined()" class="card-link">Joined</span>
+                </div>
+                <div *ngIf="isCook()" class="col">
+                    <i (click)="editMeal()" class="fa fa-pencil-square" aria-hidden="true"></i>
+                </div>
+                <div (click)="goToMealDetails()" class="card-link col text-right">Details</div>
+            </div>
+        </li>
     </ul>
-    <div class="card-footer">
-        <div class="row">
-            <div *ngIf="! isCook()" class="col">
-                <a *ngIf="! asJoined()" (click)="joinMeal()" class="card-link">Join</a>
-                <span *ngIf="asJoined()" class="card-link">Joined</span>
-            </div>
-            <div *ngIf="isCook()" class="col">
-                <i (click)="editMeal()" class="fa fa-pencil-square" aria-hidden="true"></i>
-            </div>
-            <div (click)="goToMealDetails()" class="card-link col text-right">Details</div>
-        </div>
-    </div>
 </div>
