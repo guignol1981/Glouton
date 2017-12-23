@@ -1,9 +1,8 @@
-import {Component, OnInit, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewContainerRef, Input} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MealService} from "../../models/meal/meal.service";
 import {Meal} from "../../models/meal/meal";
 import {AuthenticationService} from "../../services/authentication.service";
-import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../models/user/user.service";
 import {User} from "../../models/user/user";
 import {MealImageService} from "../../services/meal-image.service";
@@ -17,30 +16,20 @@ import {ToastsManager} from "ng2-toastr";
 })
 export class MealFormComponent implements OnInit {
     form: FormGroup;
-    meal: Meal = new Meal();
+    @Input() meal: Meal;
     user: User;
 
     constructor(private mealService: MealService,
                 public authenticationService: AuthenticationService,
                 private userService: UserService,
                 public imageService: MealImageService,
-                private activatedRoute: ActivatedRoute,
                 public toastr: ToastsManager, vcr: ViewContainerRef) {
         this.toastr.setRootViewContainerRef(vcr);
     }
 
     ngOnInit() {
-        let mealId = this.activatedRoute.snapshot.paramMap.get('id');
-        if (mealId) {
-            this.mealService.get(mealId)
-                .then(data => {
-                    this.meal = data;
+        this.meal = this.meal || new Meal();
                     this.initForm();
-                });
-        } else {
-            this.meal = new Meal();
-            this.initForm();
-        }
     }
 
     initForm() {
@@ -71,13 +60,13 @@ export class MealFormComponent implements OnInit {
     onSubmit() {
         let meal = <Meal>this.form.value;
         meal._id = this.meal._id;
-        meal.participants = [];
+        meal.participants = this.meal.participants;
         meal.cook = this.user;
 
         this.mealService.save(meal)
             .then(
                 data => {
-                    this.toastr.success('Meal created!', 'Success!');
+                    this.toastr.success(`Meal ${data.title} created!`, 'Success!');
                 }
             );
     }
@@ -85,6 +74,10 @@ export class MealFormComponent implements OnInit {
     displayFormControlValidationMessage(formControlName: string) {
         let formControl = this.form.get(formControlName);
         return !formControl.valid && !formControl.pristine;
+    }
+
+    close() {
+        this.meal = null;
     }
 
 }

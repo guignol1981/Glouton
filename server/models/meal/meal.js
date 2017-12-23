@@ -13,7 +13,7 @@ let mealSchema = new Schema({
 	minParticipants: Number,
 	maxParticipants: Number,
 	participants: [{type: Schema.Types.ObjectId, ref: 'User'}],
-}, {usePushEach: true});
+});
 
 let Meal = mongoose.model('Meal', mealSchema);
 

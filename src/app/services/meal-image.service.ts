@@ -4,22 +4,10 @@ import {AuthenticationService} from "./authentication.service";
 
 @Injectable()
 export class MealImageService {
+  apiEndPoint = 'api/images/meal';
+
   constructor(private http: Http,
               private authenticationService: AuthenticationService) {
-  }
-
-  getMealImageApiEndPoint() {
-    return 'api/images/meal';
-  }
-
-  getMealImage(id) {
-    let headers = new Headers({
-      Authorization: 'Bearer ' + this.authenticationService.getToken()
-    });
-
-    return this.http.get(this.getMealImageApiEndPoint() + '/' + id, {headers: headers})
-        .toPromise()
-        .then((response: Response) => response);
   }
 
   private handleError(error: any) {

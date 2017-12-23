@@ -2,7 +2,7 @@
 <div *ngIf="meal && user" class="card border-0">
     <div class="meal-img">
         <img class="card-img-top img-fluid"
-             [src]="imageService.getMealImageApiEndPoint() + '/' + meal._id"
+             [src]="imageService.apiEndPoint + '/' + meal._id"
              alt="Card image cap">
         <div class="overlay">
             <div class="position-absolute card-options">

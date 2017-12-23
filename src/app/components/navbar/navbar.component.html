@@ -10,7 +10,8 @@
                     <a class="nav-link" [routerLink]="['/dashboard']">explore</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['/suggest']">suggest</a>
+                    <a class="nav-link" data-toggle="modal" data-target="#mealModal">suggest</a>
+                    <app-meal-form></app-meal-form>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" [routerLink]="['/lunch-box']">lunch box</a>

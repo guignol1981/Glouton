@@ -4,9 +4,12 @@ import {Meal} from "./meal";
 import {User} from "../user/user";
 import {AuthenticationService} from "../../services/authentication.service";
 import {UserService} from "../user/user.service";
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 @Injectable()
 export class MealService {
+    private meals: Meal[] = [];
+    public mealsSubject = new BehaviorSubject<Meal[]>(this.meals);
 
     apiEndPoint = 'api/meals';
 
@@ -34,7 +37,11 @@ export class MealService {
 
         return this.http.get(this.apiEndPoint, {headers: headers})
             .toPromise()
-            .then((response: Response) => response.json())
+            .then((response: Response) => {
+                this.meals = response.json();
+                this.mealsSubject.next(this.meals);
+                return response.json();
+            })
             .catch(this.handleError);
     }
 
@@ -94,7 +101,12 @@ export class MealService {
         return this.http
             .post(this.apiEndPoint, JSON.stringify(model), {headers: headers})
             .toPromise()
-            .then((response: Response) => response.json())
+            .then((response: Response) => {
+                let meal = <Meal>response.json();
+                this.meals.push(meal);
+                this.mealsSubject.next(this.meals);
+                return meal;
+            })
             .catch(this.handleError);
     }
 

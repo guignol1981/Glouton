@@ -73,13 +73,12 @@ module.exports.getJoined = function (req, res) {
 module.exports.create = function (req, res) {
 	let meal = new Meal(req.body);
 
-	meal.save((err, meal) => {
+	meal.save((err, doc) => {
 		if (err) {
 			throw err;
 		}
-		res.send(meal);
+		res.send(doc);
 	});
-
 };
 
 module.exports.join = function (req, res) {

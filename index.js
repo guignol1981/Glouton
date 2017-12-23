@@ -10,7 +10,8 @@ let api = require('./server/routes/api');
 
 require('./server/configs/passport');
 
-mongoose.connect('mongodb://localhost/lunch-box');
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/lunch-box', { useMongoClient: true });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
