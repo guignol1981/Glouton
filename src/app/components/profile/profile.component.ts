@@ -14,7 +14,7 @@ export class ProfileComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.userService.getProfile()
+        this.userService.getConnectedUser()
             .then(data => this.user = data);
     }
 

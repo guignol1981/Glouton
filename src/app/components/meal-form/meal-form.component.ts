@@ -29,11 +29,11 @@ export class MealFormComponent implements OnInit {
 
     ngOnInit() {
         this.meal = this.meal || new Meal();
-                    this.initForm();
+        this.initForm();
     }
 
     initForm() {
-        this.userService.getProfile().then(
+        this.userService.getConnectedUser().then(
             data => {
                 this.user = data;
                 this.form = new FormGroup({
@@ -64,11 +64,7 @@ export class MealFormComponent implements OnInit {
         meal.cook = this.user;
 
         this.mealService.save(meal)
-            .then(
-                data => {
-                    this.toastr.success(`Meal ${data.title} created!`, 'Success!');
-                }
-            );
+            .then(() => this.toastr.success(`Meal created!`, 'Success!'));
     }
 
     displayFormControlValidationMessage(formControlName: string) {
@@ -77,6 +73,7 @@ export class MealFormComponent implements OnInit {
     }
 
     close() {
+        this.form.reset();
         this.meal = null;
     }
 

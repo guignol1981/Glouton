@@ -5,12 +5,13 @@ import {AuthenticationService} from "../../services/authentication.service";
 
 @Injectable()
 export class UserService {
+    user: User;
 
     constructor(private http: Http,
                 private authenticationService: AuthenticationService) {
     }
 
-    getProfile(): Promise<User> {
+    getConnectedUser(): Promise<User> {
         let headers = new Headers({
             Authorization: 'Bearer ' + this.authenticationService.getToken()
         });

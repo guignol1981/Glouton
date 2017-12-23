@@ -72,7 +72,7 @@ export class MealService {
         });
 
         return this.http
-            .put(url, JSON.stringify(this.userService.getProfile()), {headers: headers})
+            .put(url, JSON.stringify(this.userService.getConnectedUser()), {headers: headers})
             .toPromise()
             .then((response: Response) => response.json())
             .catch(this.handleError);
@@ -85,7 +85,7 @@ export class MealService {
             Authorization: 'Bearer ' + this.authenticationService.getToken()
         });
 
-        return this.http.put(url, JSON.stringify(this.userService.getProfile()), {headers: headers})
+        return this.http.put(url, JSON.stringify(this.userService.getConnectedUser()), {headers: headers})
             .toPromise()
             .then((response: Response) => response.json())
             .catch(this.handleError);

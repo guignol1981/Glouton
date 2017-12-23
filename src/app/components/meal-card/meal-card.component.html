@@ -11,7 +11,8 @@
                     <button *ngIf="asJoined()" (click)="leaveMeal()" class="btn btn-outline-light">Leave</button>
                 </span>
                 <span *ngIf="isCook()">
-                        <button (click)="editMeal()" class="btn btn-outline-light">Edit</button>
+                        <button class="btn btn-outline-light" data-toggle="modal" data-target="#mealModal">Edit</button>
+                        <app-meal-form [meal]="meal"></app-meal-form>
                 </span>
                 <span>
                     <button (click)="goToMealDetails()" class="btn btn-outline-light">Details</button>

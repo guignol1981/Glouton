@@ -26,7 +26,7 @@ export class MealCardComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.userService.getProfile()
+        this.userService.getConnectedUser()
             .then(data => this.user = data);
     }
 
@@ -43,7 +43,7 @@ export class MealCardComponent implements OnInit {
     }
 
     isCook() {
-        return (this.meal.cook._id === this.user._id)
+        return (this.meal.cook._id === this.user._id);
     }
 
     joinMeal() {
@@ -67,7 +67,7 @@ export class MealCardComponent implements OnInit {
     }
 
     editMeal() {
-        this.router.navigate([`/suggest/${this.meal._id}`]);
+
     }
 
 }

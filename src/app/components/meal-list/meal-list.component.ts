@@ -10,21 +10,18 @@ import {Subscription} from "rxjs/Subscription";
 })
 export class MealListComponent implements OnInit, OnDestroy {
     meals: Meal[] = [];
-    mealsSubscribtion: Subscription;
+    mealsSubscription: Subscription;
 
     constructor(private mealService: MealService) {
     }
 
     ngOnInit() {
-        this.mealsSubscribtion = this.mealService.mealsSubject.subscribe(data => this.meals = data);
-        this.mealService.getAll().then(data => {
-            console.log(data);
-            this.meals = data;
-        });
+        this.mealsSubscription = this.mealService.mealsSubject.subscribe(data => this.meals = data);
+        this.mealService.getAll().then(data => this.meals = data);
     }
 
     ngOnDestroy() {
-        this.mealsSubscribtion.unsubscribe();
+        this.mealsSubscription.unsubscribe();
     }
 
 }

@@ -10,7 +10,8 @@ export class Meal {
     public maxParticipants: number;
     public participants: User[] = [];
 
-    constructor(public id: string = null) {
+    constructor(public _id: string = null) {
+
     }
 
 }

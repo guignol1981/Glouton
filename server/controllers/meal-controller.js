@@ -71,6 +71,8 @@ module.exports.getJoined = function (req, res) {
 };
 
 module.exports.create = function (req, res) {
+	delete req.body._id;
+
 	let meal = new Meal(req.body);
 
 	meal.save((err, doc) => {
