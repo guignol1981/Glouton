@@ -1,8 +1,6 @@
 # LunchBox
 
-A Lunch sharing web application.s
-
-Author: Vincent Guillemette
+A Lunch sharing web applications by Vincent Guillemette
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0.
 
