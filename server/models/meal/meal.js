@@ -20,6 +20,10 @@ mealSchema.methods.userIsCook = function(userId) {
 };
 
 mealSchema.methods.addParticipant = function(userId) {
+	if (this.limitDate < Date.now()) {
+		throw 'its too late to join this meal';
+	}
+
 	if (this.userIsCook(userId)) {
 		throw 'This user is the cook and cannot join the meal';
 	}

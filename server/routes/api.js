@@ -21,7 +21,6 @@ router.get('/profile', auth, ctrlProfile.profileRead);
 //meal
 router.get('/meals/joined', auth, ctrlMeal.getJoined);
 router.get('/meals/:id', auth, ctrlMeal.get);
-router.put('/meals/:id', auth, ctrlMeal.update);
 router.put('/meals/join/:id', auth, ctrlMeal.join);
 router.put('/meals/leave/:id', auth, ctrlMeal.leave);
 router.get('/meals', auth, ctrlMeal.getAll);
