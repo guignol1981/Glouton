@@ -20,9 +20,14 @@ import {CanActivateViaAuthGuardService} from "./services/can-activate-via-auth-g
 import { LunchBoxComponent } from './components/lunch-box/lunch-box.component';
 import {ImageUploadModule} from "angular2-image-upload";
 import {MealImageService} from "./services/meal-image.service";
-import {ToastModule} from "ng2-toastr";
+import {ToastModule, ToastOptions} from "ng2-toastr";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
+export class CustomToastOption extends ToastOptions { // can create separate .ts file for class
+    animate = 'flyRight';
+    positionClass = 'toast-bottom-left';
+    showCloseButton = true;
+}
 
 @NgModule({
     declarations: [
@@ -48,6 +53,10 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
         ToastModule.forRoot()
     ],
     providers: [
+        {
+            provide: ToastOptions,
+            useClass: CustomToastOption
+        },
         MealService,
         AuthenticationService,
         UserService,

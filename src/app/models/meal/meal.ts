@@ -23,7 +23,7 @@ export class Meal {
     }
 
     isConfirmed() {
-        return this.participants.length >= this.minParticipants;
+        return this.participants.length >= this.minParticipants && this.limitDate.getTime() < Date.now();
     }
 
     canJoin(user: User) {

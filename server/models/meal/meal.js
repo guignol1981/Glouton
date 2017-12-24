@@ -44,7 +44,12 @@ mealSchema.methods.addParticipant = function(userId) {
 };
 
 mealSchema.methods.removeParticipants = function(userId) {
+	if (this.limitDate < Date.now()) {
+		throw 'its too late to leave this meal';
+	}
+
 	let index = this.participants.indexOf(userId);
+
 	if (index > -1) {
 		this.participants.splice(index, 1);
 	} else {

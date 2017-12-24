@@ -5,7 +5,7 @@ import {User} from "../../models/user/user";
 import {UserService} from "../../models/user/user.service";
 import {MealService} from "../../models/meal/meal.service";
 import {MealImageService} from "../../services/meal-image.service";
-import {ToastsManager} from "ng2-toastr";
+import {ToastOptions, ToastsManager} from "ng2-toastr";
 
 
 @Component({
