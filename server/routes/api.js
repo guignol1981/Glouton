@@ -12,6 +12,7 @@ let ctrlProfile = require('../controllers/profile');
 let ctrlAuth = require('../controllers/authentications');
 let ctrlMeal = require('../controllers/meal-controller');
 let ctrlMealImage = require('../controllers/meal-image-controller');
+let ctrlMessage = require('../controllers/message-controller');
 
 //user
 router.post('/register', ctrlAuth.register);
@@ -21,7 +22,6 @@ router.get('/profile', auth, ctrlProfile.profileRead);
 //meal
 router.get('/meals/joined', auth, ctrlMeal.getJoined);
 router.get('/meals/:id', auth, ctrlMeal.get);
-router.put('/meals/:id', auth, ctrlMeal.update);
 router.put('/meals/join/:id', auth, ctrlMeal.join);
 router.put('/meals/leave/:id', auth, ctrlMeal.leave);
 router.get('/meals', auth, ctrlMeal.getAll);
@@ -30,5 +30,8 @@ router.post('/meals', auth, ctrlMeal.create);
 //images
 router.get('/images/meal/:id', ctrlMealImage.get);
 router.post('/images/meal', auth, upload.single('image'), ctrlMealImage.create);
+
+//messages
+router.get('/messages', auth, ctrlMessage.getAll);
 
 module.exports = router;

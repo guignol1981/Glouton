@@ -23,15 +23,15 @@ export class Meal {
     }
 
     isConfirmed() {
-        return this.participants.length >= this.minParticipants;
+        return this.participants.length >= this.minParticipants && this.limitDate.getTime() < Date.now();
     }
 
     canJoin(user: User) {
-        return ! this.asJoined(user) && ! this.isFull() && !this.isCook(user);
+        return ! this.asJoined(user) && ! this.isFull() && !this.isCook(user) && this.limitDate.getTime() >= Date.now();
     }
 
     canLeave(user: User) {
-        return this.asJoined(user);
+        return this.asJoined(user) && this.limitDate.getTime() > Date.now();
     }
 
     isFull() {

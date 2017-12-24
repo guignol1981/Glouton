@@ -1,0 +1,8 @@
+<div *ngIf="messages" class="container mt-3">
+  <h2 class="font-weight-bold">Inbox</h2>
+  <ul class="list-group">
+    <li *ngFor="let message of messages" class="list-group-item mt-1">
+      {{message.title}}
+    </li>
+  </ul>
+</div>

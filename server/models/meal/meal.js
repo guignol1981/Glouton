@@ -1,6 +1,7 @@
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 let User = require('../user/user');
+let Message = require('../message/message');
 
 let mealSchema = new Schema({
 	title: String,
@@ -20,6 +21,10 @@ mealSchema.methods.userIsCook = function(userId) {
 };
 
 mealSchema.methods.addParticipant = function(userId) {
+	if (this.limitDate < Date.now()) {
+		throw 'its too late to join this meal';
+	}
+
 	if (this.userIsCook(userId)) {
 		throw 'This user is the cook and cannot join the meal';
 	}
@@ -35,12 +40,17 @@ mealSchema.methods.addParticipant = function(userId) {
 	if (exist) {
 		throw 'user already joined this meal';
 	}
-
+	Message.create({destination: this.cook, title: 'someone has joined', body: 'someone has joined your meal'});
 	this.participants.push(userId);
 };
 
 mealSchema.methods.removeParticipants = function(userId) {
+	if (this.limitDate < Date.now()) {
+		throw 'its too late to leave this meal';
+	}
+
 	let index = this.participants.indexOf(userId);
+
 	if (index > -1) {
 		this.participants.splice(index, 1);
 	} else {

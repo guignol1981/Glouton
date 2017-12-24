@@ -7,6 +7,7 @@ import {LoginComponent} from './components/login/login.component';
 import {RegisterComponent} from './components/register/register.component';
 import {ProfileComponent} from './components/profile/profile.component';
 import {LunchBoxComponent} from './components/lunch-box/lunch-box.component';
+import {InboxComponent} from './components/inbox/inbox.component';
 import {CanActivateViaAuthGuardService} from "./services/can-activate-via-auth-guard.service";
 
 const appRoutes: Routes = [
@@ -16,6 +17,7 @@ const appRoutes: Routes = [
     {path: 'meal-form/:id', component: MealFormComponent, canActivate: [CanActivateViaAuthGuardService]},
     {path: 'profile', component: ProfileComponent, canActivate: [CanActivateViaAuthGuardService]},
     {path: 'lunch-box', component: LunchBoxComponent, canActivate: [CanActivateViaAuthGuardService]},
+    {path: 'inbox', component: InboxComponent, canActivate: [CanActivateViaAuthGuardService]},
     {path: 'meal-details/:id', component: MealDetailsComponent, canActivate: [CanActivateViaAuthGuardService]},
     {
         path: '',

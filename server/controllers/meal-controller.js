@@ -11,33 +11,6 @@ module.exports.get = function (req, res) {
 		});
 };
 
-module.exports.update = function (req, res) {
-	let id = req.params.id;
-
-	Meal.findById(id, (err, meal) => {
-		if (err) {
-			throw err;
-		}
-
-		if (!meal.userIsCook(req.payload._id)) {
-			res.status(500).json({msg: 'only meal cook can edit'});
-			return;
-		}
-
-		meal.title = req.body.title;
-		meal.description = req.body.description;
-		meal.date = req.body.date;
-		meal.limitDate = req.body.limitDate;
-		meal.minParticipants = req.body.minParticipants;
-		meal.maxParticipants = req.body.maxParticipants;
-		meal.imageUrl = req.body.imageUrl;
-
-		meal.save((err, meal) => {
-			res.send(meal);
-		})
-	})
-};
-
 module.exports.getAll = function (req, res) {
 	Meal.find({})
 		.populate('cook')
