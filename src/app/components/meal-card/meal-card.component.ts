@@ -27,6 +27,22 @@ export class MealCardComponent implements OnInit {
     ngOnInit() {
     }
 
+    canJoin() {
+        return ! this.asJoined() && ! this.isFull() && !this.isCook();
+    }
+
+    canLeave() {
+        return this.asJoined();
+    }
+
+    isFull() {
+        return this.meal.participants.length >= this.meal.maxParticipants;
+    }
+
+    isConfirmed() {
+        return this.meal.participants.length >= this.meal.minParticipants;
+    }
+
     asJoined() {
         let asJoined = false;
 

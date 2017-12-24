@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title font-weight-bold" id="mealModalLabel">Suggest a meal</h5>
-                <button (click)="close()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button (click)="close()" type="button" class="close" data-dismiss="modal" aria-label="Close" id="mealformclosebutton">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -17,7 +17,7 @@
                                    placeholder="Title"
                                    aria-describedby="titleHelper" required>
                             <small id="titleHelper" class="form-text text-muted">The title of you meal</small>
-                            <small *ngIf="displayFormControlValidationMessage('title')" class="form-text text-warning">
+                            <small *ngIf="formControlIsInvalid('title')" class="form-text text-warning">
                                 The title should be 10 characters at least
                             </small>
                         </div>
@@ -27,7 +27,7 @@
                                       placeholder="Description" aria-describedby="descriptionHelper" cols="30"
                                       rows="5"></textarea>
                             <small id="descriptionHelper" class="form-text text-muted">Describe your mean</small>
-                            <small *ngIf="displayFormControlValidationMessage('description')"
+                            <small *ngIf="formControlIsInvalid('description')"
                                    class="form-text text-warning">The description should be 30 characters at least
                             </small>
                         </div>

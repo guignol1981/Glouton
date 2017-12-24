@@ -1,4 +1,3 @@
-let User = require('../models/user/user');
 let Meal = require('../models/meal/meal');
 
 module.exports.get = function (req, res) {
@@ -71,12 +70,12 @@ module.exports.getJoined = function (req, res) {
 };
 
 module.exports.create = function (req, res) {
+	//hack without this it will force the _id to null
 	delete req.body._id;
-
 	let newMeal = new Meal(req.body);
 
 	newMeal.save((err, doc) => {
-		Meal.populate(doc, {path:"cook"}, function(err, book) { res.send(book); });
+		Meal.populate(doc, {path: "cook"}, (err, book) => res.send(book));
 	});
 };
 

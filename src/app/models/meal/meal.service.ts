@@ -40,7 +40,7 @@ export class MealService {
             .then((response: Response) => {
                 this.meals = response.json();
                 this.mealsSubject.next(this.meals);
-                return response.json();
+                return this.meals;
             })
             .catch(this.handleError);
     }

@@ -14,4 +14,8 @@ export class Meal {
 
     }
 
+    isConfirmed() {
+        return this.participants.length >= this.minParticipants;
+    }
+
 }

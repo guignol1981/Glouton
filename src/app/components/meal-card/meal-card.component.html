@@ -1,17 +1,18 @@
 <div *ngIf="meal && user" class="card border-0">
+    <div>
+        <span *ngIf="asJoined()" class="badge badge-info">joined</span>
+        <span *ngIf="isFull()" class="badge badge-danger">full</span>
+        <span *ngIf="isConfirmed()" class="badge badge-success">confirmed</span>
+    </div>
     <div class="meal-img">
         <img class="card-img-top img-fluid"
              [src]="imageService.apiEndPoint + '/' + meal._id"
              alt="Card image cap">
         <div class="overlay">
             <div class="text-center mt-4">
-                <span *ngIf="! isCook()">
-                    <button *ngIf="! asJoined()" (click)="joinMeal()" class="btn btn-outline-light">Join</button>
-                    <button *ngIf="asJoined()" (click)="leaveMeal()" class="btn btn-outline-light">Leave</button>
-                </span>
-                <span *ngIf="isCook()">
-                </span>
                 <span>
+                    <button *ngIf="canJoin()" (click)="joinMeal()" class="btn btn-outline-light">Join</button>
+                    <button *ngIf="canLeave()" (click)="leaveMeal()" class="btn btn-outline-light">Leave</button>
                     <button (click)="goToMealDetails()" class="btn btn-outline-light">Details</button>
                 </span>
             </div>
@@ -25,9 +26,6 @@
             <div class="row">
                 <div class="col">
                     <p class="card-text">{{meal.date | date}}</p>
-                </div>
-                <div class="col">
-                    <span *ngIf="asJoined()" class="float-right badge badge-info">joined</span>
                 </div>
             </div>
         </li>

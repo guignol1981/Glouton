@@ -23,15 +23,12 @@ export class MealFormComponent implements OnInit {
                 public authenticationService: AuthenticationService,
                 public imageService: MealImageService,
                 public userService: UserService,
-                public toastr: ToastsManager, vcr: ViewContainerRef) {
+                public toastr: ToastsManager,
+                vcr: ViewContainerRef) {
         this.toastr.setRootViewContainerRef(vcr);
     }
 
     ngOnInit() {
-        this.initForm();
-    }
-
-    initForm() {
         this.userService.getConnectedUser().then(user => {
             this.user = user;
             this.form = new FormGroup({
@@ -61,17 +58,20 @@ export class MealFormComponent implements OnInit {
         meal.cook = this.user;
 
         this.mealService.save(meal)
-            .then(() => this.toastr.success(`Meal created!`, 'Success!'));
+            .then(() => {
+                this.toastr.success(`Meal created!`, 'Success!');
+                document.getElementById('mealformclosebutton').click();
+            });
     }
 
-    displayFormControlValidationMessage(formControlName: string) {
+    formControlIsInvalid(formControlName: string) {
         let formControl = this.form.get(formControlName);
         return !formControl.valid && !formControl.pristine;
     }
 
     close() {
         this.form.reset();
-        this.meal = null;
+        this.meal = new Meal();
     }
 
 }
