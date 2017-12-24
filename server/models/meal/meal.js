@@ -15,6 +15,39 @@ let mealSchema = new Schema({
 	participants: [{type: Schema.Types.ObjectId, ref: 'User'}],
 }, {usePushEach: true});
 
+mealSchema.methods.userIsCook = function(userId) {
+	return this.cook._id == userId;
+};
+
+mealSchema.methods.addParticipant = function(userId) {
+	if (this.userIsCook(userId)) {
+		throw 'This user is the cook and cannot join the meal';
+	}
+
+	let exist = false;
+
+	this.participants.forEach((participant) => {
+		if (participant._id == userId) {
+			exist = true;
+		}
+	});
+
+	if (exist) {
+		throw 'user already joined this meal';
+	}
+
+	this.participants.push(userId);
+};
+
+mealSchema.methods.removeParticipants = function(userId) {
+	let index = this.participants.indexOf(userId);
+	if (index > -1) {
+		this.participants.splice(index, 1);
+	} else {
+		throw 'participant not found';
+	}
+};
+
 let Meal = mongoose.model('Meal', mealSchema);
 
 module.exports = Meal;

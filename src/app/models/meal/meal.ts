@@ -1,21 +1,57 @@
 import {User} from "../user/user";
 export class Meal {
-    public title: string;
-    public description: string;
-    public imageUrl: string;
     public cook: User;
-    public date: Date;
-    public limitDate: Date;
-    public minParticipants: number;
-    public maxParticipants: number;
     public participants: User[] = [];
-
-    constructor(public _id: string = null) {
-
+    constructor(public _id: string = null,
+                public title: string = '',
+                public description: string = '',
+                public imageUrl: string = '',
+                public cookData: any = null,
+                public date: Date = new Date(),
+                public limitDate: Date = new Date(),
+                public minParticipants: number = 0,
+                public maxParticipants: number = 0,
+                public participantsData: any[] = []) {
+        if (cookData) {
+            this.cook = new User(cookData._id, cookData.name, cookData.email);
+        }
+        if (participantsData) {
+            participantsData.forEach(data => {
+                this.participants.push(new User(data._id, data.name, data.email));
+            });
+        }
     }
 
     isConfirmed() {
         return this.participants.length >= this.minParticipants;
+    }
+
+    canJoin(user: User) {
+        return ! this.asJoined(user) && ! this.isFull() && !this.isCook(user);
+    }
+
+    canLeave(user: User) {
+        return this.asJoined(user);
+    }
+
+    isFull() {
+        return this.participants.length >= this.maxParticipants;
+    }
+
+    asJoined(user: User) {
+        let asJoined = false;
+
+        this.participants.forEach((participant) => {
+            if (participant._id === user._id) {
+                asJoined = true;
+            }
+        });
+
+        return asJoined;
+    }
+
+    isCook(user: User) {
+        return (this.cook._id === user._id);
     }
 
 }

@@ -25,7 +25,19 @@ export class MealService {
 
         return this.http.get(this.apiEndPoint + '/' + id, {headers: headers})
             .toPromise()
-            .then((response: Response) => response.json())
+            .then((response: Response) => {
+                let mealData = response.json();
+                return new Meal(mealData._id,
+                    mealData.title,
+                    mealData.description,
+                    mealData.imageUrl,
+                    mealData.cook,
+                    mealData.date,
+                    mealData.limitDate,
+                    mealData.minParticipants,
+                    mealData.maxParticipants,
+                    mealData.participants);
+            })
             .catch(this.handleError);
     }
 
@@ -38,7 +50,20 @@ export class MealService {
         return this.http.get(this.apiEndPoint, {headers: headers})
             .toPromise()
             .then((response: Response) => {
-                this.meals = response.json();
+                this.meals = [];
+                response.json().forEach(mealData => {
+                    let meal = new Meal(mealData._id,
+                                        mealData.title,
+                                        mealData.description,
+                                        mealData.imageUrl,
+                                        mealData.cook,
+                                        mealData.date,
+                                        mealData.limitDate,
+                                        mealData.minParticipants,
+                                        mealData.maxParticipants,
+                                        mealData.participants);
+                    this.meals.push(meal);
+                });
                 this.mealsSubject.next(this.meals);
                 return this.meals;
             })
@@ -53,15 +78,33 @@ export class MealService {
 
         return this.http.get(this.apiEndPoint + '/joined', {headers: headers})
             .toPromise()
-            .then((response: Response) => response.json())
+            .then((response: Response) => {
+                let joined: Meal[] = [];
+
+                response.json().forEach(mealData => {
+                    let meal = new Meal(mealData._id,
+                                        mealData.title,
+                                        mealData.description,
+                                        mealData.imageUrl,
+                                        mealData.cook,
+                                        mealData.date,
+                                        mealData.limitDate,
+                                        mealData.minParticipants,
+                                        mealData.maxParticipants,
+                                        mealData.participants);
+                    joined.push(meal);
+                });
+
+                return joined;
+            })
             .catch(this.handleError);
     }
 
-    save(model: Meal): Promise<Meal> {
-        if (model['_id']) {
-            return this.put(model);
+    save(meal: Meal): Promise<Meal> {
+        if (meal['_id']) {
+            return this.put(meal);
         }
-        return this.post(model);
+        return this.post(meal);
     }
 
     join(meal: Meal): Promise<Meal> {
@@ -74,7 +117,19 @@ export class MealService {
         return this.http
             .put(url, JSON.stringify(this.userService.getConnectedUser()), {headers: headers})
             .toPromise()
-            .then((response: Response) => response.json())
+            .then((response: Response) => {
+                let mealData = response.json();
+                return new Meal(mealData._id,
+                                mealData.title,
+                                mealData.description,
+                                mealData.imageUrl,
+                                mealData.cook,
+                                mealData.date,
+                                mealData.limitDate,
+                                mealData.minParticipants,
+                                mealData.maxParticipants,
+                                mealData.participants);
+            })
             .catch(this.handleError);
     }
 
@@ -87,14 +142,26 @@ export class MealService {
 
         return this.http.put(url, JSON.stringify(this.userService.getConnectedUser()), {headers: headers})
             .toPromise()
-            .then((response: Response) => response.json())
+            .then((response: Response) => {
+                let mealData = response.json();
+                return new Meal(mealData._id,
+                                mealData.title,
+                                mealData.description,
+                                mealData.imageUrl,
+                                mealData.cook,
+                                mealData.date,
+                                mealData.limitDate,
+                                mealData.minParticipants,
+                                mealData.maxParticipants,
+                                mealData.participants);
+            })
             .catch(this.handleError);
     }
 
     private post(model: Meal): Promise<Meal> {
         let headers = new Headers({
                 'Content-Type': 'application/json',
-                 Authorization: 'Bearer ' + this.authenticationService.getToken()
+                Authorization: 'Bearer ' + this.authenticationService.getToken()
             }
         );
 
@@ -102,10 +169,20 @@ export class MealService {
             .post(this.apiEndPoint, JSON.stringify(model), {headers: headers})
             .toPromise()
             .then((response: Response) => {
-                let meal = <Meal>response.json();
-                this.meals.push(meal);
+                let mealData = response.json();
+                let newMeal =  new Meal(mealData._id,
+                                        mealData.title,
+                                        mealData.description,
+                                        mealData.imageUrl,
+                                        mealData.cook,
+                                        mealData.date,
+                                        mealData.limitDate,
+                                        mealData.minParticipants,
+                                        mealData.maxParticipants,
+                                        mealData.participants);
+                this.meals.push(newMeal);
                 this.mealsSubject.next(this.meals);
-                return meal;
+                return newMeal;
             })
             .catch(this.handleError);
     }

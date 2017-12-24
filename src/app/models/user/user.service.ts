@@ -18,7 +18,12 @@ export class UserService {
 
         return this.http.get('/api/profile', {headers: headers})
             .toPromise()
-            .then((response: Response) => <User>response.json())
+            .then((response: Response) => {
+                let userData = response.json();
+                return new User(userData._id,
+                                userData.name,
+                                userData.email);
+            })
             .catch(this.handleError);
     }
 

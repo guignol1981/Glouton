@@ -18,7 +18,8 @@ module.exports.update = function (req, res) {
 		if (err) {
 			throw err;
 		}
-		if (meal.cook != req.payload._id) {
+
+		if (!meal.userIsCook(req.payload._id)) {
 			res.status(500).json({msg: 'only meal cook can edit'});
 			return;
 		}
@@ -32,10 +33,6 @@ module.exports.update = function (req, res) {
 		meal.imageUrl = req.body.imageUrl;
 
 		meal.save((err, meal) => {
-			if (err) {
-				throw err;
-			}
-
 			res.send(meal);
 		})
 	})
@@ -87,30 +84,8 @@ module.exports.join = function (req, res) {
 		.populate('cook')
 		.populate('participants')
 		.exec((err, meal) => {
-			if (meal.cook._id == userId) {
-				res.status(500).json({msg: 'This user is the cook and cannot join the meal'});
-				return;
-			}
-
-			let exist = false;
-
-			meal.participants.forEach((participant) => {
-				if (participant._id == userId) {
-					exist = true;
-				}
-			});
-
-			if (exist) {
-				res.status(500).json({msg: 'user already joined this meal'});
-				return;
-			}
-
-			meal.participants.push(userId);
+			meal.addParticipant(userId);
 			meal.save((err, meal) => {
-				if (err) {
-					throw err;
-				}
-
 				res.send(meal);
 			});
 		});
@@ -118,24 +93,13 @@ module.exports.join = function (req, res) {
 
 module.exports.leave = function (req, res) {
 	let mealId = req.params.id;
+	let userId = req.payload._id;
 
 	Meal.findById(mealId)
 		.populate('cook')
 		.exec((err, meal) => {
-			let userId = req.payload._id;
-
-			let index = meal.participants.indexOf(userId);
-			if (index === -1) {
-				res.status(500).json({msg: 'user dit not already joined this meal'});
-				return;
-			}
-
-			meal.participants.splice(index, 1);
+			meal.removeParticipants(userId);
 			meal.save((err, meal) => {
-				if (err) {
-					throw err;
-				}
-
 				res.send(meal);
 			});
 		});

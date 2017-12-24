@@ -1,8 +1,8 @@
 <div *ngIf="meal && user" class="card border-0">
     <div>
-        <span *ngIf="asJoined()" class="badge badge-info">joined</span>
-        <span *ngIf="isFull()" class="badge badge-danger">full</span>
-        <span *ngIf="isConfirmed()" class="badge badge-success">confirmed</span>
+        <span *ngIf="meal.asJoined(user)" class="badge badge-info">joined</span>
+        <span *ngIf="meal.isFull()" class="badge badge-danger">full</span>
+        <span *ngIf="meal.isConfirmed()" class="badge badge-success">confirmed</span>
     </div>
     <div class="meal-img">
         <img class="card-img-top img-fluid"
@@ -11,8 +11,8 @@
         <div class="overlay">
             <div class="text-center mt-4">
                 <span>
-                    <button *ngIf="canJoin()" (click)="joinMeal()" class="btn btn-outline-light">Join</button>
-                    <button *ngIf="canLeave()" (click)="leaveMeal()" class="btn btn-outline-light">Leave</button>
+                    <button *ngIf="meal.canJoin(user)" (click)="joinMeal()" class="btn btn-outline-light">Join</button>
+                    <button *ngIf="meal.canLeave(user)" (click)="leaveMeal()" class="btn btn-outline-light">Leave</button>
                     <button (click)="goToMealDetails()" class="btn btn-outline-light">Details</button>
                 </span>
             </div>
