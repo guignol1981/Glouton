@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewContainerRef} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {Meal} from "../../models/meal/meal";
 import {Router} from "@angular/router";
 import {User} from "../../models/user/user";
@@ -15,10 +15,9 @@ import {ToastsManager} from "ng2-toastr";
 })
 export class MealCardComponent implements OnInit {
     @Input() meal: Meal;
-    user: User;
+    @Input() user: User;
 
     constructor(private router: Router,
-                private userService: UserService,
                 private mealService: MealService,
                 public imageService: MealImageService,
                 public toastr: ToastsManager, vcr: ViewContainerRef) {
@@ -26,8 +25,6 @@ export class MealCardComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.userService.getConnectedUser()
-            .then(data => this.user = data);
     }
 
     asJoined() {
@@ -64,10 +61,6 @@ export class MealCardComponent implements OnInit {
 
     goToMealDetails() {
         this.router.navigate(['/meal-details/' + this.meal._id]);
-    }
-
-    editMeal() {
-
     }
 
 }

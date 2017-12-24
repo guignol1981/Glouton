@@ -73,25 +73,27 @@ module.exports.getJoined = function (req, res) {
 module.exports.create = function (req, res) {
 	delete req.body._id;
 
-	let meal = new Meal(req.body);
+	let newMeal = new Meal(req.body);
 
-	meal.save((err, doc) => {
-		if (err) {
-			throw err;
-		}
-		res.send(doc);
+	newMeal.save((err, doc) => {
+		Meal.populate(doc, {path:"cook"}, function(err, book) { res.send(book); });
 	});
 };
 
 module.exports.join = function (req, res) {
 	let mealId = req.params.id;
+	let userId = req.payload._id;
 
 	Meal.findById(mealId)
 		.populate('cook')
 		.populate('participants')
 		.exec((err, meal) => {
+			if (meal.cook._id == userId) {
+				res.status(500).json({msg: 'This user is the cook and cannot join the meal'});
+				return;
+			}
+
 			let exist = false;
-			let userId = req.payload._id;
 
 			meal.participants.forEach((participant) => {
 				if (participant._id == userId) {

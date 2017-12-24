@@ -1,18 +1,15 @@
-<!--<div *ngIf="meal && user" class="card" style="width: 20rem; min-height: 150px;">-->
 <div *ngIf="meal && user" class="card border-0">
     <div class="meal-img">
         <img class="card-img-top img-fluid"
              [src]="imageService.apiEndPoint + '/' + meal._id"
              alt="Card image cap">
         <div class="overlay">
-            <div class="position-absolute card-options">
+            <div class="text-center mt-4">
                 <span *ngIf="! isCook()">
                     <button *ngIf="! asJoined()" (click)="joinMeal()" class="btn btn-outline-light">Join</button>
                     <button *ngIf="asJoined()" (click)="leaveMeal()" class="btn btn-outline-light">Leave</button>
                 </span>
                 <span *ngIf="isCook()">
-                        <button class="btn btn-outline-light" data-toggle="modal" data-target="#mealModal">Edit</button>
-                        <app-meal-form [meal]="meal"></app-meal-form>
                 </span>
                 <span>
                     <button (click)="goToMealDetails()" class="btn btn-outline-light">Details</button>
