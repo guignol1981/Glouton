@@ -22,6 +22,8 @@ import {ImageUploadModule} from "angular2-image-upload";
 import {MealImageService} from "./services/meal-image.service";
 import {ToastModule, ToastOptions} from "ng2-toastr";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { InboxComponent } from './components/inbox/inbox.component';
+import {MessageService} from "./services/message.service";
 
 export class CustomToastOption extends ToastOptions { // can create separate .ts file for class
     animate = 'flyRight';
@@ -41,7 +43,8 @@ export class CustomToastOption extends ToastOptions { // can create separate .ts
         RegisterComponent,
         LoginComponent,
         ProfileComponent,
-        LunchBoxComponent
+        LunchBoxComponent,
+        InboxComponent
     ],
     imports: [
         BrowserModule,
@@ -61,7 +64,8 @@ export class CustomToastOption extends ToastOptions { // can create separate .ts
         AuthenticationService,
         UserService,
         CanActivateViaAuthGuardService,
-        MealImageService
+        MealImageService,
+        MessageService
     ],
     bootstrap: [AppComponent]
 })

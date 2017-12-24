@@ -12,6 +12,7 @@ let ctrlProfile = require('../controllers/profile');
 let ctrlAuth = require('../controllers/authentications');
 let ctrlMeal = require('../controllers/meal-controller');
 let ctrlMealImage = require('../controllers/meal-image-controller');
+let ctrlMessage = require('../controllers/message-controller');
 
 //user
 router.post('/register', ctrlAuth.register);
@@ -29,5 +30,8 @@ router.post('/meals', auth, ctrlMeal.create);
 //images
 router.get('/images/meal/:id', ctrlMealImage.get);
 router.post('/images/meal', auth, upload.single('image'), ctrlMealImage.create);
+
+//messages
+router.get('/messages', auth, ctrlMessage.getAll);
 
 module.exports = router;
