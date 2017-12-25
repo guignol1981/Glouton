@@ -24,6 +24,7 @@ import {ToastModule, ToastOptions} from "ng2-toastr";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { InboxComponent } from './components/inbox/inbox.component';
 import {MessageService} from "./services/message.service";
+import { PrivateMessageComponent } from './components/private-message/private-message.component';
 
 export class CustomToastOption extends ToastOptions { // can create separate .ts file for class
     animate = 'flyRight';
@@ -44,7 +45,8 @@ export class CustomToastOption extends ToastOptions { // can create separate .ts
         LoginComponent,
         ProfileComponent,
         LunchBoxComponent,
-        InboxComponent
+        InboxComponent,
+        PrivateMessageComponent
     ],
     imports: [
         BrowserModule,

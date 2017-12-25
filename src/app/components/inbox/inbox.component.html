@@ -3,16 +3,23 @@
     <div *ngIf="messages.length > 0">
         <ul class="list-group">
             <li *ngFor="let message of messages" [class]="getMessageClass(message)">
-                <span (click)="markAsSeen(message)" data-toggle="collapse" [attr.href]="'#'+message._id" aria-expanded="false"
-                      aria-controls="collapseExample">
-                    {{message.title}}
-                </span>
-                <span class="float-right">
-                    <a (click)="remove(message)">delete</a>
-                </span>
+                <div>
+                    From: <span class="font-weight-bold">{{message.author? message.author.name: 'Lunch box group'}}</span>
+                </div>
+                <div>
+                    <span (click)="markAsSeen(message)" data-toggle="collapse" [attr.href]="'#'+message._id" aria-expanded="false"
+                          aria-controls="collapseExample">
+                        Title: {{message.title}}
+                    </span>
+                    <span class="float-right">
+                        <a (click)="remove(message)">delete</a>
+                    </span>
+                </div>
                 <div class="collapse mt-1" [id]="message._id">
                     <div class="card card-body">
-                        {{message.body}}
+                        <div *ngFor="let body of message.body">
+                            <p>{{body}}</p>
+                        </div>
                     </div>
                 </div>
             </li>

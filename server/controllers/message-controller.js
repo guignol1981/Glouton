@@ -3,7 +3,7 @@ let Message = require('../models/message/message');
 module.exports.getAll = function(req, res) {
 	let userId = req.payload._id;
 
-	Message.find({recipient: userId}, (err, messages) => {
+	Message.find({recipient: userId}).populate('author').exec((err, messages) => {
 		res.send(messages);
 	});
 };
@@ -23,6 +23,14 @@ module.exports.update = function(req, res) {
 		message.save((err, message) => {
 			res.send(message);
 		});
+	});
+};
+
+module.exports.create = function(req, res) {
+	delete req.body._id;
+	let message = new Message(req.body);
+	message.save((err, savedMessage) => {
+		res.send(savedMessage);
 	});
 };
 

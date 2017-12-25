@@ -15,6 +15,9 @@
                 <li [class]="getNavItemClass(2)">
                     <a (click)="setTab(2)" class="nav-link" [routerLink]="['/lunch-box']">lunch box</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" [routerLink]="['/inspiration']">inspiration</a>
+                </li>
             </ul>
             <div class="mx-auto d-none d-lg-block">
                 <a class="navbar-brand">
@@ -24,14 +27,14 @@
                 </a>
             </div>
             <ul class="navbar-nav">
-                <li [class]="getNavItemClass(3)">
-                    <a (click)="setTab(3); unseenMessageCount = 0" class="nav-link" [routerLink]="['/inbox']">
+                <li [class]="getNavItemClass(4)">
+                    <a (click)="setTab(4); unseenMessageCount = 0" class="nav-link" [routerLink]="['/inbox']">
                         Inbox
                         <span *ngIf="unseenMessageCount > 0" class="badge badge-pill badge-warning">new</span>
                     </a>
                 </li>
-                <li [class]="getNavItemClass(4)">
-                    <a (click)="setTab(4)" class="nav-link" [routerLink]="['/profile']">
+                <li [class]="getNavItemClass(5)">
+                    <a (click)="setTab(5)" class="nav-link" [routerLink]="['/profile']">
                         profile
                     </a>
                 </li>

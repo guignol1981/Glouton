@@ -22,7 +22,8 @@ export class UserService {
                 let userData = response.json();
                 return new User(userData._id,
                                 userData.name,
-                                userData.email);
+                                userData.email,
+                                userData.creationDate);
             })
             .catch(this.handleError);
     }

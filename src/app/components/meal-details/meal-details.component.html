@@ -18,6 +18,12 @@
                     {{meal.participants.length}}/{{meal.minParticipants}} ({{meal.maxParticipants}}max)
                 </li>
                 <li class="list-group-item border-0">
+                    This suggestion was posted on
+                    <span class="badge badge-info">
+                        {{meal.creationDate | date}}
+                    </span>
+                </li>
+                <li class="list-group-item border-0">
                     This meal will be delivered on
                     <span class="badge badge-info">
                         {{meal.date | date}}
@@ -48,7 +54,16 @@
         <div class="col">
             <ul class="list-group">
                 <li class="list-group-item border-0">
-                    {{meal.cook.name}}
+                    Cooked by {{meal.cook.name}}
+                </li>
+                <li class="list-group-item border-0">
+                    Member since {{meal.cook.creationDate | date}}
+                </li>
+                <li *ngIf="! meal.isCook(user)" class="list-group-item border-0">
+                    <button class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#messageModal">write to
+                        the cook
+                    </button>
+                    <app-private-message [author]="user" [recipient]="meal.cook"></app-private-message>
                 </li>
             </ul>
         </div>

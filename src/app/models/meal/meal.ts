@@ -11,7 +11,8 @@ export class Meal {
                 public limitDate: Date = new Date(),
                 public minParticipants: number = 0,
                 public maxParticipants: number = 0,
-                public participantsData: any[] = []) {
+                public participantsData: any[] = [],
+                public creationDate: Date = new Date()) {
         if (cookData) {
             this.cook = new User(cookData._id, cookData.name, cookData.email);
         }

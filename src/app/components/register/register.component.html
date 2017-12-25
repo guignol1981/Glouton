@@ -1,38 +1,63 @@
-<div class="container mt-3">
-    <div class="card">
-        <div class="card-header">
-            Register
+<div class="container mt-5">
+    <div class="row">
+        <div class="col">
+            <div class="my-3">
+                <h2 class="font-weight-bold">Take a minute to read our disclaimer</h2>
+                <div style="overflow: scroll; height: 200px;">
+                   <p>1. This website is to use with people you know and trust.</p>
+                   <p>2. People with allergy should not eat other people meal proposed on this website. They can, however, propsoe meals.</p>
+                   <p>3. It's up to user to ensure that they are conform to local laws regarding selling/offering prepared meals.</p>
+                   <p>4. In case somone who proposed a meal failed to deliver, we are not responsible for lost paiement. We do offer however
+                   the opportunity to give positive or negative feedback about a user. User can also report to us (see help section) any user
+                   who don't contribute to the well being of this organization.</p>
+                </div>
+                <form [formGroup]="form">
+                    <div class="form-check mt-5">
+                        <label class="form-check-label">
+                            <input formControlName="agree" class="form-check-input" type="checkbox" value="false">
+                            I have read and agreed to the above
+                        </label>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="card-body">
-            <form [formGroup]="form" (ngSubmit)="onSubmit()">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" formControlName="name" placeholder="Your name"
-                           aria-describedby="nameHelper">
-                    <small id="nameHelper" class="form-text text-muted">Your full name</small>
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    Register
                 </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="text" class="form-control" id="email" formControlName="email" placeholder="Your email"
-                           aria-describedby="emailHelper">
-                    <small id="emailHelper" class="form-text text-muted">Your email</small>
+                <div class="card-body">
+                    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" formControlName="name" placeholder="Your name"
+                                   aria-describedby="nameHelper">
+                            <small id="nameHelper" class="form-text text-muted">Your full name</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="text" class="form-control" id="email" formControlName="email" placeholder="Your email"
+                                   aria-describedby="emailHelper">
+                            <small id="emailHelper" class="form-text text-muted">Your email</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="text" class="form-control" id="password" formControlName="password"
+                                   placeholder="Your password"
+                                   aria-describedby="passwordHelper">
+                            <small id="passwordHelper" class="form-text text-muted">Your password</small>
+                        </div>
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <button [disabled]="!form.valid" class="btn btn-primary">Submit</button>
+                            </div>
+                            <div class="form-group ml-3">
+                                <button (click)="goToLogin()" class="btn btn-secondary">Already a member</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="text" class="form-control" id="password" formControlName="password"
-                           placeholder="Your password"
-                           aria-describedby="passwordHelper">
-                    <small id="passwordHelper" class="form-text text-muted">Your password</small>
-                </div>
-                <div class="form-inline">
-                    <div class="form-group">
-                        <button class="btn btn-primary">Submit</button>
-                    </div>
-                    <div class="form-group ml-3">
-                        <button (click)="goToLogin()" class="btn btn-secondary">Already a member</button>
-                    </div>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>

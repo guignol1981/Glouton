@@ -13,6 +13,7 @@ let mealSchema = new Schema({
 	minParticipants: Number,
 	maxParticipants: Number,
 	participants: [{type: Schema.Types.ObjectId, ref: 'User'}],
+	creationDate: {type: Date, default: Date.now()}
 }, {usePushEach: true});
 
 mealSchema.methods.userIsCook = function(userId) {

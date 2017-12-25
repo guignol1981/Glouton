@@ -4,10 +4,11 @@ let Schema = mongoose.Schema;
 let messageSchema = new Schema({
 	recipient: {type: Schema.Types.ObjectId, ref: 'User'},
 	title: String,
-	body: String,
-	creationDate: Date,
+	body: [String],
+	creationDate: {type: Date, default: Date.now()},
 	type: String,
-	seen: {type: Boolean, default: false}
+	seen: {type: Boolean, default: false},
+	author: {type: Schema.Types.ObjectId, ref: 'User'},
 });
 
 let Message = mongoose.model('Message', messageSchema);

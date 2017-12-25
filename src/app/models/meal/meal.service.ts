@@ -36,7 +36,8 @@ export class MealService {
                     new Date(mealData.limitDate),
                     mealData.minParticipants,
                     mealData.maxParticipants,
-                    mealData.participants);
+                    mealData.participants,
+                    mealData.creationDate);
             })
             .catch(this.handleError);
     }
@@ -61,7 +62,8 @@ export class MealService {
                                         new Date(mealData.limitDate),
                                         mealData.minParticipants,
                                         mealData.maxParticipants,
-                                        mealData.participants);
+                                        mealData.participants,
+                                        mealData.creationDate);
                     this.meals.push(meal);
                 });
                 this.mealsSubject.next(this.meals);
@@ -91,7 +93,8 @@ export class MealService {
                                         new Date(mealData.limitDate),
                                         mealData.minParticipants,
                                         mealData.maxParticipants,
-                                        mealData.participants);
+                                        mealData.participants,
+                                        mealData.creationDate);
                     joined.push(meal);
                 });
 
@@ -128,7 +131,8 @@ export class MealService {
                                 new Date(mealData.limitDate),
                                 mealData.minParticipants,
                                 mealData.maxParticipants,
-                                mealData.participants);
+                                mealData.participants,
+                                mealData.creationDate);
             })
             .catch(this.handleError);
     }
@@ -153,7 +157,8 @@ export class MealService {
                                 new Date(mealData.limitDate),
                                 mealData.minParticipants,
                                 mealData.maxParticipants,
-                                mealData.participants);
+                                mealData.participants,
+                                mealData.creationDate);
             })
             .catch(this.handleError);
     }
@@ -179,7 +184,8 @@ export class MealService {
                                         new Date(mealData.limitDate),
                                         mealData.minParticipants,
                                         mealData.maxParticipants,
-                                        mealData.participants);
+                                        mealData.participants,
+                                        mealData.creationDate);
                 this.meals.push(newMeal);
                 this.mealsSubject.next(this.meals);
                 return newMeal;

@@ -45,6 +45,27 @@ export class MessageService {
             .catch(this.handleError);
     }
 
+    public send(message: Message): Promise<Message> {
+        let url = `${this.apiEndPoint}`;
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + this.authenticationService.getToken()
+        });
+
+        return this.http.post(url, JSON.stringify(message), {headers: headers})
+            .toPromise()
+            .then((response: Response) => {
+                let messageData = response.json();
+                return new Message(
+                    messageData._id,
+                    messageData.title,
+                    messageData.body,
+                    messageData.type,
+                    messageData.seen);
+            })
+            .catch(this.handleError);
+    }
+
     public getUnseen(): Promise<Message[]> {
         let url = `${this.apiEndPoint}/unseen`;
 
@@ -63,7 +84,8 @@ export class MessageService {
                                     messageData.title,
                                     messageData.body,
                                     messageData.type,
-                                    messageData.seen));
+                                    messageData.seen,
+                                    messageData.author));
                 });
                 return messages;
             })
@@ -88,7 +110,8 @@ export class MessageService {
                             messageData.title,
                             messageData.body,
                             messageData.type,
-                            messageData.seen));
+                            messageData.seen,
+                            messageData.author));
                 });
                 return messages;
             })
