@@ -10,6 +10,7 @@ import {Subscription} from "rxjs/Subscription";
     styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit, OnDestroy {
+    activeTab = 0;
     unseenMessageCount = 0;
     loggedInSubscription: Subscription;
 
@@ -20,9 +21,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.loggedInSubscription = this.authenticationService.isLoggedInSubject.subscribe(loggedIn => {
-           if (loggedIn) {
+            if (loggedIn) {
                 this.messageService.getUnseen().then(messages => this.unseenMessageCount = messages.length);
-           }
+            }
         });
     }
 
@@ -33,6 +34,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
     logout() {
         this.authenticationService.logout();
         this.router.navigate(['login']);
+    }
+
+    setTab(tabIndex) {
+        this.activeTab = tabIndex;
+    }
+
+    getNavItemClass(tabIndex) {
+        return this.activeTab === tabIndex ? 'nav-item active' : 'nav-item';
     }
 
 }
