@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Http, Response, Headers} from "@angular/http";
-import {UserService} from "../models/user/user.service";
 import {Message} from "../models/message/message";
 import {AuthenticationService} from "./authentication.service";
 
@@ -9,8 +8,53 @@ export class MessageService {
     apiEndPoint = 'api/messages';
 
     constructor(private http: Http,
-                private userService: UserService,
                 private authenticationService: AuthenticationService) {
+    }
+
+    public save(message: Message): Promise<Message> {
+        let url = `${this.apiEndPoint}/${message._id}`;
+
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + this.authenticationService.getToken()
+        });
+
+        return this.http.put(url, JSON.stringify(message), {headers: headers})
+            .toPromise()
+            .then((response: Response) => {
+                let messageData = response.json();
+                return new Message(messageData._id,
+                    messageData.title,
+                    messageData.body,
+                    messageData.type,
+                    messageData.seen);
+            })
+            .catch(this.handleError);
+    }
+
+    public getUnseen(): Promise<Message[]> {
+        let url = `${this.apiEndPoint}/unseen`;
+
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + this.authenticationService.getToken()
+        });
+
+        return this.http.get(url, {headers: headers})
+            .toPromise()
+            .then((response: Response) => {
+                let messages = [];
+                response.json().forEach((messageData) => {
+                    messages.push(
+                        new Message(messageData._id,
+                                    messageData.title,
+                                    messageData.body,
+                                    messageData.type,
+                                    messageData.seen));
+                });
+                return messages;
+            })
+            .catch(this.handleError);
     }
 
     public getAll(): Promise<Message[]> {
@@ -25,9 +69,13 @@ export class MessageService {
             .toPromise()
             .then((response: Response) => {
                 let messages = [];
-                response.json().forEach(messageData => {
-                    let message = new Message(messageData._id, messageData.title, messageData.body);
-                    messages.push(message);
+                response.json().forEach((messageData) => {
+                    messages.push(
+                        new Message(messageData._id,
+                            messageData.title,
+                            messageData.body,
+                            messageData.type,
+                            messageData.seen));
                 });
                 return messages;
             })

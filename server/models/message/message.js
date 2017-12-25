@@ -2,10 +2,12 @@ let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let messageSchema = new Schema({
-	destination: {type: Schema.Types.ObjectId, ref: 'User'},
+	recipient: {type: Schema.Types.ObjectId, ref: 'User'},
 	title: String,
 	body: String,
-	creationDate: String
+	creationDate: Date,
+	type: String,
+	seen: {type: Boolean, default: false}
 });
 
 let Message = mongoose.model('Message', messageSchema);

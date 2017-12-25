@@ -1,7 +1,6 @@
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 let User = require('../user/user');
-let Message = require('../message/message');
 
 let mealSchema = new Schema({
 	title: String,
@@ -40,7 +39,7 @@ mealSchema.methods.addParticipant = function(userId) {
 	if (exist) {
 		throw 'user already joined this meal';
 	}
-	Message.create({destination: this.cook, title: 'someone has joined', body: 'someone has joined your meal'});
+
 	this.participants.push(userId);
 };
 

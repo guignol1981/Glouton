@@ -1,8 +1,22 @@
 <div *ngIf="messages" class="container mt-3">
-  <h2 class="font-weight-bold">Inbox</h2>
-  <ul class="list-group">
-    <li *ngFor="let message of messages" class="list-group-item mt-1">
-      {{message.title}}
-    </li>
-  </ul>
+    <h2 class="font-weight-bold">Inbox</h2>
+    <div *ngIf="messages.length > 0">
+        <ul class="list-group">
+            <li *ngFor="let message of messages" [class]="getMessageClass(message)">
+                <span (click)="markAsSeen(message)" data-toggle="collapse" [attr.href]="'#'+message._id" aria-expanded="false"
+                      aria-controls="collapseExample">
+                    {{message.title}}
+                </span>
+                delete
+                <div class="collapse mt-1" [id]="message._id">
+                    <div class="card card-body">
+                        {{message.body}}
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div *ngIf="messages.length === 0" class="mt-5">
+        <h4 class="font-weight-bold">All catch up!</h4>
+    </div>
 </div>

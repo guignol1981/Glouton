@@ -1,4 +1,6 @@
 let Meal = require('../models/meal/meal');
+let User = require('../models/user/user');
+let Message = require('../models/message/message');
 
 module.exports.get = function (req, res) {
 	let id = req.params.id;
@@ -53,13 +55,28 @@ module.exports.join = function (req, res) {
 	let mealId = req.params.id;
 	let userId = req.payload._id;
 
+
 	Meal.findById(mealId)
 		.populate('cook')
 		.populate('participants')
 		.exec((err, meal) => {
 			meal.addParticipant(userId);
 			meal.save((err, meal) => {
-				res.send(meal);
+				User.findById(userId, (err, user) => {
+					User.findById(meal.cook, (err, cook) => {
+						Message.create({
+							recipient: cook._id,
+							title: `${user.name} has joined your meal ${meal.title}`,
+							body: `Hey good news ${cook.name}, someone just joined your meal. 
+							This mean only ${meal.minParticipants - meal.participants.length} more participants are needed to confirm the meal before
+							${meal.limitDate}`,
+							creationDate: Date.now(),
+							type: 'info'
+						});
+
+						res.send(meal);
+					});
+				});
 			});
 		});
 };

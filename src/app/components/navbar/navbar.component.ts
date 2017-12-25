@@ -1,18 +1,33 @@
-import {Component , OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthenticationService} from "../../services/authentication.service";
 import {Router} from "@angular/router";
+import {MessageService} from "../../services/message.service";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
+    unseenMessageCount = 0;
+    loggedInSubscription: Subscription;
+
     constructor(public authenticationService: AuthenticationService,
+                private messageService: MessageService,
                 private router: Router) {
     }
 
     ngOnInit() {
+        this.loggedInSubscription = this.authenticationService.isLoggedInSubject.subscribe(loggedIn => {
+           if (loggedIn) {
+                this.messageService.getUnseen().then(messages => this.unseenMessageCount = messages.length);
+           }
+        });
+    }
+
+    ngOnDestroy() {
+        this.loggedInSubscription.unsubscribe();
     }
 
     logout() {

@@ -1,6 +1,7 @@
 let passport = require('passport');
 let mongoose = require('mongoose');
 let User = mongoose.model('User');
+let Message = require('../models/message/message');
 
 let sendJSONresponse = function (res, status, content) {
 	res.status(status);
@@ -29,7 +30,13 @@ module.exports.register = function (req, res) {
 
 		let token;
 		token = user.generateJwt();
-
+		Message.create({
+			recipient: user._id,
+			title: `Welcome ${user.name}!`,
+			body: `${user.name}! now is the begin of a new era for you. Why? Because your kitchen just expanded the size of your organization. Start today suggesting meal or join other's proposition!! If you have any suggestion or question, be sure to adress to us your concern. Have a very nice day!`,
+			creationDate: Date.now(),
+			type: 'success'
+		});
 		res.status(200).json({
 			"token": token
 		});

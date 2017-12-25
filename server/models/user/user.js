@@ -39,7 +39,6 @@ userSchema.methods.generateJwt = function () {
 	}, "MY_SECRET");
 };
 
-
 let User = mongoose.model('User', userSchema);
 module.exports.schema = userSchema;
 module.exports = User;

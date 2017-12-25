@@ -1,9 +1,12 @@
 import {Injectable} from '@angular/core';
 import {Http, Response, Headers} from "@angular/http";
 import {User} from "../models/user/user";
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 @Injectable()
 export class AuthenticationService {
+    loggedIn = false;
+    isLoggedInSubject = new BehaviorSubject<Boolean>(this.loggedIn);
 
     constructor(private http: Http) {
     }
@@ -53,7 +56,11 @@ export class AuthenticationService {
         return this.http
             .post('/api/register', JSON.stringify(user), {headers: headers})
             .toPromise()
-            .then((response: Response) => this.saveToken(response.json().token))
+            .then((response: Response) => {
+                this.saveToken(response.json().token)
+                this.loggedIn = true;
+                this.isLoggedInSubject.next(this.loggedIn);
+            })
             .catch(this.handleError);
     }
 
@@ -66,12 +73,18 @@ export class AuthenticationService {
         return this.http
             .post('/api/login', JSON.stringify(user), {headers: headers})
             .toPromise()
-            .then((response: Response) => this.saveToken(response.json().token))
+            .then((response: Response) => {
+                this.saveToken(response.json().token);
+                this.loggedIn = true;
+                this.isLoggedInSubject.next(this.loggedIn);
+            })
             .catch(this.handleError);
     }
 
     logout() {
         localStorage.removeItem('mean-token');
+        this.loggedIn = false;
+        this.isLoggedInSubject.next(this.loggedIn);
     }
 
 
