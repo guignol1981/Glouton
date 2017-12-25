@@ -7,7 +7,9 @@
                       aria-controls="collapseExample">
                     {{message.title}}
                 </span>
-                delete
+                <span class="float-right">
+                    <a (click)="remove(message)">delete</a>
+                </span>
                 <div class="collapse mt-1" [id]="message._id">
                     <div class="card card-body">
                         {{message.body}}

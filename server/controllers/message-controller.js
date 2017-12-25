@@ -25,3 +25,9 @@ module.exports.update = function(req, res) {
 		});
 	});
 };
+
+module.exports.delete = function(req, res) {
+	let messageId = req.params.id;
+
+	Message.findById(messageId).remove().exec().then(res.send({msg: 'message removed'}));
+};

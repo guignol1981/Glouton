@@ -32,7 +32,8 @@ router.get('/images/meal/:id', ctrlMealImage.get);
 router.post('/images/meal', auth, upload.single('image'), ctrlMealImage.create);
 
 //messages
+router.put('/messages/:id', auth, ctrlMessage.update);
+router.delete('/messages/:id', auth, ctrlMessage.delete);
 router.get('/messages', auth, ctrlMessage.getAll);
 router.get('/messages/unseen', auth, ctrlMessage.getUnseen);
-router.put('/messages/:id', auth, ctrlMessage.update);
 module.exports = router;

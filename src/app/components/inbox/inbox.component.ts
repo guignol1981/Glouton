@@ -29,4 +29,15 @@ export class InboxComponent implements OnInit {
         this.messageService.save(message).then();
     }
 
+    remove(message: Message) {
+        this.messageService.delete(message).then(() => {
+            for (let i = this.messages.length - 1; i >= 0; i--) {
+                if (this.messages[i]._id === message._id) {
+                    this.messages.splice(i, 1);
+                    break;
+                }
+            }
+        });
+    }
+
 }

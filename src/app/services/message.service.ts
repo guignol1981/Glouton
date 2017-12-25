@@ -32,6 +32,19 @@ export class MessageService {
             .catch(this.handleError);
     }
 
+    public delete(message: Message) {
+        let url = `${this.apiEndPoint}/${message._id}`;
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + this.authenticationService.getToken()
+        });
+
+        return this.http.delete(url, {headers: headers})
+            .toPromise()
+            .then((response: Response) => response.json())
+            .catch(this.handleError);
+    }
+
     public getUnseen(): Promise<Message[]> {
         let url = `${this.apiEndPoint}/unseen`;
 
