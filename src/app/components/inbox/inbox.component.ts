@@ -1,6 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MessageService} from "../../services/message.service";
 import {Message} from "../../models/message/message";
+import {UserService} from "../../models/user/user.service";
+import {User} from "../../models/user/user";
+import {PrivateMessageComponent} from "../private-message/private-message.component";
 
 @Component({
     selector: 'app-inbox',
@@ -9,12 +12,18 @@ import {Message} from "../../models/message/message";
 })
 export class InboxComponent implements OnInit {
     messages: Message[];
+    user: User;
+    @ViewChild(PrivateMessageComponent) privateMessage: PrivateMessageComponent ;
 
-    constructor(private messageService: MessageService) {
+    constructor(private userService: UserService,
+                private messageService: MessageService) {
     }
 
     ngOnInit() {
-        this.messageService.getAll().then(messages => this.messages = messages);
+        this.userService.getConnectedUser().then(user => {
+            this.user = user;
+            this.messageService.getAll().then(messages => this.messages = messages);
+        });
     }
 
     getMessageClass(message: Message) {
@@ -22,6 +31,11 @@ export class InboxComponent implements OnInit {
             return 'list-group-item mt-1 list-group-item-secondary';
         }
         return 'list-group-item mt-1 list-group-item-' + message.type;
+    }
+
+    reply(message: Message, initModalButton) {
+        this.privateMessage.initMessage(this.user, message.author, 'this is a reply to :' + message.body);
+        initModalButton.click();
     }
 
     markAsSeen(message: Message) {

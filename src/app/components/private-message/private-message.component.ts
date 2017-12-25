@@ -13,6 +13,8 @@ import {ToastsManager} from "ng2-toastr";
 export class PrivateMessageComponent implements OnInit {
     @Input() recipient: User;
     @Input() author: User;
+    @Input() trailingBody =  '';
+
     form: FormGroup;
 
     constructor(private messageService: MessageService,
@@ -22,17 +24,30 @@ export class PrivateMessageComponent implements OnInit {
     }
 
     ngOnInit() {
+       this.initForm();
+    }
+
+    initForm() {
         this.form = new FormGroup({
             title: new FormControl('', Validators.minLength(5)),
             body: new FormControl('', Validators.minLength(5))
         });
     }
 
+    @Input()
+    initMessage(author: User, recipient: User, trailingBody = '') {
+        this.author = author;
+        this.recipient = recipient;
+        this.trailingBody = trailingBody;
+        this.initForm();
+    }
+
     onMessageFormSubmit(messageCloseButton) {
         let message = new Message();
         message.recipient = this.recipient;
         message.title = this.form.get('title').value;
-        message.body = this.form.get('body').value;
+        message.body.push(this.form.get('body').value);
+        message.body.push(this.trailingBody);
         message.author = this.author;
         message.type = 'primary';
         this.messageService.send(message).then(() => {
