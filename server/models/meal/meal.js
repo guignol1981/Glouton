@@ -14,7 +14,7 @@ let mealSchema = new Schema({
 	maxParticipants: Number,
 	participants: [{type: Schema.Types.ObjectId, ref: 'User'}],
 	creationDate: {type: Date, default: Date.now()},
-	confirmed: {type: Boolean, default: false},
+	status: {type: String, default: 'pending'},
 	canceled: {type: Boolean, default: false}
 }, {usePushEach: true});
 

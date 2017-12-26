@@ -8,14 +8,6 @@ var transporter = nodemailer.createTransport({
 	}
 });
 
-let mailOptionsTest = {
-	from: '"Fred Foo ?" <foo@blurdybloop.com>',
-	to: 'bar@blurdybloop.com, baz@blurdybloop.com',
-	subject: 'Hello ✔',
-	text: 'Hello world ?',
-	html: '<b>Hello world ?</b>'
-};
-
 module.exports.sendMail = function(mailOptions) {
 	transporter.sendMail(mailOptions, function(error, info){
 		if(error){

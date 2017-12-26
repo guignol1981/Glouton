@@ -33,7 +33,7 @@ app.use(function (err, req, res) {
 });
 
 schedule.scheduleJob('42 * * * * *', function(){
-	// scheduledJobs.execute();
+	scheduledJobs.execute();
 });
 
 app.set('port', port);
