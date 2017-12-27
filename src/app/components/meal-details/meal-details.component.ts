@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MealService} from "../../models/meal/meal.service";
 import {Meal} from "../../models/meal/meal";
 import {ActivatedRoute, Params} from "@angular/router";
 import {MealImageService} from "../../services/meal-image.service";
 import {UserService} from "../../models/user/user.service";
-import {MessageService} from "../../services/message.service";
 import {User} from "../../models/user/user";
+import {MealFormComponent} from "../meal-form/meal-form.component";
 
 @Component({
     selector: 'app-meal-details',
@@ -15,12 +15,12 @@ import {User} from "../../models/user/user";
 export class MealDetailsComponent implements OnInit {
     meal: Meal;
     user: User;
+    @ViewChild(MealFormComponent) mealFormComponent: MealFormComponent;
 
     constructor(private mealService: MealService,
                 private activatedRoute: ActivatedRoute,
                 public imageService: MealImageService,
-                public userService: UserService,
-                public messageService: MessageService) {
+                public userService: UserService) {
     }
 
     ngOnInit() {
@@ -34,6 +34,16 @@ export class MealDetailsComponent implements OnInit {
                     });
             });
         });
+    }
+
+    editMeal(button) {
+        this.mealFormComponent.initFromEdit(this.user, this.meal);
+        button.click();
+    }
+
+    onMealUpdated(meal: Meal) {
+        console.log(meal);
+        this.meal = meal;
     }
 
 }
