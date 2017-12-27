@@ -14,8 +14,7 @@ let mealSchema = new Schema({
 	maxParticipants: Number,
 	participants: [{type: Schema.Types.ObjectId, ref: 'User'}],
 	creationDate: {type: Date, default: Date.now()},
-	status: {type: String, default: 'pending'},
-	canceled: {type: Boolean, default: false}
+	status: {type: String, default: 'active'}
 }, {usePushEach: true});
 
 mealSchema.methods.userIsCook = function (userId) {
@@ -71,7 +70,14 @@ mealSchema.statics.getLimitDateReached = function (callback) {
 			"$gte": yesterday,
 			"$lt": tomorrow
 		}
-	}).populate('cook').populate('participants').exec((err, meals) => callback(meals));
+	}).populate('cook')
+		.populate('participants')
+		.exec((err, meals) => {
+			if (err) {
+				throw err;
+			}
+			callback(meals);
+		});
 };
 
 let Meal = mongoose.model('Meal', mealSchema);

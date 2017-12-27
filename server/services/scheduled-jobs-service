@@ -55,19 +55,11 @@ let updateMealStatus = function() {
 	console.log('updateMealStatus job done');
 };
 
-let sendMailToCooksOnMinimumParticipantsReached = function() {
+let minimumParticipantsReached = function() {
 
 };
 
-let sendMailToCooksOnMaximumParticipantsReached = function() {
-
-};
-
-let sendMailToCookWhenMealIsConfirmed = function() {
-
-};
-
-let sendMailToCookWhenMealIsCanceled = function() {
+let maximumParticipantsReached = function() {
 
 };
 
@@ -75,6 +67,10 @@ let removeUnlinkedImages = function() {
 
 };
 
+let suggestMealOnNothingPlannedDays = function() {
+
+};
+
 module.exports.execute = function() {
-	// updateMealStatus();
+	updateMealStatus();
 };

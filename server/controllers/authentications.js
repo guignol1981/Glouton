@@ -24,7 +24,9 @@ module.exports.register = function (req, res) {
 
 	user.save(function (err) {
 		if (err) {
-			res.status(500).json(err);
+			if (err.code === 11000) {
+				res.status(500).json({msg: 'this email is already used'});
+			}
 			return;
 		}
 

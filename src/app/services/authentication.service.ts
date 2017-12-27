@@ -90,6 +90,6 @@ export class AuthenticationService {
 
     private handleError(error: any) {
         console.error('An error occurred', error);
-        return Promise.reject(error.message || error);
+        return Promise.reject(JSON.parse(error._body).msg || error);
     }
 }
