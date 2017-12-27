@@ -34,7 +34,7 @@ app.use(function (err, req, res) {
 
 //daily jobs
 schedule.scheduleJob('13 * * *', function(){
-	scheduledJobs.execute();
+	// scheduledJobs.execute();
 });
 
 app.set('port', port);

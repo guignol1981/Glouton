@@ -10,7 +10,7 @@ import {MealFormComponent} from "../meal-form/meal-form.component";
 @Component({
     selector: 'app-meal-details',
     templateUrl: './meal-details.component.html',
-    styleUrls: ['./meal-details.component.css']
+    styleUrls: ['./meal-details.component.css', '../../app.component.css']
 })
 export class MealDetailsComponent implements OnInit {
     meal: Meal;

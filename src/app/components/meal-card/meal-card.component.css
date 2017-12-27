@@ -1,4 +1,3 @@
-
 img,
 .overlay {
     transition: .3s all;
@@ -18,6 +17,4 @@ img,
 .meal-img:hover .overlay {
     opacity: 1;
 }
-
-
 

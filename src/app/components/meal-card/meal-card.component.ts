@@ -1,17 +1,16 @@
-import {Component, Input, OnDestroy, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, Input, OnInit, ViewContainerRef} from '@angular/core';
 import {Meal} from "../../models/meal/meal";
 import {Router} from "@angular/router";
 import {User} from "../../models/user/user";
-import {UserService} from "../../models/user/user.service";
 import {MealService} from "../../models/meal/meal.service";
 import {MealImageService} from "../../services/meal-image.service";
-import {ToastOptions, ToastsManager} from "ng2-toastr";
+import {ToastsManager} from "ng2-toastr";
 
 
 @Component({
     selector: 'app-meal-card',
     templateUrl: './meal-card.component.html',
-    styleUrls: ['./meal-card.component.css']
+    styleUrls: ['./meal-card.component.css', '../../app.component.css']
 })
 export class MealCardComponent implements OnInit {
     @Input() meal: Meal;
