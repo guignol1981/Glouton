@@ -13,14 +13,16 @@ let mealSchema = new Schema({
 	minParticipants: Number,
 	maxParticipants: Number,
 	participants: [{type: Schema.Types.ObjectId, ref: 'User'}],
-	creationDate: {type: Date, default: Date.now()}
+	creationDate: {type: Date, default: Date.now()},
+	status: {type: String, default: 'pending'},
+	canceled: {type: Boolean, default: false}
 }, {usePushEach: true});
 
-mealSchema.methods.userIsCook = function(userId) {
+mealSchema.methods.userIsCook = function (userId) {
 	return this.cook._id == userId;
 };
 
-mealSchema.methods.addParticipant = function(userId) {
+mealSchema.methods.addParticipant = function (userId) {
 	if (this.limitDate < Date.now()) {
 		throw 'its too late to join this meal';
 	}
@@ -44,7 +46,7 @@ mealSchema.methods.addParticipant = function(userId) {
 	this.participants.push(userId);
 };
 
-mealSchema.methods.removeParticipants = function(userId) {
+mealSchema.methods.removeParticipants = function (userId) {
 	if (this.limitDate < Date.now()) {
 		throw 'its too late to leave this meal';
 	}
@@ -56,6 +58,20 @@ mealSchema.methods.removeParticipants = function(userId) {
 	} else {
 		throw 'participant not found';
 	}
+};
+
+mealSchema.statics.getLimitDateReached = function (callback) {
+	let yesterday = new Date();
+	yesterday = yesterday.setDate(yesterday.getDate() - 1);
+	let tomorrow = new Date();
+	tomorrow = tomorrow.setDate(tomorrow.getDate() + 1);
+
+	this.find({
+		"limitDate": {
+			"$gte": yesterday,
+			"$lt": tomorrow
+		}
+	}).populate('cook').populate('participants').exec((err, meals) => callback(meals));
 };
 
 let Meal = mongoose.model('Meal', mealSchema);

@@ -6,8 +6,9 @@ let mongoose = require('mongoose');
 let passport = require('passport');
 let app = express();
 let port = process.env.PORT || '3000';
+let schedule = require('node-schedule');
 let api = require('./server/routes/api');
-
+let scheduledJobs = require('./server/services/scheduled-jobs-service');
 require('./server/configs/passport');
 
 mongoose.Promise = global.Promise;
@@ -29,6 +30,10 @@ app.use(function (err, req, res) {
 		res.status(401);
 		res.json({"message" : err.name + ": " + err.message});
 	}
+});
+
+schedule.scheduleJob('42 * * * * *', function(){
+	scheduledJobs.execute();
 });
 
 app.set('port', port);
