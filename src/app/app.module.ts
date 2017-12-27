@@ -25,6 +25,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { InboxComponent } from './components/inbox/inbox.component';
 import {MessageService} from "./services/message.service";
 import { PrivateMessageComponent } from './components/private-message/private-message.component';
+import { NgDatepickerModule } from 'ng2-datepicker';
+
 
 export class CustomToastOption extends ToastOptions { // can create separate .ts file for class
     animate = 'flyRight';
@@ -55,7 +57,8 @@ export class CustomToastOption extends ToastOptions { // can create separate .ts
         routing,
         BrowserAnimationsModule,
         ImageUploadModule.forRoot(),
-        ToastModule.forRoot()
+        ToastModule.forRoot(),
+        NgDatepickerModule
     ],
     providers: [
         {

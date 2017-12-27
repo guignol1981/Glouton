@@ -54,16 +54,16 @@ export class MealService {
                 this.meals = [];
                 response.json().forEach(mealData => {
                     let meal = new Meal(mealData._id,
-                                        mealData.title,
-                                        mealData.description,
-                                        mealData.imageUrl,
-                                        mealData.cook,
-                                        new Date(mealData.date),
-                                        new Date(mealData.limitDate),
-                                        mealData.minParticipants,
-                                        mealData.maxParticipants,
-                                        mealData.participants,
-                                        mealData.creationDate);
+                        mealData.title,
+                        mealData.description,
+                        mealData.imageUrl,
+                        mealData.cook,
+                        new Date(mealData.date),
+                        new Date(mealData.limitDate),
+                        mealData.minParticipants,
+                        mealData.maxParticipants,
+                        mealData.participants,
+                        mealData.creationDate);
                     this.meals.push(meal);
                 });
                 this.mealsSubject.next(this.meals);
@@ -85,16 +85,16 @@ export class MealService {
 
                 response.json().forEach(mealData => {
                     let meal = new Meal(mealData._id,
-                                        mealData.title,
-                                        mealData.description,
-                                        mealData.imageUrl,
-                                        mealData.cook,
-                                        new Date(mealData.date),
-                                        new Date(mealData.limitDate),
-                                        mealData.minParticipants,
-                                        mealData.maxParticipants,
-                                        mealData.participants,
-                                        mealData.creationDate);
+                        mealData.title,
+                        mealData.description,
+                        mealData.imageUrl,
+                        mealData.cook,
+                        new Date(mealData.date),
+                        new Date(mealData.limitDate),
+                        mealData.minParticipants,
+                        mealData.maxParticipants,
+                        mealData.participants,
+                        mealData.creationDate);
                     joined.push(meal);
                 });
 
@@ -123,16 +123,16 @@ export class MealService {
             .then((response: Response) => {
                 let mealData = response.json();
                 return new Meal(mealData._id,
-                                mealData.title,
-                                mealData.description,
-                                mealData.imageUrl,
-                                mealData.cook,
-                                new Date(mealData.date),
-                                new Date(mealData.limitDate),
-                                mealData.minParticipants,
-                                mealData.maxParticipants,
-                                mealData.participants,
-                                mealData.creationDate);
+                    mealData.title,
+                    mealData.description,
+                    mealData.imageUrl,
+                    mealData.cook,
+                    new Date(mealData.date),
+                    new Date(mealData.limitDate),
+                    mealData.minParticipants,
+                    mealData.maxParticipants,
+                    mealData.participants,
+                    mealData.creationDate);
             })
             .catch(this.handleError);
     }
@@ -149,16 +149,16 @@ export class MealService {
             .then((response: Response) => {
                 let mealData = response.json();
                 return new Meal(mealData._id,
-                                mealData.title,
-                                mealData.description,
-                                mealData.imageUrl,
-                                mealData.cook,
-                                new Date(mealData.date),
-                                new Date(mealData.limitDate),
-                                mealData.minParticipants,
-                                mealData.maxParticipants,
-                                mealData.participants,
-                                mealData.creationDate);
+                    mealData.title,
+                    mealData.description,
+                    mealData.imageUrl,
+                    mealData.cook,
+                    new Date(mealData.date),
+                    new Date(mealData.limitDate),
+                    mealData.minParticipants,
+                    mealData.maxParticipants,
+                    mealData.participants,
+                    mealData.creationDate);
             })
             .catch(this.handleError);
     }
@@ -175,17 +175,17 @@ export class MealService {
             .toPromise()
             .then((response: Response) => {
                 let mealData = response.json();
-                let newMeal =  new Meal(mealData._id,
-                                        mealData.title,
-                                        mealData.description,
-                                        mealData.imageUrl,
-                                        mealData.cook,
-                                        new Date(mealData.date),
-                                        new Date(mealData.limitDate),
-                                        mealData.minParticipants,
-                                        mealData.maxParticipants,
-                                        mealData.participants,
-                                        mealData.creationDate);
+                let newMeal = new Meal(mealData._id,
+                    mealData.title,
+                    mealData.description,
+                    mealData.imageUrl,
+                    mealData.cook,
+                    new Date(mealData.date),
+                    new Date(mealData.limitDate),
+                    mealData.minParticipants,
+                    mealData.maxParticipants,
+                    mealData.participants,
+                    mealData.creationDate);
                 this.meals.push(newMeal);
                 this.mealsSubject.next(this.meals);
                 return newMeal;
@@ -204,7 +204,20 @@ export class MealService {
         return this.http
             .put(url, JSON.stringify(model), {headers: headers})
             .toPromise()
-            .then((response: Response) => response.json())
+            .then((response: Response) => {
+                let mealData = response.json();
+                return new Meal(mealData._id,
+                    mealData.title,
+                    mealData.description,
+                    mealData.imageUrl,
+                    mealData.cook,
+                    new Date(mealData.date),
+                    new Date(mealData.limitDate),
+                    mealData.minParticipants,
+                    mealData.maxParticipants,
+                    mealData.participants,
+                    mealData.creationDate);
+            })
             .catch(this.handleError);
     }
 

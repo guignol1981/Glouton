@@ -14,12 +14,28 @@ module.exports.get = function (req, res) {
 };
 
 module.exports.getAll = function (req, res) {
-	Meal.find({})
+	Meal.find({status: 'active'})
 		.populate('cook')
 		.populate('participants')
 		.exec((err, meals) => {
 			res.send(meals);
 		});
+};
+
+module.exports.update = function(req, res) {
+	let mealId = req.params.id;
+
+	Meal.findById(mealId).populate('cook').populate('participants').exec((err, meal) => {
+		meal.title = req.body.title;
+		meal.description = req.body.description;
+		meal.date = req.body.date;
+		meal.limitDate = req.body.limitDate;
+		meal.minParticipants = req.body.minParticipants;
+		meal.maxParticipants = req.body.maxParticipants;
+		meal.save((err, savedMeal) => {
+			res.send(savedMeal);
+		});
+	});
 };
 
 module.exports.getJoined = function (req, res) {
