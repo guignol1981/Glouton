@@ -81,11 +81,11 @@ export class MessageService {
                 response.json().forEach((messageData) => {
                     messages.push(
                         new Message(messageData._id,
-                                    messageData.title,
-                                    messageData.body,
-                                    messageData.type,
-                                    messageData.seen,
-                                    messageData.author));
+                            messageData.title,
+                            messageData.body,
+                            messageData.type,
+                            messageData.seen,
+                            messageData.author));
                 });
                 return messages;
             })

@@ -17,15 +17,15 @@ import {AuthenticationService} from "./services/authentication.service";
 import {ProfileComponent} from './components/profile/profile.component';
 import {UserService} from "./models/user/user.service";
 import {CanActivateViaAuthGuardService} from "./services/can-activate-via-auth-guard.service";
-import { LunchBoxComponent } from './components/lunch-box/lunch-box.component';
+import {LunchBoxComponent} from './components/lunch-box/lunch-box.component';
 import {ImageUploadModule} from "angular2-image-upload";
 import {MealImageService} from "./services/meal-image.service";
 import {ToastModule, ToastOptions} from "ng2-toastr";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import { InboxComponent } from './components/inbox/inbox.component';
+import {InboxComponent} from './components/inbox/inbox.component';
 import {MessageService} from "./services/message.service";
-import { PrivateMessageComponent } from './components/private-message/private-message.component';
-import { NgDatepickerModule } from 'ng2-datepicker';
+import {PrivateMessageComponent} from './components/private-message/private-message.component';
+import {NgDatepickerModule} from 'ng2-datepicker';
 import {ImageCropperComponent} from "ng2-img-cropper";
 
 

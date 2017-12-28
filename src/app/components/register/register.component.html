@@ -4,11 +4,26 @@
             <div class="my-3">
                 <h2 class="font-weight-bold">Take a minute to read our disclaimer</h2>
                 <div style="overflow: scroll; height: 200px;">
-                   <p>1. Lorem ipsum dolor sit amet, feugait nostrum facilisi cu his, dicant admodum epicuri ea cum. Ut tantas putent tibique qui, amet illud dissentiet te per, ea pro nusquam copiosae. Summo solet nonumes eu mei. Et purto detracto usu, pro ad vocent luptatum constituam. Vim an putent vocent, qui consul tempor argumentum at. Percipit pertinacia te ius.</p>
-                   <p>2. Lorem ipsum dolor sit amet, feugait nostrum facilisi cu his, dicant admodum epicuri ea cum. Ut tantas putent tibique qui, amet illud dissentiet te per, ea pro nusquam copiosae. Summo solet nonumes eu mei. Et purto detracto usu, pro ad vocent luptatum constituam. Vim an putent vocent, qui consul tempor argumentum at. Percipit pertinacia te ius.</p>
-                   <p>3. Lorem ipsum dolor sit amet, feugait nostrum facilisi cu his, dicant admodum epicuri ea cum. Ut tantas putent tibique qui, amet illud dissentiet te per, ea pro nusquam copiosae. Summo solet nonumes eu mei. Et purto detracto usu, pro ad vocent luptatum constituam. Vim an putent vocent, qui consul tempor argumentum at. Percipit pertinacia te ius.</p>
-                   <p>4. Lorem ipsum dolor sit amet, feugait nostrum facilisi cu his, dicant admodum epicuri ea cum. Ut tantas putent tibique qui, amet illud dissentiet te per, ea pro nusquam copiosae. Summo solet nonumes eu mei. Et purto detracto usu, pro ad vocent luptatum constituam. Vim an putent vocent, qui consul tempor argumentum at. Percipit pertinacia te ius.</p>
-                   <p>5. Lorem ipsum dolor sit amet, feugait nostrum facilisi cu his, dicant admodum epicuri ea cum. Ut tantas putent tibique qui, amet illud dissentiet te per, ea pro nusquam copiosae. Summo solet nonumes eu mei. Et purto detracto usu, pro ad vocent luptatum constituam. Vim an putent vocent, qui consul tempor argumentum at. Percipit pertinacia te ius.</p>
+                    <p>1. Lorem ipsum dolor sit amet, feugait nostrum facilisi cu his, dicant admodum epicuri ea cum. Ut
+                        tantas putent tibique qui, amet illud dissentiet te per, ea pro nusquam copiosae. Summo solet
+                        nonumes eu mei. Et purto detracto usu, pro ad vocent luptatum constituam. Vim an putent vocent,
+                        qui consul tempor argumentum at. Percipit pertinacia te ius.</p>
+                    <p>2. Lorem ipsum dolor sit amet, feugait nostrum facilisi cu his, dicant admodum epicuri ea cum. Ut
+                        tantas putent tibique qui, amet illud dissentiet te per, ea pro nusquam copiosae. Summo solet
+                        nonumes eu mei. Et purto detracto usu, pro ad vocent luptatum constituam. Vim an putent vocent,
+                        qui consul tempor argumentum at. Percipit pertinacia te ius.</p>
+                    <p>3. Lorem ipsum dolor sit amet, feugait nostrum facilisi cu his, dicant admodum epicuri ea cum. Ut
+                        tantas putent tibique qui, amet illud dissentiet te per, ea pro nusquam copiosae. Summo solet
+                        nonumes eu mei. Et purto detracto usu, pro ad vocent luptatum constituam. Vim an putent vocent,
+                        qui consul tempor argumentum at. Percipit pertinacia te ius.</p>
+                    <p>4. Lorem ipsum dolor sit amet, feugait nostrum facilisi cu his, dicant admodum epicuri ea cum. Ut
+                        tantas putent tibique qui, amet illud dissentiet te per, ea pro nusquam copiosae. Summo solet
+                        nonumes eu mei. Et purto detracto usu, pro ad vocent luptatum constituam. Vim an putent vocent,
+                        qui consul tempor argumentum at. Percipit pertinacia te ius.</p>
+                    <p>5. Lorem ipsum dolor sit amet, feugait nostrum facilisi cu his, dicant admodum epicuri ea cum. Ut
+                        tantas putent tibique qui, amet illud dissentiet te per, ea pro nusquam copiosae. Summo solet
+                        nonumes eu mei. Et purto detracto usu, pro ad vocent luptatum constituam. Vim an putent vocent,
+                        qui consul tempor argumentum at. Percipit pertinacia te ius.</p>
                 </div>
                 <form [formGroup]="form">
                     <div class="form-check mt-5">
@@ -29,13 +44,15 @@
                     <form [formGroup]="form" (ngSubmit)="onSubmit()">
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" formControlName="name" placeholder="Your name"
+                            <input type="text" class="form-control" id="name" formControlName="name"
+                                   placeholder="Your name"
                                    aria-describedby="nameHelper">
                             <small id="nameHelper" class="form-text text-muted">Your full name</small>
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="text" class="form-control" id="email" formControlName="email" placeholder="Your email"
+                            <input type="text" class="form-control" id="email" formControlName="email"
+                                   placeholder="Your email"
                                    aria-describedby="emailHelper">
                             <small id="emailHelper" class="form-text text-muted">Your email</small>
                         </div>
@@ -48,7 +65,8 @@
                         </div>
                         <div class="form-group">
                             <label for="confirmPassword">Confirm your password</label>
-                            <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword"
+                            <input type="password" class="form-control" id="confirmPassword"
+                                   formControlName="confirmPassword"
                                    placeholder="Your confirmPassword"
                                    aria-describedby="confirmPasswordHelper">
                             <small id="confirmPasswordHelper" class="form-text text-muted">Confirm your password</small>

@@ -44,9 +44,11 @@ module.exports.create = function (req, res) {
 			require('fs').writeFile(userUploadedImagePath, imageBuffer.data,
 				function () {
 					console.log('DEBUG - feed:message: Saved to disk image attached by user:', userUploadedImagePath);
-					res.status(200).json({msg: 'File saved', imageUrl: uniqueRandomImageName +
-					'.' +
-					imageTypeDetected[1]});
+					res.status(200).json({
+						msg: 'File saved', imageUrl: uniqueRandomImageName +
+						'.' +
+						imageTypeDetected[1]
+					});
 				});
 		}
 		catch (error) {

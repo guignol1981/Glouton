@@ -6,7 +6,7 @@ let auth = jwt({
 	userProperty: 'payload'
 });
 let multer = require('multer');
-let upload  = multer({ storage: multer.memoryStorage() });
+let upload = multer({storage: multer.memoryStorage()});
 
 let ctrlProfile = require('../controllers/profile');
 let ctrlAuth = require('../controllers/authentications');

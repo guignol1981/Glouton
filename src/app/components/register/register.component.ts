@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit {
             .then(
                 () => this.router.navigate(['dashboard']),
                 error => {
-                        alert(error);
+                    alert(error);
                 }
             );
     }

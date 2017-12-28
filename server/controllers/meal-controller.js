@@ -22,7 +22,7 @@ module.exports.getAll = function (req, res) {
 		});
 };
 
-module.exports.update = function(req, res) {
+module.exports.update = function (req, res) {
 	let mealId = req.params.id;
 
 	Meal.findById(mealId).populate('cook').populate('participants').exec((err, meal) => {

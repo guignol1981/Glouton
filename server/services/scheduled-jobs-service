@@ -1,7 +1,7 @@
 let Meal = require('../models/meal/meal');
 let mailer = require('../services/mailer-service');
 
-let updateMealStatus = function() {
+let updateMealStatus = function () {
 	Meal.getLimitDateReached((meals) => {
 		meals.forEach(meal => {
 			let confirmed = meal.participants.length >= meal.minParticipants;
@@ -55,22 +55,22 @@ let updateMealStatus = function() {
 	console.log('updateMealStatus job done');
 };
 
-let minimumParticipantsReached = function() {
+let minimumParticipantsReached = function () {
 
 };
 
-let maximumParticipantsReached = function() {
+let maximumParticipantsReached = function () {
 
 };
 
-let removeUnlinkedImages = function() {
+let removeUnlinkedImages = function () {
 
 };
 
-let suggestMealOnNothingPlannedDays = function() {
+let suggestMealOnNothingPlannedDays = function () {
 
 };
 
-module.exports.execute = function() {
+module.exports.execute = function () {
 	// updateMealStatus();
 };

@@ -13,7 +13,7 @@ import {PrivateMessageComponent} from "../private-message/private-message.compon
 export class InboxComponent implements OnInit {
     messages: Message[];
     user: User;
-    @ViewChild(PrivateMessageComponent) privateMessage: PrivateMessageComponent ;
+    @ViewChild(PrivateMessageComponent) privateMessage: PrivateMessageComponent;
 
     constructor(private userService: UserService,
                 private messageService: MessageService) {
