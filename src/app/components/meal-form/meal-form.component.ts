@@ -8,7 +8,8 @@ import {MealImageService} from "../../services/meal-image.service";
 import {FileHolder} from "angular2-image-upload";
 import {ToastsManager} from "ng2-toastr";
 import {UserService} from "../../models/user/user.service";
-import { DatepickerOptions, NgDatepickerComponent } from 'ng2-datepicker';
+import {MealFormDateValidation} from '../../validators/meal-form-date';
+import {MealFormParticipantValidation} from '../../validators/meal-form-participants';
 
 @Component({
     selector: 'app-meal-form',
@@ -18,18 +19,9 @@ import { DatepickerOptions, NgDatepickerComponent } from 'ng2-datepicker';
 export class MealFormComponent implements OnInit {
     @Input() edit = false;
     @Output() updated: EventEmitter<Meal> = new EventEmitter<Meal>();
-    @ViewChild(NgDatepickerComponent) ngDatepickerComponent: NgDatepickerComponent;
     meal: Meal;
     user: User;
     form: FormGroup;
-
-    datePickerOptions: DatepickerOptions = {
-        minDate: new Date(Date.now())
-    };
-
-    limitDatePickerOptions: DatepickerOptions = {
-        maxDate: new Date(Date.now())
-    };
 
     constructor(private mealService: MealService,
                 public authenticationService: AuthenticationService,
@@ -59,18 +51,14 @@ export class MealFormComponent implements OnInit {
 
     initForm() {
         this.form = new FormGroup({
-            title: new FormControl(this.meal.title, [Validators.required, Validators.minLength(10)]),
-            description: new FormControl(this.meal.description, [Validators.required, Validators.minLength(30)]),
+            title: new FormControl(this.meal.title, [Validators.required, Validators.minLength(5)]),
+            description: new FormControl(this.meal.description, [Validators.required, Validators.minLength(15)]),
             imageUrl: new FormControl(this.meal.imageUrl, Validators.required),
             date: new FormControl(this.meal.date, Validators.required),
             limitDate: new FormControl(this.meal.limitDate, Validators.required),
             minParticipants: new FormControl(this.meal.minParticipants, [Validators.required, Validators.min(1)]),
             maxParticipants: new FormControl(this.meal.maxParticipants, [Validators.required, Validators.min(1)])
-        });
-
-        this.form.valueChanges.subscribe(values => {
-            this.limitDatePickerOptions.maxDate = new Date(values['date']);
-        });
+        }, {validators: [MealFormDateValidation.LogicDatesSelection, MealFormParticipantValidation.LogicParticipantsSelection]});
     }
 
     onImageRemoved() {

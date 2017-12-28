@@ -1,3 +1,24 @@
 .transparent-list li {
     background: 0;
 }
+
+.app {
+    font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 17px;
+    line-height: 1.43;
+    color: #484848;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.app::after {
+    content: "";
+    background: url('../assets/bg1.jpg');
+    opacity: 0.1;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+}
+

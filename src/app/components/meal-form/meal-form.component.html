@@ -19,7 +19,7 @@
                                    aria-describedby="titleHelper" style="background-color: white" required>
                             <small id="titleHelper" class="form-text text-muted">The title of you meal</small>
                             <small *ngIf="formControlIsInvalid('title')" class="form-text text-warning">
-                                The title should be 10 characters at least
+                                The title should be 5 characters at least
                             </small>
                         </div>
                         <div class="form-group">
@@ -29,7 +29,7 @@
                                       rows="5"></textarea>
                             <small id="descriptionHelper" class="form-text text-muted">Describe your mean</small>
                             <small *ngIf="formControlIsInvalid('description')"
-                                   class="form-text text-warning">The description should be 30 characters at least
+                                   class="form-text text-warning">The description should be 15 characters at least
                             </small>
                         </div>
                         <div class="form-group">
@@ -45,19 +45,31 @@
                         <div class="row">
                             <div class="col form-group">
                                 <label for="date">Delivery date</label>
-                                <ng-datepicker [options]="datePickerOptions" id="date" formControlName="date"
+                                <ng-datepicker id="date" formControlName="date"
                                                aria-describedby="dateHelper"></ng-datepicker>
                                 <small id="dateHelper" class="form-text text-muted">The date you will deliver this
                                     meal
                                 </small>
+                                <small *ngIf="form.get('date').hasError('LogicDatesSelection')"
+                                       class="form-text text-warning">Delivery date should be later than limit date.
+                                </small>
+                                <small *ngIf="form.get('date').hasError('DateLessOrEqualThanToday')"
+                                       class="form-text text-warning">Delivery date should be later than today
+                                </small>
                             </div>
-                            <div [hidden]="edit? false: form.get('date').pristine" class="col form-group">
+                            <div class="col form-group">
                                 <label for="limitDate">Date limit for subscription</label>
-                                <ng-datepicker [options]="limitDatePickerOptions" id="limitDate"
+                                <ng-datepicker id="limitDate"
                                                formControlName="limitDate"
                                                aria-describedby="limiteDateHelper"></ng-datepicker>
                                 <small id="limiteDateHelper" class="form-text text-muted">The limit date to join or
                                     leave this meal
+                                </small>
+                                <small *ngIf="form.get('limitDate').hasError('LogicDatesSelection')"
+                                     class="form-text text-warning">Limit date should be lower than delivery date.
+                                </small>
+                                <small *ngIf="form.get('limitDate').hasError('DateLessOrEqualThanToday')"
+                                     class="form-text text-warning">Limit date should be later than today
                                 </small>
                             </div>
                         </div>
@@ -71,6 +83,9 @@
                                     <small id="minParticipantsHelper" class="form-text text-muted">The minimum
                                         participants you need to
                                         cook this meal
+                                    </small>
+                                    <small *ngIf="form.get('minParticipants').hasError('LogicParticipantsSelection')"
+                                           class="form-text text-warning">min participants should be lower or equal than max participants
                                     </small>
                                 </div>
                             </div>
