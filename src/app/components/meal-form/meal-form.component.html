@@ -1,9 +1,15 @@
 <div class="modal fade" [id]="edit? 'mealformedit': 'mealform'" tabindex="-1" role="dialog"
-     aria-labelledby="mealModalLabel" aria-hidden="true">
+     [attr.aria-labelledby]="edit? 'mealModalLabelEdit': 'mealModalLabel'" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title font-weight-bold" id="mealModalLabel">Suggest a meal</h5>
+                <div *ngIf="edit">
+                    <h5 class="modal-title font-weight-bold" id="mealModalLabelEdit">Edit your meal</h5>
+                </div>
+                <div *ngIf="!edit">
+                    <h5 class="modal-title font-weight-bold" id="mealModalLabel">Suggest a meal</h5>
+                </div>
+
                 <button (click)="close()" type="button" class="close" data-dismiss="modal" aria-label="Close"
                         #mealformclosebutton>
                     <span aria-hidden="true">&times;</span>
@@ -39,6 +45,9 @@
                             <img [src]="data.image" [width]="cropperSettings.croppedWidth"
                                  [height]="cropperSettings.croppedHeight">
                             </span>
+                            <small *ngIf="! data.image"
+                                   class="form-text text-danger">You need to select an image
+                            </small>
                         </div>
                         <div class="row">
                             <div class="col form-group">
@@ -48,10 +57,10 @@
                                 <small id="dateHelper" class="form-text text-muted">The date you will deliver this
                                     meal
                                 </small>
-                                <small *ngIf="form.get('date').hasError('LogicDatesSelection')"
+                                <small *ngIf="!form.get('date').pristine && form.get('date').hasError('LogicDatesSelection')"
                                        class="form-text text-danger">Delivery date should be later than limit date.
                                 </small>
-                                <small *ngIf="form.get('date').hasError('DateLessOrEqualThanToday')"
+                                <small *ngIf="!form.get('date').pristine && form.get('date').hasError('DateLessOrEqualThanToday')"
                                        class="form-text text-danger">Delivery date should be later than today
                                 </small>
                             </div>
@@ -63,10 +72,10 @@
                                 <small id="limiteDateHelper" class="form-text text-muted">The limit date to join or
                                     leave this meal
                                 </small>
-                                <small *ngIf="form.get('limitDate').hasError('LogicDatesSelection')"
+                                <small *ngIf="!form.get('limitDate').pristine && form.get('limitDate').hasError('LogicDatesSelection')"
                                        class="form-text text-danger">Limit date should be lower than delivery date.
                                 </small>
-                                <small *ngIf="form.get('limitDate').hasError('DateLessOrEqualThanToday')"
+                                <small *ngIf="!form.get('limitDate').pristine && form.get('limitDate').hasError('DateLessOrEqualThanToday')"
                                        class="form-text text-danger">Limit date should be later than today
                                 </small>
                             </div>
@@ -81,8 +90,8 @@
                                     <small id="minParticipantsHelper" class="form-text text-muted">The minimum
                                         participants you need to cook this meal
                                     </small>
-                                    <small *ngIf="form.get('minParticipants').hasError('LogicParticipantsSelection')"
-                                           class="form-text text-danger">min participants should be lower or equal than
+                                    <small *ngIf="!form.get('minParticipants').pristine && form.get('minParticipants').hasError('LogicParticipantsSelection')"
+                                           class="form-text text-danger">Minimum participants should be lower or equal than
                                         max participants
                                     </small>
                                 </div>
