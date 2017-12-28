@@ -2,6 +2,7 @@ import {User} from "../user/user";
 export class Meal {
     public cook: User;
     public participants: User[] = [];
+
     constructor(public _id: string = null,
                 public title: string = '',
                 public description: string = '',
@@ -28,7 +29,7 @@ export class Meal {
     }
 
     canJoin(user: User) {
-        return ! this.asJoined(user) && ! this.isFull() && !this.isCook(user) && this.limitDate.getTime() >= Date.now();
+        return !this.asJoined(user) && !this.isFull() && !this.isCook(user) && this.limitDate.getTime() >= Date.now();
     }
 
     canLeave(user: User) {

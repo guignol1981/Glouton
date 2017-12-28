@@ -1,5 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 
+.ngx-datepicker-container {
+    z-index: inherit !important;
+}
 
-.ngx-datepicker-container { z-index: inherit !important; }
-.ngx-datepicker-calendar-container { z-index: 1; }
+.ngx-datepicker-calendar-container {
+    z-index: 1;
+}

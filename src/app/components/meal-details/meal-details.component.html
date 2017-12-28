@@ -62,7 +62,8 @@
                     Member since {{meal.cook.creationDate | date}}
                 </li>
                 <li *ngIf="! meal.isCook(user)" class="list-group-item border-0">
-                    <button class="btn btn-secondary btn-sm" data-toggle="modal" [attr.data-target]="'#messageModal'">write to
+                    <button class="btn btn-secondary btn-sm" data-toggle="modal" [attr.data-target]="'#messageModal'">
+                        write to
                         the cook
                     </button>
                     <app-private-message [author]="user" [recipient]="meal.cook"></app-private-message>

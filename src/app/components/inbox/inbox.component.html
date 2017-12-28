@@ -5,10 +5,12 @@
         <ul class="list-group">
             <li *ngFor="let message of messages" [class]="getMessageClass(message)">
                 <div>
-                    From: <span class="font-weight-bold">{{message.author? message.author.name: 'Lunch box group'}}</span>
+                    From: <span
+                        class="font-weight-bold">{{message.author? message.author.name: 'Lunch box group'}}</span>
                 </div>
                 <div>
-                    <span (click)="markAsSeen(message)" data-toggle="collapse" [attr.href]="'#'+message._id" aria-expanded="false"
+                    <span (click)="markAsSeen(message)" data-toggle="collapse" [attr.href]="'#'+message._id"
+                          aria-expanded="false"
                           aria-controls="collapseExample">
                         Title: {{message.title}}
                     </span>

@@ -1,6 +1,6 @@
 let Message = require('../models/message/message');
 
-module.exports.getAll = function(req, res) {
+module.exports.getAll = function (req, res) {
 	let userId = req.payload._id;
 
 	Message.find({recipient: userId}).populate('author').exec((err, messages) => {
@@ -8,7 +8,7 @@ module.exports.getAll = function(req, res) {
 	});
 };
 
-module.exports.getUnseen = function(req, res) {
+module.exports.getUnseen = function (req, res) {
 	let userId = req.payload._id;
 
 	Message.find({recipient: userId, seen: false}, (err, messages) => {
@@ -16,7 +16,7 @@ module.exports.getUnseen = function(req, res) {
 	});
 };
 
-module.exports.update = function(req, res) {
+module.exports.update = function (req, res) {
 	let messageId = req.params.id;
 	Message.findById(messageId, (err, message) => {
 		message.seen = req.body.seen;
@@ -26,7 +26,7 @@ module.exports.update = function(req, res) {
 	});
 };
 
-module.exports.create = function(req, res) {
+module.exports.create = function (req, res) {
 	delete req.body._id;
 	let message = new Message(req.body);
 	message.save((err, savedMessage) => {
@@ -34,7 +34,7 @@ module.exports.create = function(req, res) {
 	});
 };
 
-module.exports.delete = function(req, res) {
+module.exports.delete = function (req, res) {
 	let messageId = req.params.id;
 
 	Message.findById(messageId).remove().exec().then(res.send({msg: 'message removed'}));

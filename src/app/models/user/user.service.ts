@@ -21,9 +21,9 @@ export class UserService {
             .then((response: Response) => {
                 let userData = response.json();
                 return new User(userData._id,
-                                userData.name,
-                                userData.email,
-                                userData.creationDate);
+                    userData.name,
+                    userData.email,
+                    userData.creationDate);
             })
             .catch(this.handleError);
     }

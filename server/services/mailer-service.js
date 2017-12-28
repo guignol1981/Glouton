@@ -8,9 +8,9 @@ var transporter = nodemailer.createTransport({
 	}
 });
 
-module.exports.sendMail = function(mailOptions) {
-	transporter.sendMail(mailOptions, function(error, info){
-		if(error){
+module.exports.sendMail = function (mailOptions) {
+	transporter.sendMail(mailOptions, function (error, info) {
+		if (error) {
 			return console.log(error);
 		}
 		console.log('Message sent: ' + info.response);

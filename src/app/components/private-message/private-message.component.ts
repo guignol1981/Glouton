@@ -13,7 +13,7 @@ import {ToastsManager} from "ng2-toastr";
 export class PrivateMessageComponent implements OnInit {
     @Input() recipient: User;
     @Input() author: User;
-    @Input() trailingBody =  '';
+    @Input() trailingBody = '';
 
     form: FormGroup;
 
@@ -24,7 +24,7 @@ export class PrivateMessageComponent implements OnInit {
     }
 
     ngOnInit() {
-       this.initForm();
+        this.initForm();
     }
 
     initForm() {
