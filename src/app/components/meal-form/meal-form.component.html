@@ -5,6 +5,9 @@
             <div class="modal-header">
                 <div *ngIf="edit">
                     <h5 class="modal-title font-weight-bold" id="mealModalLabelEdit">Edit your meal</h5>
+                    <small class="form-text text-danger">
+                        If you edit your meal all participants will be removed, we take care to inform them.
+                    </small>
                 </div>
                 <div *ngIf="!edit">
                     <h5 class="modal-title font-weight-bold" id="mealModalLabel">Suggest a meal</h5>

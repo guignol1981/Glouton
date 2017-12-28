@@ -9,7 +9,7 @@ let sendJSONresponse = function (res, status, content) {
 };
 
 module.exports.register = function (req, res) {
-	if (!req.body.name || !req.body.email || !req.body.password) {
+	if (!req.body['name'] || !req.body['email'] || !req.body['password']) {
 		sendJSONresponse(res, 400, {
 			"message": "All fields required"
 		});
@@ -18,9 +18,9 @@ module.exports.register = function (req, res) {
 
 	let user = new User();
 
-	user.name = req.body.name;
-	user.email = req.body.email;
-	user.setPassword(req.body.password);
+	user.name = req.body['name'];
+	user.email = req.body['email'];
+	user.setPassword(req.body['password']);
 
 	user.save(function (err) {
 		if (err) {
@@ -32,6 +32,7 @@ module.exports.register = function (req, res) {
 
 		let token;
 		token = user.generateJwt();
+
 		Message.create({
 			recipient: user._id,
 			title: `Welcome ${user.name}!`,
@@ -53,7 +54,7 @@ module.exports.register = function (req, res) {
 };
 
 module.exports.login = function (req, res) {
-	if (!req.body.email || !req.body.password) {
+	if (!req.body['email'] || !req.body['password']) {
 		sendJSONresponse(res, 400, {
 			"message": "All fields required"
 		});
