@@ -18,7 +18,7 @@
                                    placeholder="Title"
                                    aria-describedby="titleHelper" style="background-color: white" required>
                             <small id="titleHelper" class="form-text text-muted">The title of you meal</small>
-                            <small *ngIf="formControlIsInvalid('title')" class="form-text text-warning">
+                            <small *ngIf="formControlIsInvalid('title')" class="form-text text-danger">
                                 The title should be 5 characters at least
                             </small>
                         </div>
@@ -29,7 +29,7 @@
                                       rows="5"></textarea>
                             <small id="descriptionHelper" class="form-text text-muted">Describe your mean</small>
                             <small *ngIf="formControlIsInvalid('description')"
-                                   class="form-text text-warning">The description should be 15 characters at least
+                                   class="form-text text-danger">The description should be 15 characters at least
                             </small>
                         </div>
                         <div class="form-group">
@@ -51,10 +51,10 @@
                                     meal
                                 </small>
                                 <small *ngIf="form.get('date').hasError('LogicDatesSelection')"
-                                       class="form-text text-warning">Delivery date should be later than limit date.
+                                       class="form-text text-danger">Delivery date should be later than limit date.
                                 </small>
                                 <small *ngIf="form.get('date').hasError('DateLessOrEqualThanToday')"
-                                       class="form-text text-warning">Delivery date should be later than today
+                                       class="form-text text-danger">Delivery date should be later than today
                                 </small>
                             </div>
                             <div class="col form-group">
@@ -66,10 +66,10 @@
                                     leave this meal
                                 </small>
                                 <small *ngIf="form.get('limitDate').hasError('LogicDatesSelection')"
-                                     class="form-text text-warning">Limit date should be lower than delivery date.
+                                     class="form-text text-danger">Limit date should be lower than delivery date.
                                 </small>
                                 <small *ngIf="form.get('limitDate').hasError('DateLessOrEqualThanToday')"
-                                     class="form-text text-warning">Limit date should be later than today
+                                     class="form-text text-danger">Limit date should be later than today
                                 </small>
                             </div>
                         </div>
@@ -85,7 +85,7 @@
                                         cook this meal
                                     </small>
                                     <small *ngIf="form.get('minParticipants').hasError('LogicParticipantsSelection')"
-                                           class="form-text text-warning">min participants should be lower or equal than max participants
+                                           class="form-text text-danger">min participants should be lower or equal than max participants
                                     </small>
                                 </div>
                             </div>
