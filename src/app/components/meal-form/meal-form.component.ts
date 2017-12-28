@@ -5,11 +5,11 @@ import {Meal} from "../../models/meal/meal";
 import {AuthenticationService} from "../../services/authentication.service";
 import {User} from "../../models/user/user";
 import {MealImageService} from "../../services/meal-image.service";
-import {FileHolder} from "angular2-image-upload";
 import {ToastsManager} from "ng2-toastr";
 import {UserService} from "../../models/user/user.service";
 import {MealFormDateValidation} from '../../validators/meal-form-date';
 import {MealFormParticipantValidation} from '../../validators/meal-form-participants';
+import {CropperSettings, ImageCropperComponent} from "ng2-img-cropper";
 
 @Component({
     selector: 'app-meal-form',
@@ -19,20 +19,35 @@ import {MealFormParticipantValidation} from '../../validators/meal-form-particip
 export class MealFormComponent implements OnInit {
     @Input() edit = false;
     @Output() updated: EventEmitter<Meal> = new EventEmitter<Meal>();
+    @ViewChild('cropper', undefined)
+    cropper: ImageCropperComponent;
     meal: Meal;
     user: User;
     form: FormGroup;
+    data: any;
+    cropperSettings: CropperSettings;
 
     constructor(private mealService: MealService,
                 public authenticationService: AuthenticationService,
                 public imageService: MealImageService,
                 public userService: UserService,
+                public mealImageService: MealImageService,
                 public toastr: ToastsManager,
                 vcr: ViewContainerRef) {
         this.toastr.setRootViewContainerRef(vcr);
     }
 
     ngOnInit() {
+        this.cropperSettings = new CropperSettings();
+        this.cropperSettings.width = 200;
+        this.cropperSettings.height = 200;
+        this.cropperSettings.croppedWidth = 200;
+        this.cropperSettings.croppedHeight = 200;
+        this.cropperSettings.canvasWidth = 400;
+        this.cropperSettings.canvasHeight = 300;
+
+        this.data = {};
+
         if (!this.edit) {
             this.meal = new Meal();
             this.userService.getConnectedUser().then(user => {
@@ -53,7 +68,6 @@ export class MealFormComponent implements OnInit {
         this.form = new FormGroup({
             title: new FormControl(this.meal.title, [Validators.required, Validators.minLength(5)]),
             description: new FormControl(this.meal.description, [Validators.required, Validators.minLength(15)]),
-            imageUrl: new FormControl(this.meal.imageUrl, Validators.required),
             date: new FormControl(this.meal.date, Validators.required),
             limitDate: new FormControl(this.meal.limitDate, Validators.required),
             minParticipants: new FormControl(this.meal.minParticipants, [Validators.required, Validators.min(1)]),
@@ -61,31 +75,32 @@ export class MealFormComponent implements OnInit {
         }, {validators: [MealFormDateValidation.LogicDatesSelection, MealFormParticipantValidation.LogicParticipantsSelection]});
     }
 
-    onImageRemoved() {
-        this.meal.imageUrl = null;
-    }
-
-    imageFinishedUploading(file: FileHolder) {
-        this.form.get('imageUrl').setValue(JSON.parse(file.serverResponse['_body']).imageUrl);
-    }
-
     onSubmit(closeButton) {
-        let meal = <Meal>this.form.value;
-        meal._id = this.meal._id;
-        meal.participants = this.meal.participants;
-        meal.cook = this.user;
-        console.log(meal);
-        this.mealService.save(meal)
-            .then((updatedMeal) => {
-                if (this.edit) {
-                    this.toastr.success(`Meal updated!`, 'Success!');
-                    this.updated.emit(updatedMeal);
-                } else {
-                    this.toastr.success(`Meal created!`, 'Success!');
-                }
-
-                closeButton.click();
+        let me = this;
+        let saveMeal = function (imageData) {
+            let meal = <Meal>me.form.value;
+            meal._id = me.meal._id;
+            meal.imageUrl = imageData ? JSON.parse(imageData['_body']).imageUrl : meal.imageUrl;
+            meal.participants = me.meal.participants;
+            meal.cook = me.user;
+            me.mealService.save(meal)
+                .then((updatedMeal) => {
+                    if (me.edit) {
+                        me.toastr.success(`Meal updated!`, 'Success!');
+                        me.updated.emit(updatedMeal);
+                    } else {
+                        me.toastr.success(`Meal created!`, 'Success!');
+                    }
+                    closeButton.click();
+                });
+        };
+        if (!me.edit) {
+            me.mealImageService.postImage(me.data.image).subscribe(data => {
+                saveMeal(data);
             });
+        } else {
+            saveMeal(null);
+        }
     }
 
     formControlIsInvalid(formControlName: string) {
@@ -94,6 +109,9 @@ export class MealFormComponent implements OnInit {
     }
 
     close() {
+        if (this.cropper) {
+            this.cropper.reset();
+        }
         this.form.reset();
         this.meal = new Meal();
     }
