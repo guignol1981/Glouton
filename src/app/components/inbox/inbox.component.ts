@@ -22,7 +22,10 @@ export class InboxComponent implements OnInit {
     ngOnInit() {
         this.userService.getConnectedUser().then(user => {
             this.user = user;
-            this.messageService.getAll().then(messages => this.messages = messages);
+            this.messageService.getAll().then(messages => {
+                    this.messages = messages;
+                }
+            );
         });
     }
 

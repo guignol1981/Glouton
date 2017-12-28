@@ -9,6 +9,7 @@ let messageSchema = new Schema({
 	type: String,
 	seen: {type: Boolean, default: false},
 	author: {type: Schema.Types.ObjectId, ref: 'User'},
+	template: String
 });
 
 let Message = mongoose.model('Message', messageSchema);

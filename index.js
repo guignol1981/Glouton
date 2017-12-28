@@ -9,6 +9,8 @@ let port = process.env.PORT || '3000';
 let schedule = require('node-schedule');
 let api = require('./server/routes/api');
 let scheduledJobs = require('./server/services/scheduled-jobs-service');
+app.set('view engine', 'pug');
+
 require('./server/configs/passport');
 
 mongoose.Promise = global.Promise;

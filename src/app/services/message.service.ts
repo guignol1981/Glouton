@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http, Response, Headers} from "@angular/http";
 import {Message} from "../models/message/message";
 import {AuthenticationService} from "./authentication.service";
+import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class MessageService {
@@ -111,7 +112,10 @@ export class MessageService {
                             messageData.body,
                             messageData.type,
                             messageData.seen,
-                            messageData.author));
+                            messageData.author,
+                            null,
+                            messageData.template));
+                    console.log(messageData.template);
                 });
                 return messages;
             })

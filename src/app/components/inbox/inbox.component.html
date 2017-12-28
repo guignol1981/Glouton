@@ -21,9 +21,7 @@
                 <div class="collapse mt-1" [id]="message._id">
                     <div class="card">
                         <div class="card-body">
-                            <div *ngFor="let body of message.body">
-                                <p>{{body}}</p>
-                            </div>
+                            <div [innerHtml]="message.template">{{message.template}}</div>
                         </div>
                         <div *ngIf="message.author" class="card-footer">
                             <div class="text-right">

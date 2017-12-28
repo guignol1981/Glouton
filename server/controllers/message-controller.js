@@ -4,6 +4,11 @@ module.exports.getAll = function (req, res) {
 	let userId = req.payload._id;
 
 	Message.find({recipient: userId}).populate('author').exec((err, messages) => {
+		messages.forEach(message => {
+			res.render('message-join', { title: message.title, message: message.body }, (err, str) => {
+				message.template = str;
+			});
+		});
 		res.send(messages);
 	});
 };
@@ -39,3 +44,4 @@ module.exports.delete = function (req, res) {
 
 	Message.findById(messageId).remove().exec().then(res.send({msg: 'message removed'}));
 };
+

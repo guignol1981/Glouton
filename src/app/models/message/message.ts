@@ -10,7 +10,8 @@ export class Message {
                 public type: string = '',
                 public seen: boolean = false,
                 public authorData: any = null,
-                public recipientData: any = null) {
+                public recipientData: any = null,
+                public template: string = null) {
         if (bodyData) {
             bodyData.forEach(data => {
                 this.body.push(data);
