@@ -10,6 +10,7 @@ import {ToastsManager} from "ng2-toastr";
 import {UserService} from "../../models/user/user.service";
 import {MealFormDateValidation} from '../../validators/meal-form-date';
 import {MealFormParticipantValidation} from '../../validators/meal-form-participants';
+import {CropperSettings, ImageCropperComponent} from "ng2-img-cropper";
 
 @Component({
     selector: 'app-meal-form',
@@ -19,20 +20,35 @@ import {MealFormParticipantValidation} from '../../validators/meal-form-particip
 export class MealFormComponent implements OnInit {
     @Input() edit = false;
     @Output() updated: EventEmitter<Meal> = new EventEmitter<Meal>();
+    @ViewChild('cropper', undefined)
+    cropper:ImageCropperComponent;
     meal: Meal;
     user: User;
     form: FormGroup;
+    data: any;
+    cropperSettings: CropperSettings;
 
     constructor(private mealService: MealService,
                 public authenticationService: AuthenticationService,
                 public imageService: MealImageService,
                 public userService: UserService,
+                public mealImageService: MealImageService,
                 public toastr: ToastsManager,
                 vcr: ViewContainerRef) {
         this.toastr.setRootViewContainerRef(vcr);
     }
 
     ngOnInit() {
+        this.cropperSettings = new CropperSettings();
+        this.cropperSettings.width = 200;
+        this.cropperSettings.height = 200;
+        this.cropperSettings.croppedWidth = 200;
+        this.cropperSettings.croppedHeight = 200;
+        this.cropperSettings.canvasWidth = 400;
+        this.cropperSettings.canvasHeight = 300;
+
+        this.data = {};
+
         if (!this.edit) {
             this.meal = new Meal();
             this.userService.getConnectedUser().then(user => {
@@ -70,22 +86,24 @@ export class MealFormComponent implements OnInit {
     }
 
     onSubmit(closeButton) {
-        let meal = <Meal>this.form.value;
-        meal._id = this.meal._id;
-        meal.participants = this.meal.participants;
-        meal.cook = this.user;
-        console.log(meal);
-        this.mealService.save(meal)
-            .then((updatedMeal) => {
-                if (this.edit) {
-                    this.toastr.success(`Meal updated!`, 'Success!');
-                    this.updated.emit(updatedMeal);
-                } else {
-                    this.toastr.success(`Meal created!`, 'Success!');
-                }
+        this.mealImageService.postImage(this.data.image).subscribe(data => {
+            let meal = <Meal>this.form.value;
+            meal._id = this.meal._id;
+            meal.imageUrl = JSON.parse(data['_body']).imageUrl;
+            meal.participants = this.meal.participants;
+            meal.cook = this.user;
+            this.mealService.save(meal)
+                .then((updatedMeal) => {
+                    if (this.edit) {
+                        this.toastr.success(`Meal updated!`, 'Success!');
+                        this.updated.emit(updatedMeal);
+                    } else {
+                        this.toastr.success(`Meal created!`, 'Success!');
+                    }
 
-                closeButton.click();
-            });
+                    closeButton.click();
+                });
+        });
     }
 
     formControlIsInvalid(formControlName: string) {

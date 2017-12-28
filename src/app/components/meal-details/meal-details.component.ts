@@ -42,7 +42,6 @@ export class MealDetailsComponent implements OnInit {
     }
 
     onMealUpdated(meal: Meal) {
-        console.log(meal);
         this.meal = meal;
     }
 

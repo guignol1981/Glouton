@@ -26,9 +26,10 @@ import { InboxComponent } from './components/inbox/inbox.component';
 import {MessageService} from "./services/message.service";
 import { PrivateMessageComponent } from './components/private-message/private-message.component';
 import { NgDatepickerModule } from 'ng2-datepicker';
+import {ImageCropperComponent} from "ng2-img-cropper";
 
 
-export class CustomToastOption extends ToastOptions { // can create separate .ts file for class
+export class CustomToastOption extends ToastOptions {
     animate = 'flyRight';
     positionClass = 'toast-bottom-left';
     showCloseButton = true;
@@ -48,7 +49,8 @@ export class CustomToastOption extends ToastOptions { // can create separate .ts
         ProfileComponent,
         LunchBoxComponent,
         InboxComponent,
-        PrivateMessageComponent
+        PrivateMessageComponent,
+        ImageCropperComponent
     ],
     imports: [
         BrowserModule,
