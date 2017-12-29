@@ -13,8 +13,8 @@
 
 .app::after {
     content: "";
-    background: url('../assets/bg5.jpg');
-    opacity: 0.1;
+    background: url('../assets/bg3.jpg');
+    opacity: 0.03;
     top: 0;
     left: 0;
     bottom: 0;

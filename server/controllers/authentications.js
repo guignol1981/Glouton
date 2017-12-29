@@ -37,7 +37,7 @@ module.exports.register = function (req, res) {
 			recipient: user._id,
 			title: `Welcome ${user.name}!`,
 			type: 'message-register',
-			category: 'success'
+			category: 'primary'
 		});
 		res.status(200).json({
 			"token": token

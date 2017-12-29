@@ -13,7 +13,7 @@ let mealSchema = new Schema({
 	maxParticipants: Number,
 	participants: [{type: Schema.Types.ObjectId, ref: 'User'}],
 	creationDate: {type: Date, default: Date.now()},
-	status: {type: String, default: 'active'}
+	status: {type: String, default: 'pending'}
 }, {usePushEach: true});
 
 mealSchema.methods.userIsCook = function (userId) {

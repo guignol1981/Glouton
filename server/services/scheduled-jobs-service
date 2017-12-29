@@ -5,7 +5,7 @@ let updateMealStatus = function () {
 	Meal.getLimitDateReached((meals) => {
 		meals.forEach(meal => {
 			let confirmed = meal.participants.length >= meal.minParticipants;
-
+			
 			if (confirmed) {
 				mailer.sendMail({
 					from: 'vincentguillemette1981@gmail.com	',

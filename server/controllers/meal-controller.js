@@ -12,7 +12,7 @@ module.exports.get = function (req, res) {
 };
 
 module.exports.getAll = function (req, res) {
-	Meal.find({status: 'active'}).populate('cook').populate('participants')
+	Meal.find({status: 'pending'}).populate('cook').populate('participants')
 		.then(meals => {
 			res.send(meals)
 		});
@@ -53,17 +53,15 @@ module.exports.getJoined = function (req, res) {
 	Meal.find({})
 		.populate('cook')
 		.populate('participants')
-		.exec((err, meals) => {
-			handleError(err, res, () => {
-				meals.forEach((meal) => {
-					meal.participants.forEach((participant) => {
-						if (participant.id === userId) {
-							joined.push(meal);
-						}
-					});
+		.exec().then(meals => {
+			meals.forEach((meal) => {
+				meal.participants.forEach((participant) => {
+					if (participant.id === userId) {
+						joined.push(meal);
+					}
 				});
-				res.send(joined);
 			});
+			res.send(joined);
 		});
 };
 
@@ -130,9 +128,9 @@ module.exports.leave = function (req, res) {
 	Meal.findById(mealId)
 		.populate('cook')
 		.exec().then(meal => {
-				meal.removeParticipants(userId);
-				meal.save().then(meal => {
-					res.send(meal);
-				});
+		meal.removeParticipants(userId);
+		meal.save().then(meal => {
+			res.send(meal);
 		});
+	});
 };

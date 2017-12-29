@@ -1,7 +1,8 @@
 div.message
+    img(src="../../assets/bg5.jpg" alt="Image Title")
     p #{thread[0]}
     ul
         each val, index in thread
             if index == 0
             else
-                li this is a reply to #{val}
+                li.text-muted this is a reply to: #{val}

@@ -1,80 +1,68 @@
 <div *ngIf="meal" class="container mt-3">
     <app-meal-form [edit]="true" (updated)="onMealUpdated($event)" #mealformedit></app-meal-form>
     <button hidden data-toggle="modal" data-target="#mealformedit" #mealformeditbutton></button>
-    <div class="row">
-        <div class="col text-left">
-            <h2 class="font-weight-bold">{{meal.title}}</h2>
-            <div class="mt-3">
+    <div class="card">
+        <div class="row">
+            <div class="col">
                 <img style="height: auto; width: 300px"
                      [src]="imageService.apiEndPoint + '/' + meal._id"
                      alt="meal img">
             </div>
-            <h5 class="mt-3">
-                {{meal.description}}
-            </h5>
+            <div class="col">
+                <div class="card-body">
+                    <h5 class="card-title">{{meal.title}}</h5>
+                    <p class="card-text">{{meal.description}}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item border-0">
+                        <button *ngIf="meal.canJoin(user)" (click)="joinMeal()" class="btn btn-primary">Join</button>
+                        <button *ngIf="meal.canLeave(user)" (click)="leaveMeal()"
+                                class="btn btn-primary">Leave
+                        </button>
+                    </li>
+                    <li *ngIf="! meal.isCook(user)" class="list-group-item border-0">
+                        <button class="btn btn-secondary btn-sm" data-toggle="modal" [attr.data-target]="'#messageModal'">
+                            write to the cook
+                        </button>
+                        <app-private-message [author]="user" [recipient]="meal.cook"></app-private-message>
+                    </li>
+                    <li *ngIf="meal.isCook(user)" class="list-group-item border-0">
+                        <button (click)="editMeal(mealformeditbutton)" class="btn btn-secondary btn-sm">edit lunch
+                        </button>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="col">
-            <ul class="list-group text-left transparent-list">
-                <li class="list-group-item border-0">
-                    {{meal.participants.length}}/{{meal.minParticipants}} ({{meal.maxParticipants}}max)
-                </li>
-                <li class="list-group-item border-0">
-                    This suggestion was posted on
-                    <span class="badge badge-info">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item border-0">
+                Participants: {{meal.participants.length}}/{{meal.minParticipants}} ({{meal.maxParticipants}}max)
+                <div *ngIf="meal.participants.length > 0">
+                    <ul class="list-group">
+                        <div *ngFor="let participant of meal.participants">
+                            {{participant.name}}
+                        </div>
+                    </ul>
+                </div>
+            </li>
+            <li class="list-group-item border-0">
+                This suggestion was posted on
+                <span class="badge badge-info">
                         {{meal.creationDate | date}}
                     </span>
-                </li>
-                <li class="list-group-item border-0">
-                    This meal will be delivered on
-                    <span class="badge badge-info">
+            </li>
+            <li class="list-group-item border-0">
+                This meal will be delivered on
+                <span class="badge badge-info">
                         {{meal.deliveryDate | date}}
                     </span>
-                </li>
-                <li class="list-group-item border-0">
-                    Users have until
-                    <span class="badge badge-warning">
+            </li>
+            <li class="list-group-item border-0">
+                Users have until
+                <span class="badge badge-warning">
                         {{meal.limitDate | date}}
                     </span>
-                    to subscribe
-                </li>
-                <li class="list-group-item border-0">
-                    <div *ngIf="meal.participants.length > 0">
-                        Participants :
-                        <ul class="list-group">
-                            <div *ngFor="let participant of meal.participants">
-                                {{participant.name}}
-                            </div>
-                        </ul>
-                    </div>
-                    <div *ngIf="meal.participants.length === 0">
-                        No participants yet
-                    </div>
-                </li>
-            </ul>
-        </div>
+                to subscribe
+            </li>
+        </ul>
     </div>
-    <ul class="list-group transparent-list">
-        <li class="list-group-item border-0">
-            Cooked by {{meal.cook.name}}
-        </li>
-        <li class="list-group-item border-0">
-            Member since {{meal.cook.creationDate | date}}
-        </li>
-        <li class="list-group-item border-0">
-            <button *ngIf="meal.canJoin(user)" (click)="joinMeal()" class="btn btn-primary">Join</button>
-            <button *ngIf="meal.canLeave(user)" (click)="leaveMeal()"
-                    class="btn btn-primary">Leave
-            </button>
-        </li>
-        <li *ngIf="! meal.isCook(user)" class="list-group-item border-0">
-            <button class="btn btn-secondary btn-sm" data-toggle="modal" [attr.data-target]="'#messageModal'">
-                write to the cook
-            </button>
-            <app-private-message [author]="user" [recipient]="meal.cook"></app-private-message>
-        </li>
-        <li *ngIf="meal.isCook(user)" class="list-group-item border-0">
-            <button (click)="editMeal(mealformeditbutton)" class="btn btn-secondary btn-sm">edit lunch
-            </button>
-        </li>
-    </ul>
 </div>
