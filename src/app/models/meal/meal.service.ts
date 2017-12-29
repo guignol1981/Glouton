@@ -226,4 +226,8 @@ export class MealService {
         return Promise.reject(error.message || error);
     }
 
+    private deserializeMeal(data: any): Meal {
+
+    }
+
 }

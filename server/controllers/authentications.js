@@ -36,15 +36,8 @@ module.exports.register = function (req, res) {
 		Message.create({
 			recipient: user._id,
 			title: `Welcome ${user.name}!`,
-			body: [
-				`What a pleasure to have you here ${user.name}!`,
-				`Now is the begin of a new era for you.`,
-				`Why? Because your kitchen just expanded the size of your organization.`,
-				`Start today suggesting meals or join other's propositions!!`,
-				`If you have any suggestion or question, be sure to adress to us your concern. Have a very nice day!`
-			],
-			creationDate: Date.now(),
-			type: 'success'
+			type: 'message-register',
+			category: 'success'
 		});
 		res.status(200).json({
 			"token": token
