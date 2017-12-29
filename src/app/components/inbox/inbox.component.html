@@ -12,7 +12,8 @@
                     <span (click)="markAsSeen(message)" data-toggle="collapse" [attr.href]="'#'+message._id"
                           aria-expanded="false"
                           aria-controls="collapseExample">
-                        Title: {{message.title}}
+                        Title: {{message.title}} <br>
+                        Sent on {{message.creationDate | date}}
                     </span>
                     <span class="float-right">
                         <a (click)="remove(message)">delete</a>

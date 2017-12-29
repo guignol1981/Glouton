@@ -110,34 +110,29 @@ module.exports.join = function (req, res) {
 
 	Meal.findById(mealId)
 		.populate('cook')
-		.populate('participants')
-		.exec((err, meal) => {
-			handleError(err, res, () => {
-				meal.addParticipant(userId);
-				meal.save((err, meal) => {
-					handleError(err, res, () => {
-						User.findById(userId, (err, user) => {
-							handleError(err, res, () => {
-								User.findById(meal.cook, (err, cook) => {
-									handleError(err, res, () => {
-										Message.create({
-											recipient: cook._id,
-											title: `${user.name} has joined your meal ${meal.title}`,
-											body: `Hey good news ${cook.name}, someone just joined your meal. 
-											This mean only ${meal.minParticipants - meal.participants.length} more participants are needed to confirm the meal before
-											${meal.limitDate}`,
-											creationDate: Date.now(),
-											type: 'info'
-										});
-										res.send(meal);
+		.populate('participants').exec()
+		.then(meal => {
+			meal.addParticipant(userId);
+			meal.save()
+				.then(meal => {
+					User.findById(userId).exec()
+						.then(user => {
+							User.findById(meal.cook).exec()
+								.then((cook) => {
+									Message.create({
+										recipient: cook._id,
+										title: `${user.name} has joined your meal ${meal.title}`,
+										type: 'message-join',
+										category: 'success',
+										data: {
+											meal: meal,
+											joinedBy: user,
+										}
 									});
+									res.send(meal);
 								});
-							});
 						});
-					});
 				});
-			});
-
 		});
 };
 
@@ -152,7 +147,6 @@ module.exports.leave = function (req, res) {
 				meal.removeParticipants(userId);
 				meal.save((err, meal) => {
 					handleError(err, res, () => res.send(meal));
-					res.send(meal);
 				});
 			});
 		});

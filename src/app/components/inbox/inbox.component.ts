@@ -33,21 +33,18 @@ export class InboxComponent implements OnInit {
         if (message.seen) {
             return 'list-group-item mt-1 list-group-item-secondary';
         }
-        return 'list-group-item mt-1 list-group-item-' + message.type;
-    }
-
-    reply(message: Message, initModalButton) {
-        this.privateMessage.initMessage(this.user, message.author, 'this is a reply to :' + message.body);
-        initModalButton.click();
+        return 'list-group-item mt-1 list-group-item-' + message.category;
     }
 
     markAsSeen(message: Message) {
-        message.seen = true;
-        this.messageService.save(message).then();
+        if (! message.seen) {
+            message.seen = true;
+            this.messageService.update(message).then();
+        }
     }
 
     remove(message: Message) {
-        this.messageService.delete(message).then(() => {
+        this.messageService.remove(message).then(() => {
             for (let i = this.messages.length - 1; i >= 0; i--) {
                 if (this.messages[i]._id === message._id) {
                     this.messages.splice(i, 1);

@@ -12,7 +12,7 @@ export class MessageService {
                 private authenticationService: AuthenticationService) {
     }
 
-    public save(message: Message): Promise<Message> {
+    public update(message: Message): Promise<Message> {
         let url = `${this.apiEndPoint}/${message._id}`;
 
         let headers = new Headers({
@@ -26,14 +26,17 @@ export class MessageService {
                 let messageData = response.json();
                 return new Message(messageData._id,
                     messageData.title,
-                    messageData.body,
                     messageData.type,
-                    messageData.seen);
+                    messageData.category,
+                    messageData.seen,
+                    messageData.recipientData,
+                    messageData.template,
+                    messageData.creationDate);
             })
             .catch(this.handleError);
     }
 
-    public delete(message: Message) {
+    public remove(message: Message) {
         let url = `${this.apiEndPoint}/${message._id}`;
         let headers = new Headers({
             'Content-Type': 'application/json',
@@ -57,12 +60,14 @@ export class MessageService {
             .toPromise()
             .then((response: Response) => {
                 let messageData = response.json();
-                return new Message(
-                    messageData._id,
+                return new Message(messageData._id,
                     messageData.title,
-                    messageData.body,
                     messageData.type,
-                    messageData.seen);
+                    messageData.category,
+                    messageData.seen,
+                    messageData.recipientData,
+                    messageData.template,
+                    messageData.creationDate);
             })
             .catch(this.handleError);
     }
@@ -83,10 +88,12 @@ export class MessageService {
                     messages.push(
                         new Message(messageData._id,
                             messageData.title,
-                            messageData.body,
                             messageData.type,
+                            messageData.category,
                             messageData.seen,
-                            messageData.author));
+                            messageData.recipientData,
+                            messageData.template,
+                            messageData.creationDate));
                 });
                 return messages;
             })
@@ -109,13 +116,12 @@ export class MessageService {
                     messages.push(
                         new Message(messageData._id,
                             messageData.title,
-                            messageData.body,
                             messageData.type,
+                            messageData.category,
                             messageData.seen,
-                            messageData.author,
-                            null,
-                            messageData.template));
-                    console.log(messageData.template);
+                            messageData.recipientData,
+                            messageData.template,
+                            messageData.creationDate));
                 });
                 return messages;
             })

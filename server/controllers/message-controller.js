@@ -3,14 +3,21 @@ let Message = require('../models/message/message');
 module.exports.getAll = function (req, res) {
 	let userId = req.payload._id;
 
-	Message.find({recipient: userId}).populate('author').exec((err, messages) => {
-		messages.forEach(message => {
-			res.render('message-join', { title: message.title, message: message.body }, (err, str) => {
-				message.template = str;
+	Message.find({recipient: userId})
+		.populate('author')
+		.populate('recipient')
+		.exec()
+		.then((messages) => {
+			messages.forEach(message => {
+				res.render(message.type, {
+					recipient: message.recipient,
+					data: message.data
+				}, (err, str) => {
+					message.template = str;
+				});
 			});
+			res.send(messages);
 		});
-		res.send(messages);
-	});
 };
 
 module.exports.getUnseen = function (req, res) {
