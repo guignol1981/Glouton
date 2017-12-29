@@ -87,7 +87,7 @@ module.exports.create = function (req, res) {
 	}
 
 	newMeal.save().then(meal => {
-		Meal.populate(meal, {path: "cook"}).then(book => res.send(book));
+		Meal.populate(meal, {path: "cook"}).then(cook => res.send(cook));
 	});
 };
 
@@ -116,7 +116,7 @@ module.exports.join = function (req, res) {
 											joinedBy: user,
 										}
 									});
-									res.send(meal);
+									Meal.populate(meal, {path: "participants"}).then(meal => res.send(meal));
 								});
 						});
 				});

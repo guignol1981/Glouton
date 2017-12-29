@@ -18,19 +18,20 @@ export class UserService {
 
         return this.http.get('/api/profile', {headers: headers})
             .toPromise()
-            .then((response: Response) => {
-                let userData = response.json();
-                return new User(userData._id,
-                    userData.name,
-                    userData.email,
-                    userData.creationDate);
-            })
+            .then((response: Response) => this._desirializeUser(response.json()))
             .catch(this.handleError);
     }
 
     private handleError(error: any) {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);
+    }
+
+    private _desirializeUser(data: any): User {
+        return new User(data._id,
+            data.name,
+            data.email,
+            data.creationDate);
     }
 
 }

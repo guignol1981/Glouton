@@ -176,7 +176,6 @@ export class MealService {
             data.minParticipants,
             data.maxParticipants,
             data.status);
-        console.log(meal);
         return meal;
     }
 
