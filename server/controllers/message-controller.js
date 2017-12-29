@@ -13,7 +13,7 @@ module.exports.getAll = function (req, res) {
 					author: message.author,
 					recipient: message.recipient,
 					data: message.data,
-					thread: message.thread
+					thread: message.thread.reverse()
 				}, (err, str) => {
 					message.template = str;
 				});

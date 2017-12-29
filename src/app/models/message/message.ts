@@ -8,7 +8,7 @@ export class Message {
                 public recipient: User = null,
                 public author: User = null,
                 public template: string = null,
-                public creationDate: Date = null,
+                public creationDate: Date = new Date(),
                 public thread: string[] = []) {
     }
 }

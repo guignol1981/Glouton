@@ -45,12 +45,14 @@ export class PrivateMessageComponent implements OnInit {
     onMessageFormSubmit(messageCloseButton) {
         let message = new Message();
         this.thread.push(this.form.get('body').value);
+
         message.recipient = this.recipient;
         message.title = this.form.get('title').value;
         message.thread = this.thread;
         message.author = this.author;
         message.category = 'secondary';
         message.type = 'message-private';
+
         this.messageService.send(message).then(() => {
             this.toastr.success('Message sent!', 'Success!');
             messageCloseButton.click();

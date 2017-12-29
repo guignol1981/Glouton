@@ -118,6 +118,7 @@ export class MessageService {
             new User(data.recipient._id, data.recipient.name, data.recipient.email, data.recipient.creationDate),
             author,
             data.template,
-            data.creationDate);
+            data.creationDate,
+            data.thread);
     }
 }

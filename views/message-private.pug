@@ -1,4 +1,7 @@
 div.message
+    p #{thread[0]}
     ul
-        each val in thread
-            li= val
+        each val, index in thread
+            if index == 0
+            else
+                li this is a reply to #{val}
