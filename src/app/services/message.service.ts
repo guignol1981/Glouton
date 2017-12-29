@@ -3,6 +3,7 @@ import {Http, Response, Headers} from "@angular/http";
 import {Message} from "../models/message/message";
 import {AuthenticationService} from "./authentication.service";
 import {Observable} from "rxjs/Observable";
+import {User} from "../models/user/user";
 
 @Injectable()
 export class MessageService {
@@ -23,15 +24,7 @@ export class MessageService {
         return this.http.put(url, JSON.stringify(message), {headers: headers})
             .toPromise()
             .then((response: Response) => {
-                let messageData = response.json();
-                return new Message(messageData._id,
-                    messageData.title,
-                    messageData.type,
-                    messageData.category,
-                    messageData.seen,
-                    messageData.recipientData,
-                    messageData.template,
-                    messageData.creationDate);
+                return this._desirializeMessage(response.json());
             })
             .catch(this.handleError);
     }
@@ -59,15 +52,7 @@ export class MessageService {
         return this.http.post(url, JSON.stringify(message), {headers: headers})
             .toPromise()
             .then((response: Response) => {
-                let messageData = response.json();
-                return new Message(messageData._id,
-                    messageData.title,
-                    messageData.type,
-                    messageData.category,
-                    messageData.seen,
-                    messageData.recipientData,
-                    messageData.template,
-                    messageData.creationDate);
+                return this._desirializeMessage(response.json());
             })
             .catch(this.handleError);
     }
@@ -85,15 +70,7 @@ export class MessageService {
             .then((response: Response) => {
                 let messages = [];
                 response.json().forEach((messageData) => {
-                    messages.push(
-                        new Message(messageData._id,
-                            messageData.title,
-                            messageData.type,
-                            messageData.category,
-                            messageData.seen,
-                            messageData.recipientData,
-                            messageData.template,
-                            messageData.creationDate));
+                    messages.push(this._desirializeMessage(messageData));
                 });
                 return messages;
             })
@@ -113,15 +90,7 @@ export class MessageService {
             .then((response: Response) => {
                 let messages = [];
                 response.json().forEach((messageData) => {
-                    messages.push(
-                        new Message(messageData._id,
-                            messageData.title,
-                            messageData.type,
-                            messageData.category,
-                            messageData.seen,
-                            messageData.recipientData,
-                            messageData.template,
-                            messageData.creationDate));
+                    messages.push(this._desirializeMessage(messageData));
                 });
                 return messages;
             })
@@ -131,5 +100,25 @@ export class MessageService {
     private handleError(error: any) {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);
+    }
+
+    private _desirializeMessage(data: any): Message {
+        let author = null;
+        if (data.author) {
+            author = new User(data.author._id,
+                data.author.name,
+                data.author.email,
+                data.author.creationDate);
+        }
+        return new Message(data._id,
+            data.title,
+            data.type,
+            data.category,
+            data.seen,
+            new User(data.recipient._id, data.recipient.name, data.recipient.email, data.recipient.creationDate),
+            author,
+            data.template,
+            data.creationDate,
+            data.thread);
     }
 }

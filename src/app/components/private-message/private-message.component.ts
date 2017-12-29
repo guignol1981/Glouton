@@ -13,7 +13,7 @@ import {ToastsManager} from "ng2-toastr";
 export class PrivateMessageComponent implements OnInit {
     @Input() recipient: User;
     @Input() author: User;
-    @Input() trailingBody = '';
+    @Input() thread = [];
 
     form: FormGroup;
 
@@ -28,32 +28,35 @@ export class PrivateMessageComponent implements OnInit {
     }
 
     initForm() {
-        // this.form = new FormGroup({
-        //     title: new FormControl('', Validators.minLength(5)),
-        //     body: new FormControl('', Validators.minLength(5))
-        // });
+        this.form = new FormGroup({
+            title: new FormControl('', Validators.minLength(5)),
+            body: new FormControl('', Validators.minLength(5))
+        });
     }
 
     @Input()
-    initMessage(author: User, recipient: User, trailingBody = '') {
+    initMessage(author: User, recipient: User, thread) {
         this.author = author;
         this.recipient = recipient;
-        this.trailingBody = trailingBody;
+        this.thread = thread;
         this.initForm();
     }
 
     onMessageFormSubmit(messageCloseButton) {
-        // let message = new Message();
-        // message.recipient = this.recipient;
-        // message.title = this.form.get('title').value;
-        // message.body.push(this.form.get('body').value);
-        // message.body.push(this.trailingBody);
-        // message.author = this.author;
-        // message.type = 'primary';
-        // this.messageService.send(message).then(() => {
-        //     this.toastr.success('Message sent!', 'Success!');
-        //     messageCloseButton.click();
-        // });
+        let message = new Message();
+        this.thread.push(this.form.get('body').value);
+
+        message.recipient = this.recipient;
+        message.title = this.form.get('title').value;
+        message.thread = this.thread;
+        message.author = this.author;
+        message.category = 'secondary';
+        message.type = 'message-private';
+
+        this.messageService.send(message).then(() => {
+            this.toastr.success('Message sent!', 'Success!');
+            messageCloseButton.click();
+        });
     }
 
     onMessageFormClose() {

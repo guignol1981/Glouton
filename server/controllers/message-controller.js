@@ -10,8 +10,10 @@ module.exports.getAll = function (req, res) {
 		.then((messages) => {
 			messages.forEach(message => {
 				res.render(message.type, {
+					author: message.author,
 					recipient: message.recipient,
-					data: message.data
+					data: message.data,
+					thread: message.thread.reverse()
 				}, (err, str) => {
 					message.template = str;
 				});
@@ -42,7 +44,7 @@ module.exports.create = function (req, res) {
 	delete req.body._id;
 	let message = new Message(req.body);
 	message.save().then(savedMessage => {
-		res.send(savedMessage);
+		Message.findById(savedMessage._id).populate('author').populate('recipient').exec().then(doc => res.send(doc));
 	});
 };
 
