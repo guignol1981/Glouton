@@ -36,6 +36,11 @@ export class InboxComponent implements OnInit {
         return 'list-group-item mt-1 list-group-item-' + message.category;
     }
 
+    reply(message: Message, initModalButton) {
+        this.privateMessage.initMessage(this.user, message.author, message.thread);
+        initModalButton.click();
+    }
+
     markAsSeen(message: Message) {
         if (! message.seen) {
             message.seen = true;

@@ -10,7 +10,8 @@ let messageSchema = new Schema({
 	type: String,
 	category: {type: String, default: 'secondary'},
 	template: String,
-	data: Schema.Types.Mixed
+	data: Schema.Types.Mixed,
+	thread: {type: [String], default: []}
 });
 
 let Message = mongoose.model('Message', messageSchema);
