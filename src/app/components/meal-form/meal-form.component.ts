@@ -68,7 +68,7 @@ export class MealFormComponent implements OnInit {
         this.form = new FormGroup({
             title: new FormControl(this.meal.title, [Validators.required, Validators.minLength(5)]),
             description: new FormControl(this.meal.description, [Validators.required, Validators.minLength(15)]),
-            date: new FormControl(this.meal.date, Validators.required),
+            deliveryDate: new FormControl(this.meal.deliveryDate, Validators.required),
             limitDate: new FormControl(this.meal.limitDate, Validators.required),
             minParticipants: new FormControl(this.meal.minParticipants, [Validators.required, Validators.min(1)]),
             maxParticipants: new FormControl(this.meal.maxParticipants, [Validators.required, Validators.min(1)])
@@ -80,7 +80,7 @@ export class MealFormComponent implements OnInit {
         let saveMeal = function (imageData) {
             let meal = <Meal>me.form.value;
             meal._id = me.meal._id;
-            meal.imageUrl = imageData ? JSON.parse(imageData['_body']).imageUrl : meal.imageUrl;
+            meal.image = imageData ? JSON.parse(imageData['_body']).image : meal.image;
             meal.participants = me.meal.participants;
             meal.cook = me.user;
             me.mealService.save(meal)

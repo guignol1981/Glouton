@@ -2,14 +2,14 @@ import {AbstractControl} from '@angular/forms';
 export class MealFormDateValidation {
 
     static LogicDatesSelection(AC: AbstractControl) {
-        let dateControl = AC.get('date');
+        let deliveryDateControl = AC.get('deliveryDate');
         let limitDateControl = AC.get('limitDate');
         let today = Date.now();
         let deliveryDateErrors = {};
         let limitDateErrors = {};
 
-        if (dateControl.value <= today || limitDateControl.value <= today || dateControl.value <= limitDateControl.value) {
-            if (dateControl.value <= today) {
+        if (deliveryDateControl.value <= today || limitDateControl.value <= today || deliveryDateControl.value <= limitDateControl.value) {
+            if (deliveryDateControl.value <= today) {
                 deliveryDateErrors['DateLessOrEqualThanToday'] = true;
             } else {
                 deliveryDateErrors['DateLessOrEqualThanToday'] = false;
@@ -21,14 +21,14 @@ export class MealFormDateValidation {
                 limitDateErrors['DateLessOrEqualThanToday'] = false;
             }
 
-            if (dateControl.value <= limitDateControl.value) {
+            if (deliveryDateControl.value <= limitDateControl.value) {
                 deliveryDateErrors['LogicDatesSelection'] = true;
                 limitDateErrors['LogicDatesSelection'] = true;
             } else {
                 deliveryDateErrors['LogicDatesSelection'] = false;
                 limitDateErrors['LogicDatesSelection'] = false;
             }
-            dateControl.setErrors(deliveryDateErrors);
+            deliveryDateControl.setErrors(deliveryDateErrors);
             limitDateControl.setErrors(limitDateErrors);
         } else {
             return null;

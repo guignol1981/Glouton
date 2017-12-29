@@ -1,31 +1,21 @@
 import {User} from "../user/user";
 export class Meal {
-    public cook: User;
-    public participants: User[] = [];
-
     constructor(public _id: string = null,
                 public title: string = '',
                 public description: string = '',
-                public imageUrl: string = '',
-                cookData: any = null,
-                public date: Date = new Date(),
+                public cook: User = new User(),
+                public participants: User[] = [],
+                public image: string = '',
+                public deliveryDate: Date = new Date(),
                 public limitDate: Date = new Date(),
-                public minParticipants: number = 0,
-                public maxParticipants: number = 0,
-                participantsData: any[] = [],
-                public creationDate: Date = new Date()) {
-        if (cookData) {
-            this.cook = new User(cookData._id, cookData.name, cookData.email);
-        }
-        if (participantsData) {
-            participantsData.forEach(data => {
-                this.participants.push(new User(data._id, data.name, data.email));
-            });
-        }
+                public creationDate: Date = new Date(),
+                public minParticipants: Number = null,
+                public maxParticipants: Number = null,
+                public status: string = '') {
     }
 
     isConfirmed() {
-        return this.participants.length >= this.minParticipants && this.limitDate < Date.now();
+        return (this.participants.length >= this.minParticipants) && this.limitDate.getTime() < Date.now();
     }
 
     canJoin(user: User) {

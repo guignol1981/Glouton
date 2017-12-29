@@ -45,7 +45,7 @@ module.exports.create = function (req, res) {
 				function () {
 					console.log('DEBUG - feed:message: Saved to disk image attached by user:', userUploadedImagePath);
 					res.status(200).json({
-						msg: 'File saved', imageUrl: uniqueRandomImageName +
+						msg: 'File saved', image: uniqueRandomImageName +
 						'.' +
 						imageTypeDetected[1]
 					});
@@ -63,8 +63,7 @@ module.exports.create = function (req, res) {
 
 module.exports.get = function (req, res) {
 	Meal.findById(req.params.id, (err, meal) => {
-		let imageUrl = meal.imageUrl;
-		let img = fs.readFileSync('server/files/' + imageUrl);
+		let img = fs.readFileSync('server/files/' + meal.image);
 
 		res.writeHead(200, {'Content-Type': 'image/gif'});
 		res.end(img, 'binary');

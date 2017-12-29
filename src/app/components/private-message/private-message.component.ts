@@ -28,10 +28,10 @@ export class PrivateMessageComponent implements OnInit {
     }
 
     initForm() {
-        this.form = new FormGroup({
-            title: new FormControl('', Validators.minLength(5)),
-            body: new FormControl('', Validators.minLength(5))
-        });
+        // this.form = new FormGroup({
+        //     title: new FormControl('', Validators.minLength(5)),
+        //     body: new FormControl('', Validators.minLength(5))
+        // });
     }
 
     @Input()
@@ -43,17 +43,17 @@ export class PrivateMessageComponent implements OnInit {
     }
 
     onMessageFormSubmit(messageCloseButton) {
-        let message = new Message();
-        message.recipient = this.recipient;
-        message.title = this.form.get('title').value;
-        message.body.push(this.form.get('body').value);
-        message.body.push(this.trailingBody);
-        message.author = this.author;
-        message.type = 'primary';
-        this.messageService.send(message).then(() => {
-            this.toastr.success('Message sent!', 'Success!');
-            messageCloseButton.click();
-        });
+        // let message = new Message();
+        // message.recipient = this.recipient;
+        // message.title = this.form.get('title').value;
+        // message.body.push(this.form.get('body').value);
+        // message.body.push(this.trailingBody);
+        // message.author = this.author;
+        // message.type = 'primary';
+        // this.messageService.send(message).then(() => {
+        //     this.toastr.success('Message sent!', 'Success!');
+        //     messageCloseButton.click();
+        // });
     }
 
     onMessageFormClose() {

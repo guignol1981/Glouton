@@ -1,0 +1,10 @@
+div.message
+    img(src="../../assets/bg1.jpg" alt="Image Title")
+    p.test.font-weight-bold Hello #{recipient.name} !
+    p The lunch propisition
+        a(href='/meal-details/' + data.meal._id) &nbsp #{data.meal.title}.
+        | that you joined just been updated. Therefor, we removed you from participant list.
+        | Please check the details and rejoin the proposition if its still good with you.
+
+    p.font-italic Sincerly yours,
+    p The Lunch box team

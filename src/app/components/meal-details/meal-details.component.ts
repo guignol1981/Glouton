@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {MealService} from "../../models/meal/meal.service";
 import {Meal} from "../../models/meal/meal";
 import {ActivatedRoute, Params} from "@angular/router";
@@ -6,6 +6,7 @@ import {MealImageService} from "../../services/meal-image.service";
 import {UserService} from "../../models/user/user.service";
 import {User} from "../../models/user/user";
 import {MealFormComponent} from "../meal-form/meal-form.component";
+import {ToastsManager} from "ng2-toastr";
 
 @Component({
     selector: 'app-meal-details',
@@ -20,7 +21,10 @@ export class MealDetailsComponent implements OnInit {
     constructor(private mealService: MealService,
                 private activatedRoute: ActivatedRoute,
                 public imageService: MealImageService,
-                public userService: UserService) {
+                public userService: UserService,
+                public toastr: ToastsManager,
+                vcr: ViewContainerRef) {
+        this.toastr.setRootViewContainerRef(vcr);
     }
 
     ngOnInit() {
@@ -34,6 +38,22 @@ export class MealDetailsComponent implements OnInit {
                     });
             });
         });
+    }
+
+    joinMeal() {
+        this.mealService.join(this.meal)
+            .then(meal => {
+                this.meal = meal;
+                this.toastr.success('Meal Joined!', 'Success!');
+            });
+    }
+
+    leaveMeal() {
+        this.mealService.leave(this.meal)
+            .then(data => {
+                this.meal = data;
+                this.toastr.success('Left meal!', 'Success!');
+            });
     }
 
     editMeal(button) {

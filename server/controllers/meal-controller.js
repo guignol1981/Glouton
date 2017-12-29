@@ -2,58 +2,46 @@ let Meal = require('../models/meal/meal');
 let User = require('../models/user/user');
 let Message = require('../models/message/message');
 
-let handleError = function (err, res, callback) {
-	if (err) {
-		res.status(500).json(err);
-	} else {
-		callback();
-	}
-};
-
 module.exports.get = function (req, res) {
 	let id = req.params.id;
 
-	Meal.findById(id)
-		.populate('cook')
-		.populate('participants')
-		.exec((err, meal) => {
-			handleError(err, res, () => res.send(meal));
+	Meal.findById(id).populate('cook').populate('participants').exec()
+		.then(meal => {
+			res.send(meal)
 		});
 };
 
 module.exports.getAll = function (req, res) {
-	Meal.find({status: 'active'})
-		.populate('cook')
-		.populate('participants')
-		.exec((err, meals) => {
-			handleError(err, res, () => res.send(meals));
+	Meal.find({status: 'active'}).populate('cook').populate('participants')
+		.then(meals => {
+			res.send(meals)
 		});
 };
 
 module.exports.update = function (req, res) {
 	let mealId = req.params.id;
 
-	Meal.findById(mealId).populate('cook').populate('participants').exec((err, meal) => {
-		handleError(err, res, () => {
-			meal.title = req.body['title'];
-			meal.description = req.body['description'];
-			meal.date = req.body['date'];
-			meal.limitDate = req.body['limitDate'];
-			meal.minParticipants = req.body['minParticipants'];
-			meal.maxParticipants = req.body['maxParticipants'];
-			meal.participants.forEach(participant => {
-				Message.create({
-					recipient: participant._id,
-					title: `${participant.name} the meal ${meal.title} edited`,
-					body: `we removed you from participants list`,
-					creationDate: Date.now(),
-					type: 'danger'
-				});
+	Meal.findById(mealId).populate('cook').populate('participants').exec().then(meal => {
+		meal.title = req.body['title'];
+		meal.description = req.body['description'];
+		meal.deliveryDate = req.body['deliveryDate'];
+		meal.limitDate = req.body['limitDate'];
+		meal.minParticipants = req.body['minParticipants'];
+		meal.maxParticipants = req.body['maxParticipants'];
+		meal.participants.forEach(participant => {
+			Message.create({
+				recipient: participant._id,
+				title: `${participant.name} Some modification has been made to the lunch proposition ${meal.title}`,
+				type: 'message-meal-rejected-from',
+				category: 'warning',
+				data: {
+					meal: meal
+				}
 			});
-			meal.participants = [];
-			meal.save((err, savedMeal) => {
-				handleError(err, res, () => res.send(savedMeal));
-			});
+		});
+		meal.participants = [];
+		meal.save().then(updatedMeal => {
+			res.send(updatedMeal);
 		});
 	});
 };
@@ -85,7 +73,7 @@ module.exports.create = function (req, res) {
 	let newMeal = new Meal(req.body);
 	let errors = [];
 
-	if (newMeal.date <= newMeal.limitDate) {
+	if (newMeal.deliveryDate <= newMeal.limitDate) {
 		errors.push('limit date should be lower than delivery date');
 	}
 
@@ -95,12 +83,11 @@ module.exports.create = function (req, res) {
 
 	if (errors.length > 0) {
 		res.send(500).json({msg: errors});
+		return;
 	}
 
-	newMeal.save((err, doc) => {
-		handleError(err, res, () => {
-			Meal.populate(doc, {path: "cook"}, (err, book) => res.send(book));
-		});
+	newMeal.save().then(meal => {
+		Meal.populate(meal, {path: "cook"}).then(cook => res.send(cook));
 	});
 };
 
@@ -122,14 +109,14 @@ module.exports.join = function (req, res) {
 									Message.create({
 										recipient: cook._id,
 										title: `${user.name} has joined your meal ${meal.title}`,
-										type: 'message-join',
+										type: 'message-meal-join',
 										category: 'success',
 										data: {
 											meal: meal,
 											joinedBy: user,
 										}
 									});
-									res.send(meal);
+									Meal.populate(meal, {path: "participants"}).then(meal => res.send(meal));
 								});
 						});
 				});
@@ -142,12 +129,10 @@ module.exports.leave = function (req, res) {
 
 	Meal.findById(mealId)
 		.populate('cook')
-		.exec((err, meal) => {
-			handleError(err, res, () => {
+		.exec().then(meal => {
 				meal.removeParticipants(userId);
-				meal.save((err, meal) => {
-					handleError(err, res, () => res.send(meal));
+				meal.save().then(meal => {
+					res.send(meal);
 				});
-			});
 		});
 };

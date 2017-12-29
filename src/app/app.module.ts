@@ -49,7 +49,6 @@ export class CustomToastOption extends ToastOptions {
         ProfileComponent,
         LunchBoxComponent,
         InboxComponent,
-        PrivateMessageComponent,
         ImageCropperComponent
     ],
     imports: [

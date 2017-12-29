@@ -13,6 +13,10 @@ let userSchema = new Schema({
 		type: String,
 		required: true
 	},
+	creationDate: {
+		type: Date,
+		default: Date.now()
+	},
 	hash: String,
 	salt: String
 });
