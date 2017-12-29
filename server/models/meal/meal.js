@@ -5,10 +5,9 @@ let User = require('../user/user');
 let mealSchema = new Schema({
 	title: String,
 	description: String,
-	imageUrl: String,
-	date: Date,
+	image: String,
+	deliveryDate: Date,
 	limitDate: Date,
-	limitDateToJoin: Date,
 	cook: {type: Schema.Types.ObjectId, ref: 'User'},
 	minParticipants: Number,
 	maxParticipants: Number,

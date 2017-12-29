@@ -54,16 +54,16 @@
                         </div>
                         <div class="row">
                             <div class="col form-group">
-                                <label for="date">Delivery date</label>
-                                <ng-datepicker id="date" formControlName="date"
-                                               aria-describedby="dateHelper"></ng-datepicker>
-                                <small id="dateHelper" class="form-text text-muted">The date you will deliver this
+                                <label for="deliveryDate">Delivery date</label>
+                                <ng-datepicker id="deliveryDate" formControlName="deliveryDate"
+                                               aria-describedby="deliveryDateHelper"></ng-datepicker>
+                                <small id="deliveryDateHelper" class="form-text text-muted">The date you will deliver this
                                     meal
                                 </small>
-                                <small *ngIf="!form.get('date').pristine && form.get('date').hasError('LogicDatesSelection')"
+                                <small *ngIf="!form.get('deliveryDate').pristine && form.get('deliveryDate').hasError('LogicDatesSelection')"
                                        class="form-text text-danger">Delivery date should be later than limit date.
                                 </small>
-                                <small *ngIf="!form.get('date').pristine && form.get('date').hasError('DateLessOrEqualThanToday')"
+                                <small *ngIf="!form.get('deliveryDate').pristine && form.get('deliveryDate').hasError('DateLessOrEqualThanToday')"
                                        class="form-text text-danger">Delivery date should be later than today
                                 </small>
                             </div>
