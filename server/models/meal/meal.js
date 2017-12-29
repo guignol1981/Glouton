@@ -21,7 +21,7 @@ mealSchema.methods.userIsCook = function (userId) {
 };
 
 mealSchema.methods.addParticipant = function (userId) {
-	if (this.limitDate < Date.now()) {
+	if (this.limitDate < new Date()) {
 		throw 'its too late to join this meal';
 	}
 
@@ -45,7 +45,7 @@ mealSchema.methods.addParticipant = function (userId) {
 };
 
 mealSchema.methods.removeParticipants = function (userId) {
-	if (this.limitDate < Date.now()) {
+	if (this.limitDate < new Date()) {
 		throw 'its too late to leave this meal';
 	}
 
@@ -58,26 +58,26 @@ mealSchema.methods.removeParticipants = function (userId) {
 	}
 };
 
-mealSchema.statics.getLimitDateReached = function (callback) {
-	let yesterday = new Date();
-	yesterday = yesterday.setDate(yesterday.getDate() - 1);
-	let tomorrow = new Date();
-	tomorrow = tomorrow.setDate(tomorrow.getDate() + 1);
-
+mealSchema.statics.getNewFailed = function (callback) {
 	this.find({
-		"limitDate": {
-			"$gte": yesterday,
-			"$lt": tomorrow
-		}
-	}).populate('cook')
-		.populate('participants')
-		.exec((err, meals) => {
-			if (err) {
-				throw err;
+		limitDate: {
+			"$lt": new Date()
+		},
+		status: 'pending'
+	}).populate('cook').populate('participants').exec().then(meals => {
+		let failed = [];
+		meals.forEach(meal => {
+			if (meal.participants.length < meal.minParticipants) {
+				failed.push(meal);
 			}
-			callback(meals);
 		});
+		callback(failed);
+	});
 };
+
+mealSchema.statics.getNewConfirmed = function(callback) {
+
+}
 
 let Meal = mongoose.model('Meal', mealSchema);
 

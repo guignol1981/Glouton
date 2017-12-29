@@ -35,7 +35,7 @@ app.use(function (err, req, res) {
 });
 
 //daily jobs
-schedule.scheduleJob('13 * * *', function(){
+schedule.scheduleJob('1 * * * * *', function(){
 	scheduledJobs.execute();
 });
 

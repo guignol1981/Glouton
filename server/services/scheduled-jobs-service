@@ -1,55 +1,22 @@
 let Meal = require('../models/meal/meal');
+let Message = require('../models/message/message');
 let mailer = require('../services/mailer-service');
 
 let updateMealStatus = function () {
-	Meal.getLimitDateReached((meals) => {
-		meals.forEach(meal => {
-			let confirmed = meal.participants.length >= meal.minParticipants;
-			
-			if (confirmed) {
-				mailer.sendMail({
-					from: 'vincentguillemette1981@gmail.com	',
-					to: meal.cook.email,
-					subject: ` ${meal.cook.name}, your meal named "${meal.title}" is confirmed!`,
-					text: 'Congrats! You can go on cooking',
-					html: '<b>Congrats! You can go on cooking, we take care of informing the participants</b>'
+	Meal.getNewFailed(failed => {
+		failed.forEach(failedMeal => {
+			failedMeal.status = 'canceled';
+			failedMeal.save().then(meal => {
+				Message.create({
+					recipient: meal.cook._id,
+					title: `${meal.cook.name} your lunch proposition ${meal.title} was canceled`,
+					type: 'message-meal-canceled',
+					category: 'danger',
+					data: {
+						meal: meal
+					}
 				});
-
-				meal.status = 'confirmed';
-				meal.save();
-
-				meal.participants.forEach(participant => {
-					mailer.sendMail({
-						from: 'vincentguillemette1981@gmail.com	',
-						to: participant.email,
-						subject: ` ${participant.name}, the meal named "${meal.title}" that your joined is confirmed!`,
-						text: 'The lunch will be delivered on time and don\'t forget to bring your contribution to the cook',
-						html: '<b>The lunch will be delivered on time and don\'t forget to bring your contribution to the cook</b>'
-					});
-				});
-			} else {
-				mailer.sendMail({
-					from: 'vincentguillemette1981@gmail.com	',
-					to: meal.cook.email,
-					subject: ` ${meal.cook.name}, your meal named "${meal.title}" was canceled!`,
-					text: 'We are sorry to inform you that not enough participants joined your proposition.',
-					html: '<b>We are sorry to inform you that not enough participants joined your proposition</b>'
-				});
-
-				meal.participants.forEach(participant => {
-					mailer.sendMail({
-						from: 'vincentguillemette1981@gmail.com	',
-						to: participant.email,
-						subject: ` ${participant.name}, the meal named "${meal.title}" that your joined is canceled!`,
-						text: 'We are sorry to inform you that not enough participants joined the proposition.',
-						html: 'We are sorry to inform you that not enough participants joined the proposition.</b>'
-					});
-				});
-
-				meal.status = 'canceled';
-				meal.participants = [];
-				meal.save();
-			}
+			});
 		});
 	});
 	console.log('updateMealStatus job done');
@@ -72,5 +39,5 @@ let suggestMealOnNothingPlannedDays = function () {
 };
 
 module.exports.execute = function () {
-	// updateMealStatus();
+	updateMealStatus();
 };
