@@ -6,7 +6,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development
 
-Run `nodemon index.js` and `ng build --watch`.  Navigate to `http://localhost:3000/` You must have an Mongo instance running; 
+Run `nodemon index.js` and `ng build --watch`.  Navigate to `http://localhost:3000/` You must have a Mongo instance running; 
 
 ## Development server
 
