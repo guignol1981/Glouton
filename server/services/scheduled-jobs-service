@@ -3,10 +3,10 @@ let Message = require('../models/message/message');
 let mailer = require('../services/mailer-service');
 
 let updateMealStatus = function () {
-	Meal.getNewFailed(failed => {
-		failed.forEach(failedMeal => {
-			failedMeal.status = 'canceled';
-			failedMeal.save().then(meal => {
+	Meal.getNewFailed(failedList => {
+		failedList.forEach(failed => {
+			failed.status = 'canceled';
+			failed.save().then(meal => {
 				Message.create({
 					recipient: meal.cook._id,
 					title: `${meal.cook.name} your lunch proposition ${meal.title} was canceled`,
@@ -15,6 +15,44 @@ let updateMealStatus = function () {
 					data: {
 						meal: meal
 					}
+				});
+				meal.participants.forEach(participant => {
+					Message.create({
+						recipient: participant._id,
+						title: `${participant.name}, the lunch proposition ${meal.title} that you joined is canceled`,
+						type: 'message-meal-participation-canceled',
+						category: 'danger',
+						data: {
+							meal: meal
+						}
+					});
+				});
+			});
+		});
+	});
+	Meal.getNewConfirmed(confirmedList => {
+		confirmedList.forEach(confirmed => {
+			confirmed.status = 'confirmed';
+			confirmed.save().then(meal => {
+				Message.create({
+					recipient: meal.cook._id,
+					title: `${meal.cook.name} your lunch proposition ${meal.title} was confirmed`,
+					type: 'message-meal-confirmed',
+					category: 'primary',
+					data: {
+						meal: meal
+					}
+				});
+				meal.participants.forEach(participant => {
+					Message.create({
+						recipient: participant._id,
+						title: `${participant.name}, the lunch proposition ${meal.title} that you joined is confirmed!`,
+						type: 'message-meal-participation-confirmed',
+						category: 'primary',
+						data: {
+							meal: meal
+						}
+					});
 				});
 			});
 		});

@@ -76,8 +76,21 @@ mealSchema.statics.getNewFailed = function (callback) {
 };
 
 mealSchema.statics.getNewConfirmed = function(callback) {
-
-}
+	this.find({
+		limitDate: {
+			"$lt": new Date()
+		},
+		status: 'pending'
+	}).populate('cook').populate('participants').exec().then(meals => {
+		let confirmed = [];
+		meals.forEach(meal => {
+			if (meal.participants.length >= meal.minParticipants) {
+				confirmed.push(meal);
+			}
+		});
+		callback(confirmed);
+	});
+};
 
 let Meal = mongoose.model('Meal', mealSchema);
 

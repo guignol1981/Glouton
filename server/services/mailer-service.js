@@ -2,11 +2,11 @@ let nodemailer = require('nodemailer');
 
 // usage example
 // mailer.sendMail({
-// 	from: 'vincentguillemette1981@gmail.com	',
+// 	from: 'admin@lunch=box-group.com',
 // 	to: meal.cook.email,
 // 	subject: ` ${meal.cook.name}, your meal named "${meal.title}" is confirmed!`,
 // 	text: 'Congrats! You can go on cooking',
-// 	html: '<b>Congrats! You can go on cooking, we take care of informing the participants</b>'
+// 	html: use pug template
 // });
 
 var transporter = nodemailer.createTransport({
