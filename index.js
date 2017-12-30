@@ -34,8 +34,8 @@ app.use(function (err, req, res) {
 	}
 });
 
-//daily jobs
-schedule.scheduleJob('1 * * * * *', function(){
+//daily jobs at noon todo add monthly jobs
+schedule.scheduleJob('12 * * *', function(){
 	scheduledJobs.execute();
 });
 

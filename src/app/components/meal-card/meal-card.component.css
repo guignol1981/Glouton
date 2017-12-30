@@ -18,3 +18,7 @@ img,
     opacity: 1;
 }
 
+.card-shadow {
+    box-shadow: 2px 2px 2px 0px #818182;
+}
+

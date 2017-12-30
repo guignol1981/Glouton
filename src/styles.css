@@ -8,6 +8,14 @@
     z-index: 1;
 }
 
+.global-shadow {
+    box-shadow: 2px 2px 2px 0px #818182;
+}
+
+.global-inner-shadow {
+    box-shadow: inset 2px 2px 1px grey;
+}
+
 .message {
     position: relative;
     overflow: hidden;

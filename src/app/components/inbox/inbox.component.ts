@@ -31,9 +31,9 @@ export class InboxComponent implements OnInit {
 
     getMessageClass(message: Message) {
         if (message.seen) {
-            return 'list-group-item mt-1 list-group-item-secondary';
+            return 'list-group-item mt-1 list-group-item-secondary global-shadow';
         }
-        return 'list-group-item mt-1 list-group-item-' + message.category;
+        return 'global-shadow list-group-item mt-1 list-group-item-' + message.category;
     }
 
     reply(message: Message, initModalButton) {

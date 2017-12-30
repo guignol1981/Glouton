@@ -5,30 +5,36 @@
         <ul class="list-group">
             <li *ngFor="let message of messages" [class]="getMessageClass(message)">
                 <div>
-                    From: <span
-                        class="font-weight-bold">{{message.author? message.author.name: 'Lunch box group'}}</span>
-                </div>
-                <div>
-                    <span (click)="markAsSeen(message)" data-toggle="collapse" [attr.href]="'#'+message._id"
-                          aria-expanded="false"
-                          aria-controls="collapseExample">
-                        Title: {{message.title}} <br>
-                        Sent on {{message.creationDate | date}}
-                    </span>
-                    <span class="float-right">
-                        <a (click)="remove(message)">delete</a>
-                    </span>
-                </div>
-                <div class="collapse mt-1" [id]="message._id">
-                    <div class="card">
-                        <div class="card-body">
-                            <div [innerHtml]="message.template">{{message.template}}</div>
+                    <div>
+                        From: <span
+                            class="font-weight-bold">{{message.author? message.author.name: 'Lunch box group'}}</span>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <span (click)="markAsSeen(message)" data-toggle="collapse" [attr.href]="'#'+message._id"
+                                  aria-expanded="false"
+                                  aria-controls="collapseExample">
+                                Title: {{message.title}} <br>
+                                Sent on {{message.creationDate | date}}
+                            </span>
                         </div>
-                        <div *ngIf="message.author" class="card-footer">
-                            <div class="text-right">
-                                <button (click)="reply(message, initModal)" class="btn btn-primary btn-sm">reply
-                                </button>
-                                <button data-toggle="modal" data-target="#messageModal" hidden #initModal></button>
+                        <div class="col text-right">
+                            <span class="float-right">
+                                <button class="btn btn-sm btn-warning" (click)="remove(message)">delete</button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="collapse mt-1" [id]="message._id">
+                        <div class="card">
+                            <div class="card-body global-inner-shadow">
+                                <div [innerHtml]="message.template">{{message.template}}</div>
+                            </div>
+                            <div *ngIf="message.author" class="card-footer">
+                                <div class="text-right">
+                                    <button (click)="reply(message, initModal)" class="btn btn-primary btn-sm">reply
+                                    </button>
+                                    <button data-toggle="modal" data-target="#messageModal" hidden #initModal></button>
+                                </div>
                             </div>
                         </div>
                     </div>
