@@ -5,11 +5,11 @@ import {Meal} from "../../models/meal/meal";
 import {AuthenticationService} from "../../services/authentication.service";
 import {User} from "../../models/user/user";
 import {MealImageService} from "../../services/meal-image.service";
-import {ToastsManager} from "ng2-toastr";
 import {UserService} from "../../models/user/user.service";
 import {MealFormDateValidation} from '../../validators/meal-form-date';
 import {MealFormParticipantValidation} from '../../validators/meal-form-participants';
 import {CropperSettings, ImageCropperComponent} from "ng2-img-cropper";
+import {NotificationsService} from "angular2-notifications";
 
 @Component({
     selector: 'app-meal-form',
@@ -26,15 +26,18 @@ export class MealFormComponent implements OnInit {
     form: FormGroup;
     data: any;
     cropperSettings: CropperSettings;
+    public notificationOptions = {
+        position: ["bottom", "left"],
+        timeOut: 5000,
+        lastOnBottom: true
+    };
 
     constructor(private mealService: MealService,
                 public authenticationService: AuthenticationService,
                 public imageService: MealImageService,
                 public userService: UserService,
                 public mealImageService: MealImageService,
-                public toastr: ToastsManager,
-                vcr: ViewContainerRef) {
-        this.toastr.setRootViewContainerRef(vcr);
+                private notificationService: NotificationsService) {
     }
 
     ngOnInit() {
@@ -97,10 +100,11 @@ export class MealFormComponent implements OnInit {
             me.mealService.save(meal)
                 .then((updatedMeal) => {
                     if (me.edit) {
-                        me.toastr.success(`Meal updated!`, 'Success!');
+                        me.notificationService.warn('participants have been removed', 'we warned them!');
+                        me.notificationService.success(`Lunch proposition updated!`);
                         me.updated.emit(updatedMeal);
                     } else {
-                        me.toastr.success(`Meal created!`, 'Success!');
+                        me.notificationService.success(`Lunch proposition created!`);
                     }
                     closeButton.click();
                 });

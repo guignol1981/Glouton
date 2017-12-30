@@ -27,6 +27,7 @@ import {MessageService} from "./services/message.service";
 import {PrivateMessageComponent} from './components/private-message/private-message.component';
 import {NgDatepickerModule} from 'ng2-datepicker';
 import {ImageCropperComponent} from "ng2-img-cropper";
+import {SimpleNotificationsModule} from "angular2-notifications";
 
 
 export class CustomToastOption extends ToastOptions {
@@ -60,7 +61,8 @@ export class CustomToastOption extends ToastOptions {
         BrowserAnimationsModule,
         ImageUploadModule.forRoot(),
         ToastModule.forRoot(),
-        NgDatepickerModule
+        NgDatepickerModule,
+        SimpleNotificationsModule.forRoot()
     ],
     providers: [
         {

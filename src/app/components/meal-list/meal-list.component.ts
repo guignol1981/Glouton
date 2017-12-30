@@ -67,22 +67,29 @@ export class MealListComponent implements OnInit, OnDestroy {
 
     filterList() {
         this.filteredMeals = [];
+        let addMealToFilter = function(meal, filteredMeals) {
+            let index = filteredMeals.indexOf(meal);
+            if (index === -1) {
+                filteredMeals.push(meal);
+            }
+            return filteredMeals;
+        };
         this.meals.forEach(meal => {
             this.filters.forEach(filter => {
                 if (filter === 'all') {
-                    this.filteredMeals.push(meal);
+                    this.filteredMeals = addMealToFilter(meal, this.filteredMeals);
                     return;
                 } else if (filter === 'joined' && meal.asJoined(this.user)) {
-                    this.filteredMeals.push(meal);
+                    this.filteredMeals = addMealToFilter(meal, this.filteredMeals);
                     return;
                 } else if (filter === 'confirmed' && meal.isConfirmed()) {
-                    this.filteredMeals.push(meal);
+                    this.filteredMeals = addMealToFilter(meal, this.filteredMeals);
                     return;
                 } else if (filter === 'pending' && meal.isPending()) {
-                    this.filteredMeals.push(meal);
+                    this.filteredMeals = addMealToFilter(meal, this.filteredMeals);
                     return;
                 } else if (filter === 'by me' && meal.isCook(this.user)) {
-                    this.filteredMeals.push(meal);
+                    this.filteredMeals = addMealToFilter(meal, this.filteredMeals);
                     return;
                 }
             });
