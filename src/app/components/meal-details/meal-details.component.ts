@@ -6,7 +6,7 @@ import {MealImageService} from "../../services/meal-image.service";
 import {UserService} from "../../models/user/user.service";
 import {User} from "../../models/user/user";
 import {MealFormComponent} from "../meal-form/meal-form.component";
-import {ToastsManager} from "ng2-toastr";
+import {NotificationsService} from "angular2-notifications";
 
 @Component({
     selector: 'app-meal-details',
@@ -17,14 +17,18 @@ export class MealDetailsComponent implements OnInit {
     meal: Meal;
     user: User;
     @ViewChild(MealFormComponent) mealFormComponent: MealFormComponent;
+    public notificationOptions = {
+        position: ["bottom", "left"],
+        timeOut: 5000,
+        lastOnBottom: true
+    };
+
 
     constructor(private mealService: MealService,
                 private activatedRoute: ActivatedRoute,
                 public imageService: MealImageService,
                 public userService: UserService,
-                public toastr: ToastsManager,
-                vcr: ViewContainerRef) {
-        this.toastr.setRootViewContainerRef(vcr);
+                private notificationService: NotificationsService) {
     }
 
     ngOnInit() {
@@ -44,7 +48,7 @@ export class MealDetailsComponent implements OnInit {
         this.mealService.join(this.meal)
             .then(meal => {
                 this.meal = meal;
-                this.toastr.success('Meal Joined!', 'Success!');
+                this.notificationService.success('You joined the lunch propositon!');
             });
     }
 
@@ -52,7 +56,7 @@ export class MealDetailsComponent implements OnInit {
         this.mealService.leave(this.meal)
             .then(data => {
                 this.meal = data;
-                this.toastr.success('Left meal!', 'Success!');
+                this.notificationService.success('You left the lunch proposition!');
             });
     }
 

@@ -118,7 +118,7 @@ module.exports.leave = function (req, res) {
 		.exec().then(meal => {
 		meal.removeParticipants(userId);
 		meal.save().then(meal => {
-			res.send(meal);
+			Meal.populate(meal, {path: "participants"}).then(meal => res.send(meal));
 		});
 	});
 };

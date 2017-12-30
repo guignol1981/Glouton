@@ -43,7 +43,7 @@ export class MealFormComponent implements OnInit {
     ngOnInit() {
         this.cropperSettings = new CropperSettings();
         this.cropperSettings.width = 200;
-        this.cropperSettings.height = 200   ;
+        this.cropperSettings.height = 200;
         this.cropperSettings.noFileInput = true;
 
         this.data = {};

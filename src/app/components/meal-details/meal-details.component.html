@@ -1,76 +1,76 @@
+<simple-notifications [options]="notificationOptions"></simple-notifications>
 <div *ngIf="meal" class="container mt-3">
     <app-meal-form [edit]="true" (updated)="onMealUpdated($event)" #mealformedit></app-meal-form>
     <button hidden data-toggle="modal" data-target="#mealformedit" #mealformeditbutton></button>
-    <div class="card">
-        <div class="row">
-            <div class="col">
-                <div class="card-header">
-                    <img style="height: auto; width: 300px"
-                         [src]="imageService.apiEndPoint + '/' + meal._id"
-                         alt="meal img">
-                    <li class="list-group-item border-0 p-0">
-                        <span *ngIf="meal.isPending()" class="badge badge-secondary">pending</span>
-                        <span *ngIf="meal.asJoined(user)" class="badge badge-info">joined</span>
-                        <span *ngIf="meal.isFull()" class="badge badge-danger">full</span>
-                        <span *ngIf="meal.isConfirmed()" class="badge badge-success">confirmed</span>
-                    </li>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card-body">
-                    <h5 class="card-title">{{meal.title}}</h5>
-                    <p class="card-text">{{meal.description}}</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item border-0">
-                        <button *ngIf="meal.canJoin(user)" (click)="joinMeal()" class="btn btn-primary">Join</button>
-                        <button *ngIf="meal.canLeave(user)" (click)="leaveMeal()"
-                                class="btn btn-primary">Leave
-                        </button>
-                    </li>
-                    <li *ngIf="! meal.isCook(user)" class="list-group-item border-0">
-                        <button class="btn btn-secondary btn-sm" data-toggle="modal" [attr.data-target]="'#messageModal'">
-                            write to the cook
-                        </button>
-                        <app-private-message [author]="user" [recipient]="meal.cook"></app-private-message>
-                    </li>
-                    <li *ngIf="meal.isCook(user)" class="list-group-item border-0">
-                        <button (click)="editMeal(mealformeditbutton)" class="btn btn-secondary btn-sm">edit lunch
-                        </button>
-                    </li>
-                </ul>
+    <h2 class="font-weight-bold">{{meal.title}}</h2>
+    <div class="row mt-3">
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+            <div class="card global-shadow">
+                <img style="height: auto; width: 100%;"
+                     [src]="imageService.apiEndPoint + '/' + meal._id"
+                     alt="meal img">
             </div>
         </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item border-0">
-                Participants: {{meal.participants.length}}/{{meal.minParticipants}} ({{meal.maxParticipants}}max)
-                <div *ngIf="meal.participants.length > 0">
+        <div class="col">
+            <div class="card global-shadow">
+                <div class="card-body">
                     <ul class="list-group">
-                        <div *ngFor="let participant of meal.participants">
-                            {{participant.name}}
-                        </div>
+                        <li class="list-group-item">
+                            Description: {{meal.description}}
+                        </li>
+                        <li class="list-group-item">
+                            This suggestion was posted on: {{meal.creationDate | date}}
+                        </li>
+                        <li class="list-group-item">
+                            <p>
+                                Created by: {{meal.cook.name | titlecase}}
+                            </p>
+                            <p>
+                                Member since {{meal.cook.creationDate | date}}
+                            </p>
+                            <span *ngIf="! meal.isCook(user)">
+                                <button class="btn btn-secondary btn-sm" data-toggle="modal"
+                                        [attr.data-target]="'#messageModal'">
+                                    write to the cook
+                                </button>
+                            </span>
+                        </li>
+                        <li class="list-group-item">
+                            Statuses:
+                            <span *ngIf="meal.isPending()" class="badge badge-secondary">pending</span>
+                            <span *ngIf="meal.asJoined(user)" class="badge badge-info">joined</span>
+                            <span *ngIf="meal.isFull()" class="badge badge-danger">full</span>
+                            <span *ngIf="meal.isConfirmed()" class="badge badge-success">confirmed</span>
+                        </li>
+                        <li class="list-group-item">
+                            <button *ngIf="meal.canJoin(user)" (click)="joinMeal()" class="btn btn-sm btn-primary">Join</button>
+                            <button *ngIf="meal.canLeave(user)" (click)="leaveMeal()"
+                                    class="btn btn-warning btn-sm">Leave</button>
+                            <app-private-message [author]="user" [recipient]="meal.cook"></app-private-message>
+                            <span *ngIf="meal.isCook(user)">
+                                <button (click)="editMeal(mealformeditbutton)" class="btn btn-secondary btn-sm">edit</button>
+                            </span>
+                        </li>
+                        <li class="list-group-item">
+                            Participants: {{meal.participants.length}}/{{meal.minParticipants}} ({{meal.maxParticipants}}max)
+                            <ul class="list-group">
+                                <li *ngFor="let participant of meal.participants" class="list-group-item border-0 py-0">
+                                    {{participant.name}}
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="list-group-item">
+                            This suggestion was posted on: {{meal.creationDate | date}}
+                        </li>
+                        <li class="list-group-item">
+                            This meal will be delivered on: {{meal.deliveryDate | date}}
+                        </li>
+                        <li class="list-group-item list-group-item-warning">
+                            Limit date to subscribe: {{meal.limitDate | date}}
+                        </li>
                     </ul>
                 </div>
-            </li>
-            <li class="list-group-item border-0">
-                This suggestion was posted on
-                <span class="badge badge-info">
-                        {{meal.creationDate | date}}
-                    </span>
-            </li>
-            <li class="list-group-item border-0">
-                This meal will be delivered on
-                <span class="badge badge-info">
-                        {{meal.deliveryDate | date}}
-                    </span>
-            </li>
-            <li class="list-group-item border-0">
-                Users have until
-                <span class="badge badge-warning">
-                        {{meal.limitDate | date}}
-                    </span>
-                to subscribe
-            </li>
-        </ul>
+            </div>
+        </div>
     </div>
 </div>
