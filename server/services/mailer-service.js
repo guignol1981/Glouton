@@ -1,10 +1,19 @@
 let nodemailer = require('nodemailer');
 
+// usage example
+// mailer.sendMail({
+// 	from: 'admin@lunch=box-group.com',
+// 	to: meal.cook.email,
+// 	subject: ` ${meal.cook.name}, your meal named "${meal.title}" is confirmed!`,
+// 	text: 'Congrats! You can go on cooking',
+// 	html: use pug template
+// });
+
 var transporter = nodemailer.createTransport({
 	service: 'gmail',
 	auth: {
-		user: 'vincentguillemette1981@gmail.com',
-		pass: 'Brocante123!!'
+		user: 'admin@lunch=box-group.com',
+		pass: 'notsosecret123!!'
 	}
 });
 

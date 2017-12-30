@@ -20,7 +20,7 @@ router.post('/login', ctrlAuth.login);
 router.get('/profile', auth, ctrlProfile.profileRead);
 
 //meal
-router.get('/meals/joined', auth, ctrlMeal.getJoined);
+router.get('/meals/lunch-box', auth, ctrlMeal.getLunchBox);
 router.get('/meals/:id', auth, ctrlMeal.get);
 router.put('/meals/:id', auth, ctrlMeal.update);
 router.put('/meals/join/:id', auth, ctrlMeal.join);

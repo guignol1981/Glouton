@@ -16,7 +16,7 @@ export class LunchBoxComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.mealService.getJoined().then(data => this.meals = data);
+        this.mealService.getLunchBox().then(data => this.meals = data);
     }
 
     goToMealDetails(meal: Meal) {

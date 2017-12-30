@@ -1,0 +1,10 @@
+div.message
+    img(src="../../assets/bg1.jpg" alt="Image Title")
+    p.test.font-weight-bold Hello #{recipient.name} !
+    p We are sorry to inform you that the meal proposition
+        a(href='/meal-details/' + data.meal._id) &nbsp #{data.meal.title}
+        | that you join was canceld...
+    p Not enough participants showed up for the proposition.
+
+    p.font-italic Sincerly yours,
+    p The Lunch box team

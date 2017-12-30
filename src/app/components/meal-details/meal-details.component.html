@@ -4,9 +4,17 @@
     <div class="card">
         <div class="row">
             <div class="col">
-                <img style="height: auto; width: 300px"
-                     [src]="imageService.apiEndPoint + '/' + meal._id"
-                     alt="meal img">
+                <div class="card-header">
+                    <img style="height: auto; width: 300px"
+                         [src]="imageService.apiEndPoint + '/' + meal._id"
+                         alt="meal img">
+                    <li class="list-group-item border-0 p-0">
+                        <span *ngIf="meal.isPending()" class="badge badge-secondary">pending</span>
+                        <span *ngIf="meal.asJoined(user)" class="badge badge-info">joined</span>
+                        <span *ngIf="meal.isFull()" class="badge badge-danger">full</span>
+                        <span *ngIf="meal.isConfirmed()" class="badge badge-success">confirmed</span>
+                    </li>
+                </div>
             </div>
             <div class="col">
                 <div class="card-body">
