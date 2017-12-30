@@ -1,4 +1,5 @@
 <div *ngIf="meal && user" class="card border-0 card-shadow">
+    <simple-notifications [options]="notificationOptions"></simple-notifications>
     <div class="meal-img">
         <img class="card-img-top img-fluid"
              [src]="imageService.apiEndPoint + '/' + meal._id"

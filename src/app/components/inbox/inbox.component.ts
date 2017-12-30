@@ -4,6 +4,7 @@ import {Message} from "../../models/message/message";
 import {UserService} from "../../models/user/user.service";
 import {User} from "../../models/user/user";
 import {PrivateMessageComponent} from "../private-message/private-message.component";
+import {NotificationsService} from "angular2-notifications";
 
 @Component({
     selector: 'app-inbox',
@@ -14,16 +15,22 @@ export class InboxComponent implements OnInit {
     messages: Message[];
     user: User;
     @ViewChild(PrivateMessageComponent) privateMessage: PrivateMessageComponent;
+    public notificationOptions = {
+        position: ["bottom", "left"],
+        timeOut: 5000,
+        lastOnBottom: true
+    };
 
     constructor(private userService: UserService,
-                private messageService: MessageService) {
+                private messageService: MessageService,
+                private notificationService: NotificationsService) {
     }
 
     ngOnInit() {
-        this.userService.getConnectedUser().then(user => {
+        this.userService.getConnectedUser().then(user    => {
             this.user = user;
             this.messageService.getAll().then(messages => {
-                    this.messages = messages;
+                this.messages = messages;
                 }
             );
         });
@@ -50,6 +57,7 @@ export class InboxComponent implements OnInit {
 
     remove(message: Message) {
         this.messageService.remove(message).then(() => {
+            this.notificationService.success('message removed');
             for (let i = this.messages.length - 1; i >= 0; i--) {
                 if (this.messages[i]._id === message._id) {
                     this.messages.splice(i, 1);

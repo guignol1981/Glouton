@@ -4,6 +4,7 @@ import {Message} from "../../models/message/message";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MessageService} from "../../services/message.service";
 import {ToastsManager} from "ng2-toastr";
+import {NotificationsService} from "angular2-notifications";
 
 @Component({
     selector: 'app-private-message',
@@ -14,13 +15,16 @@ export class PrivateMessageComponent implements OnInit {
     @Input() recipient: User;
     @Input() author: User;
     @Input() thread = [];
+    public notificationOptions = {
+        position: ["bottom", "left"],
+        timeOut: 5000,
+        lastOnBottom: true
+    };
 
     form: FormGroup;
 
     constructor(private messageService: MessageService,
-                public toastr: ToastsManager,
-                vcr: ViewContainerRef) {
-        this.toastr.setRootViewContainerRef(vcr);
+                private notificationService: NotificationsService) {
     }
 
     ngOnInit() {
@@ -54,7 +58,7 @@ export class PrivateMessageComponent implements OnInit {
         message.type = 'message-private';
 
         this.messageService.send(message).then(() => {
-            this.toastr.success('Message sent!', 'Success!');
+            this.notificationService.success('Message sent!');
             messageCloseButton.click();
         });
     }
