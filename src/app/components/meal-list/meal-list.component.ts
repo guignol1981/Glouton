@@ -12,8 +12,10 @@ import {User} from "../../models/user/user";
 })
 export class MealListComponent implements OnInit, OnDestroy {
     meals: Meal[] = [];
+    filteredMeals: Meal[] = [];
     user: User;
     mealsSubscription: Subscription;
+    filters = ['all'];
 
     constructor(private userService: UserService,
                 private mealService: MealService) {
@@ -22,8 +24,14 @@ export class MealListComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.userService.getConnectedUser().then(user => {
             this.user = user;
-            this.mealsSubscription = this.mealService.mealsSubject.subscribe(data => this.meals = data);
-            this.mealService.getList().then(data => this.meals = data);
+            this.mealsSubscription = this.mealService.mealsSubject.subscribe(data => {
+                this.meals = data;
+                this.filterList();
+            });
+            this.mealService.getList().then(data => {
+                this.meals = data;
+                this.filterList();
+            });
         });
     }
 
@@ -31,4 +39,53 @@ export class MealListComponent implements OnInit, OnDestroy {
         this.mealsSubscription.unsubscribe();
     }
 
+    toggleFilter(filter) {
+        if (filter === 'all') {
+            this.filters = ['all'];
+        } else {
+            let index = this.filters.indexOf('all');
+            if (index > -1) {
+                this.filters.splice(index, 1);
+            }
+            index = this.filters.indexOf(filter);
+            if (index > -1) {
+                this.filters.splice(index, 1);
+            } else {
+                this.filters.push(filter);
+            }
+        }
+        this.filterList();
+    }
+
+    getFilterClass(filter) {
+        let index = this.filters.indexOf(filter);
+        if (index > -1) {
+            return 'badge badge-primary';
+        }
+        return 'badge badge-secondary';
+    }
+
+    filterList() {
+        this.filteredMeals = [];
+        this.meals.forEach(meal => {
+            this.filters.forEach(filter => {
+                if (filter === 'all') {
+                    this.filteredMeals.push(meal);
+                    return;
+                } else if (filter === 'joined' && meal.asJoined(this.user)) {
+                    this.filteredMeals.push(meal);
+                    return;
+                } else if (filter === 'confirmed' && meal.isConfirmed()) {
+                    this.filteredMeals.push(meal);
+                    return;
+                } else if (filter === 'pending' && meal.isPending()) {
+                    this.filteredMeals.push(meal);
+                    return;
+                } else if (filter === 'by me' && meal.isCook(this.user)) {
+                    this.filteredMeals.push(meal);
+                    return;
+                }
+            });
+        });
+    }
 }

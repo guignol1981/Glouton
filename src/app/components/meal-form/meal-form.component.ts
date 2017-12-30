@@ -40,11 +40,8 @@ export class MealFormComponent implements OnInit {
     ngOnInit() {
         this.cropperSettings = new CropperSettings();
         this.cropperSettings.width = 200;
-        this.cropperSettings.height = 200;
-        this.cropperSettings.croppedWidth = 200;
-        this.cropperSettings.croppedHeight = 200;
-        this.cropperSettings.canvasWidth = 400;
-        this.cropperSettings.canvasHeight = 300;
+        this.cropperSettings.height = 200   ;
+        this.cropperSettings.noFileInput = true;
 
         this.data = {};
 
@@ -62,6 +59,20 @@ export class MealFormComponent implements OnInit {
         this.user = user;
         this.meal = meal;
         this.initForm();
+    }
+
+
+    fileChangeListener($event) {
+        let image: any = new Image();
+        let file: File = $event.target.files[0];
+        let myReader: FileReader = new FileReader();
+        let that = this;
+        myReader.onloadend = function (loadEvent: any) {
+            image.src = loadEvent.target.result;
+            that.cropper.setImage(image);
+        };
+
+        myReader.readAsDataURL(file);
     }
 
     initForm() {
@@ -107,6 +118,7 @@ export class MealFormComponent implements OnInit {
         let formControl = this.form.get(formControlName);
         return !formControl.valid && !formControl.pristine;
     }
+
 
     close() {
         if (this.cropper) {

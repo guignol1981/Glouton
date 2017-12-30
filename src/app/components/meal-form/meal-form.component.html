@@ -42,6 +42,13 @@
                             </small>
                         </div>
                         <div *ngIf="! edit" class="form-group">
+                            <label class="fileContainer">
+                                <a href="">
+                                    Click here to upload an image!
+                                </a>
+                                <input class="inputfile" id="custom-input" type="file"
+                                       (change)="fileChangeListener($event)">
+                            </label>
                             <img-cropper #cropper [image]="data" [settings]="cropperSettings"></img-cropper>
                             <br>
                             <span class="result rounded" *ngIf="data.image">
@@ -57,7 +64,8 @@
                                 <label for="deliveryDate">Delivery date</label>
                                 <ng-datepicker id="deliveryDate" formControlName="deliveryDate"
                                                aria-describedby="deliveryDateHelper"></ng-datepicker>
-                                <small id="deliveryDateHelper" class="form-text text-muted">The date you will deliver this
+                                <small id="deliveryDateHelper" class="form-text text-muted">The date you will deliver
+                                    this
                                     meal
                                 </small>
                                 <small *ngIf="!form.get('deliveryDate').pristine && form.get('deliveryDate').hasError('LogicDatesSelection')"
