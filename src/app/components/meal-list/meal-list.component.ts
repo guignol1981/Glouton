@@ -23,7 +23,7 @@ export class MealListComponent implements OnInit, OnDestroy {
         this.userService.getConnectedUser().then(user => {
             this.user = user;
             this.mealsSubscription = this.mealService.mealsSubject.subscribe(data => this.meals = data);
-            this.mealService.getAll().then(data => this.meals = data);
+            this.mealService.getList().then(data => this.meals = data);
         });
     }
 

@@ -31,7 +31,7 @@ export class MealService {
             .catch(this.handleError);
     }
 
-    getAll(): Promise<Meal[]> {
+    getList(): Promise<Meal[]> {
         let headers = new Headers({
             'Content-Type': 'application/json',
             Authorization: 'Bearer ' + this.authenticationService.getToken()
@@ -51,13 +51,13 @@ export class MealService {
             .catch(this.handleError);
     }
 
-    getJoined(): Promise<Meal[]> {
+    getLunchBox(): Promise<Meal[]> {
         let headers = new Headers({
             'Content-Type': 'application/json',
             Authorization: 'Bearer ' + this.authenticationService.getToken()
         });
 
-        return this.http.get(this.apiEndPoint + '/joined', {headers: headers})
+        return this.http.get(this.apiEndPoint + '/lunch-box', {headers: headers})
             .toPromise()
             .then((response: Response) => {
                 let joined: Meal[] = [];

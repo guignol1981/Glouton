@@ -75,7 +75,43 @@ mealSchema.statics.getNewFailed = function (callback) {
 	});
 };
 
-mealSchema.statics.getNewConfirmed = function(callback) {
+mealSchema.statics.getList = function(callback) {
+	Meal.find({
+			deliveryDate: {
+				"$gt": new Date()
+			}
+		})
+		.where('status').in(['pending', 'confirmed'])
+		.populate('cook')
+		.populate('participants')
+		.exec().then(meals => callback(meals));
+};
+
+mealSchema.statics.getLunchBox = function (userId, callback) {
+	Meal.find({
+			deliveryDate: {
+				"$gt": new Date()
+			}
+		})
+		.where('status').in(['pending', 'confirmed'])
+		.populate('cook')
+		.populate('participants')
+		.exec().then(meals => {
+			let lunchBox = [];
+
+			meals.forEach((meal) => {
+				meal.participants.forEach((participant) => {
+					if (participant.id == userId) {
+						lunchBox.push(meal);
+					}
+				});
+			});
+
+			callback(lunchBox);
+		});
+};
+
+mealSchema.statics.getNewConfirmed = function (callback) {
 	this.find({
 		limitDate: {
 			"$lt": new Date()

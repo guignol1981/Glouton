@@ -12,10 +12,9 @@ module.exports.get = function (req, res) {
 };
 
 module.exports.getAll = function (req, res) {
-	Meal.find({status: 'pending'}).populate('cook').populate('participants')
-		.then(meals => {
-			res.send(meals)
-		});
+	Meal.getList(meals => {
+		res.send(meals)
+	});
 };
 
 module.exports.update = function (req, res) {
@@ -46,23 +45,12 @@ module.exports.update = function (req, res) {
 	});
 };
 
-module.exports.getJoined = function (req, res) {
+module.exports.getLunchBox = function (req, res) {
 	let userId = req.payload._id;
-	let joined = [];
 
-	Meal.find({})
-		.populate('cook')
-		.populate('participants')
-		.exec().then(meals => {
-			meals.forEach((meal) => {
-				meal.participants.forEach((participant) => {
-					if (participant.id === userId) {
-						joined.push(meal);
-					}
-				});
-			});
-			res.send(joined);
-		});
+	Meal.getLunchBox(userId, (meals) => {
+		res.send(meals);
+	});
 };
 
 module.exports.create = function (req, res) {

@@ -15,7 +15,11 @@ export class Meal {
     }
 
     isConfirmed() {
-        return (this.participants.length >= this.minParticipants) && this.limitDate.getTime() < Date.now();
+        return this.status === 'confirmed';
+    }
+
+    isPending() {
+        return this.status === 'pending';
     }
 
     canJoin(user: User) {
@@ -27,7 +31,7 @@ export class Meal {
     }
 
     isFull() {
-        return this.participants.length >= this.maxParticipants;
+        return this.participants.length === this.maxParticipants;
     }
 
     asJoined(user: User) {
