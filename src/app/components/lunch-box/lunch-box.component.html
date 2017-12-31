@@ -5,8 +5,8 @@
                 {{meal.deliveryDate | date}}
                 <li class="list-group-item list-group-item-success">
                     <div>
+                            Lunch: {{meal.title}}
                             Status: {{meal.status}}
-                            Meal: {{meal.title}}
                             Cook: {{meal.cook.name}}
                             <a class="link" role="button" (click)="goToMealDetails(meal)">details</a>
                     </div>

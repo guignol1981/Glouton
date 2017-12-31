@@ -40,6 +40,8 @@ module.exports.update = function (req, res) {
 			});
 		});
 		meal.participants = [];
+		meal.deliveryDate = moment(meal.deliveryDate).startOf('day').toDate();
+		meal.limitDate = moment(meal.limitDate).endOf('day').toDate();
 		meal.save().then(updatedMeal => {
 			res.send(updatedMeal);
 		});
