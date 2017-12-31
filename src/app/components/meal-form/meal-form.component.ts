@@ -155,8 +155,8 @@ export class MealFormComponent implements OnInit {
         if (this.cropper) {
             this.cropper.reset();
         }
-        this.form.reset();
         this.meal = new Meal();
+        this.initForm();
     }
 
 }
