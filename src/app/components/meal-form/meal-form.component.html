@@ -45,22 +45,31 @@
                             </small>
                         </div>
                         <div *ngIf="! edit" class="form-group text-center">
-                            <label class="fileContainer">
-                                <a href="">
-                                    upload lunch image
-                                </a>
-                                <input class="inputfile" id="custom-input" type="file"
-                                       (change)="fileChangeListener($event)">
-                            </label>
-                            <img-cropper #cropper [image]="data" [settings]="cropperSettings"></img-cropper>
-                            <br>
-                            <span class="result rounded" *ngIf="data.image">
-                            <img [src]="data.image" [width]="cropperSettings.croppedWidth"
-                                 [height]="cropperSettings.croppedHeight">
-                            </span>
-                            <small *ngIf="! data.image"
-                                   class="form-text text-danger">You need to select an image
-                            </small>
+                            <div>
+                                <button (click)="toggleUseOwnPicture()" class="btn btn-sm btn-info mt-1">
+                                    {{useOwnPicture ? 'use default picture' : 'use own picture'}}
+                                </button>
+                            </div>
+                            <div *ngIf="useOwnPicture" class="mt-2">
+                                <div>
+                                    <label class="fileContainer">
+                                        <a href="">
+                                            upload picture
+                                        </a>
+                                        <input class="inputfile" id="custom-input" type="file"
+                                               (change)="fileChangeListener($event)">
+                                    </label>
+                                </div>
+                                <img-cropper #cropper [image]="data" [settings]="cropperSettings"></img-cropper>
+                                <br>
+                                <span class="result rounded" *ngIf="data.image">
+                                <img [src]="data.image" [width]="cropperSettings.croppedWidth"
+                                     [height]="cropperSettings.croppedHeight">
+                                </span>
+                                <small *ngIf="! data.image"
+                                       class="form-text text-danger">You need to select a picture
+                                </small>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col form-group">
@@ -72,7 +81,8 @@
                                     leave this meal
                                 </small>
                                 <small *ngIf="!form.get('limitDate').pristine && form.get('limitDate').hasError('LogicDatesSelection')"
-                                       class="form-text text-danger">Limit date should be lower or equal than delivery date.
+                                       class="form-text text-danger">Limit date should be lower or equal than delivery
+                                    date.
                                 </small>
                                 <small *ngIf="!form.get('limitDate').pristine && form.get('limitDate').hasError('DateLessOrEqualThanToday')"
                                        class="form-text text-danger">Limit date should be later than today
@@ -83,11 +93,11 @@
                                 <ng-datepicker id="deliveryDate" formControlName="deliveryDate"
                                                aria-describedby="deliveryDateHelper"></ng-datepicker>
                                 <small id="deliveryDateHelper" class="form-text text-muted">The date you will deliver
-                                    this
-                                    meal
+                                    this meal
                                 </small>
                                 <small *ngIf="!form.get('deliveryDate').pristine && form.get('deliveryDate').hasError('LogicDatesSelection')"
-                                       class="form-text text-danger">Delivery date should be greater or equal than limit date.
+                                       class="form-text text-danger">Delivery date should be greater or equal than limit
+                                    date.
                                 </small>
                                 <small *ngIf="!form.get('deliveryDate').pristine && form.get('deliveryDate').hasError('DateLessOrEqualThanToday')"
                                        class="form-text text-danger">Delivery date should be later than today
@@ -127,7 +137,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button [disabled]="!form.valid || !data.image" class="btn btn-primary">Submit</button>
+                            <button [disabled]="!form.valid || (!data.image && useOwnPicture)" class="btn btn-primary">Submit</button>
                             <button type="button" (click)="close()" class="btn btn-secondary" data-dismiss="modal">
                                 Close
                             </button>
