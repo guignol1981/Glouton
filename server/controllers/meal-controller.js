@@ -81,7 +81,8 @@ module.exports.create = function (req, res) {
 		res.send(500).json({msg: errors});
 		return;
 	}
-
+	newMeal.deliveryDate = moment(newMeal.deliveryDate).endOf('day').toDate();
+	newMeal.limitDate = moment(newMeal.limitDate).endOf('day').toDate();
 	newMeal.save().then(meal => {
 		Meal.populate(meal, {path: "cook"}).then(cook => res.send(cook));
 	});

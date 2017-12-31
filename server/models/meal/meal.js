@@ -22,7 +22,7 @@ mealSchema.methods.userIsCook = function (userId) {
 };
 
 mealSchema.methods.addParticipant = function (userId) {
-	if (this.limitDate < new Date()) {
+	if (this.limitDate < moment().toDate()) {
 		throw 'its too late to join this meal';
 	}
 
@@ -46,7 +46,7 @@ mealSchema.methods.addParticipant = function (userId) {
 };
 
 mealSchema.methods.removeParticipants = function (userId) {
-	if (this.limitDate < new Date()) {
+	if (this.limitDate < moment().toDate()) {
 		throw 'its too late to leave this meal';
 	}
 
@@ -62,7 +62,7 @@ mealSchema.methods.removeParticipants = function (userId) {
 mealSchema.statics.getNewFailed = function (callback) {
 	this.find({
 		limitDate: {
-			"$lt": moment().startOf('day').subtract(1, 'second').toDate()
+			"$lt": moment().toDate()
 		},
 		status: 'pending'
 	}).populate('cook').populate('participants').exec().then(meals => {
@@ -115,7 +115,7 @@ mealSchema.statics.getLunchBox = function (userId, callback) {
 mealSchema.statics.getNewConfirmed = function (callback) {
 	this.find({
 		limitDate: {
-			"$lt": moment().startOf('day').subtract(1, 'second').toDate()
+			"$lt": moment().toDate()
 		},
 		status: 'pending'
 	}).populate('cook').populate('participants').exec().then(meals => {
