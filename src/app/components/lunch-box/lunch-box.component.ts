@@ -42,16 +42,24 @@ export class LunchBoxComponent implements OnInit {
         return moment(meal.deliveryDate).day() === weekday.day();
     }
 
-    asLunchForThisDay(weekday): boolean {
-        let asLunch = false;
+    goToListWithDateFiler(date) {
+        this.router.navigate(['list/filters?date=' + moment(date).toISOString()]);
+    }
+
+    goToLunchDetails(id) {
+        this.router.navigate(['lunch-details/' + id]);
+    }
+
+    lunchForThisDay(weekday): Meal[] {
+        let lunchs = [];
+
         this.meals.forEach(meal => {
             if (this.isThisDay(meal, weekday)) {
-                asLunch = true;
-                return false;
+                lunchs.push(meal);
             }
         });
 
-        return asLunch;
+        return lunchs;
     }
 
     getPlannedMealClass(meal: Meal): string {
@@ -61,7 +69,7 @@ export class LunchBoxComponent implements OnInit {
             return "list-group-item list-group-item-success";
         } else if (meal.isCanceled()) {
             return 'list-group-item list-group-item-danger';
-        } else  {
+        } else {
             return "list-group-item list-group-item-secondary";
         }
     }
@@ -91,7 +99,7 @@ export class LunchBoxComponent implements OnInit {
     }
 
     goToMealDetails(meal: Meal) {
-        this.router.navigate(['meal-details/' + meal._id]);
+        this.router.navigate(['lunch-details/' + meal._id]);
     }
 
 }

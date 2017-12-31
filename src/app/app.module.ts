@@ -20,7 +20,6 @@ import {CanActivateViaAuthGuardService} from "./services/can-activate-via-auth-g
 import {LunchBoxComponent} from './components/lunch-box/lunch-box.component';
 import {ImageUploadModule} from "angular2-image-upload";
 import {MealImageService} from "./services/meal-image.service";
-import {ToastModule, ToastOptions} from "ng2-toastr";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {InboxComponent} from './components/inbox/inbox.component';
 import {MessageService} from "./services/message.service";
@@ -28,13 +27,7 @@ import {PrivateMessageComponent} from './components/private-message/private-mess
 import {NgDatepickerModule} from 'ng2-datepicker';
 import {ImageCropperComponent} from "ng2-img-cropper";
 import {SimpleNotificationsModule} from "angular2-notifications";
-
-
-export class CustomToastOption extends ToastOptions {
-    animate = 'flyRight';
-    positionClass = 'toast-bottom-left';
-    showCloseButton = true;
-}
+import {ToolTipModule} from 'angular2-tooltip';
 
 @NgModule({
     declarations: [
@@ -60,15 +53,10 @@ export class CustomToastOption extends ToastOptions {
         routing,
         BrowserAnimationsModule,
         ImageUploadModule.forRoot(),
-        ToastModule.forRoot(),
         NgDatepickerModule,
         SimpleNotificationsModule.forRoot()
     ],
     providers: [
-        {
-            provide: ToastOptions,
-            useClass: CustomToastOption
-        },
         MealService,
         AuthenticationService,
         UserService,

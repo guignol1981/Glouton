@@ -15,20 +15,22 @@
                     {{weekday.toDate() | date}}
                 </div>
                 <div class="m-2 p-1 global-inner-shadow">
-                    <div *ngIf="asLunchForThisDay(weekday)">
+                    <div *ngIf="lunchForThisDay(weekday).length > 0">
                         <div class="" style="overflow: scroll; height: 100px;">
                             <ul class="list-group">
-                                <li *ngFor="let meal of meals">
+                                <li *ngFor="let meal of lunchForThisDay(weekday)">
                                     <div *ngIf="isThisDay(meal, weekday)" [class]="getPlannedMealClass(meal)">
-                                        {{meal.title}}
+                                        <button class="btn btn-link" style="cursor: pointer" (click)="goToLunchDetails(meal._id)">
+                                            {{meal.title}}
+                                        </button>
                                     </div>
                                 </li>
                             </ul>
                         </div>
                     </div>
-                    <div *ngIf="!asLunchForThisDay(weekday)" class="text-center">
+                    <div *ngIf="lunchForThisDay(weekday).length === 0" class="text-center">
                         <div class="" style="height: 100px;">
-                            <button class="btn btn-secondary global-shadow mt-3">find something for this date</button>
+                            <button (click)="goToListWithDateFiler(weekday)" class="btn btn-secondary global-shadow mt-3">find something for this date</button>
                         </div>
                     </div>
                 </div>
