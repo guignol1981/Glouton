@@ -26,8 +26,9 @@
             <li class="list-group-item border-0 p-0">
                 <span *ngIf="meal.isPending()" class="badge badge-secondary">pending</span>
                 <span *ngIf="meal.asJoined(user)" class="badge badge-info">joined</span>
-                <span *ngIf="meal.isFull()" class="badge badge-danger">full</span>
+                <span *ngIf="meal.isFull()" class="badge badge-info">full</span>
                 <span *ngIf="meal.isConfirmed()" class="badge badge-success">confirmed</span>
+                <span *ngIf="meal.isCanceled()" class="badge badge-danger">confirmed</span>
             </li>
         </ul>
     </div>

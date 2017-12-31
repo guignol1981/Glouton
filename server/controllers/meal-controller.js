@@ -64,7 +64,7 @@ module.exports.create = function (req, res) {
 			max = Math.floor(max);
 			return Math.floor(Math.random() * (max - min)) + min;
 		}
-		newMeal.image = `image-lunch-default-${getRandomInt(1, 5)}.jpeg`;
+		newMeal.image = `image-lunch-default-${getRandomInt(1, 8)}.jpeg`;
 	}
 	let errors = [];
 
@@ -81,7 +81,7 @@ module.exports.create = function (req, res) {
 		res.send(500).json({msg: errors});
 		return;
 	}
-	newMeal.deliveryDate = moment(newMeal.deliveryDate).endOf('day').toDate();
+	newMeal.deliveryDate = moment(newMeal.deliveryDate).startOf('day').toDate();
 	newMeal.limitDate = moment(newMeal.limitDate).endOf('day').toDate();
 	newMeal.save().then(meal => {
 		Meal.populate(meal, {path: "cook"}).then(cook => res.send(cook));

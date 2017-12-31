@@ -6,9 +6,18 @@ export class MealFormParticipantValidation {
         let maxParticipants = AC.get('maxParticipants');
 
         if (minParticipants.value > maxParticipants.value) {
-            minParticipants.setErrors({LogicParticipantsSelection: true});
+            return {minParticipantsGreaterThanMaxParticipants: true};
         } else {
-            minParticipants.setErrors(null);
+            return null;
+        }
+    }
+
+    static minMinParticipants(AC: AbstractControl) {
+        let minParticipants = AC.get('minParticipants');
+
+        if (minParticipants.value < 1) {
+            return {minMinParticipantsLessThanOne: true};
+        } else {
             return null;
         }
     }

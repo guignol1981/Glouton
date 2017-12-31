@@ -105,7 +105,8 @@ export class MealFormComponent implements OnInit {
                 MealFormDateValidation.LimitDateShouldBeAtLeastToday,
                 MealFormDateValidation.LimitDateShouldBeLowerThanDeliveryDate,
                 MealFormDateValidation.deliveryDateShouldBeGreaterThanToday,
-                MealFormParticipantValidation.LogicParticipantsSelection
+                MealFormParticipantValidation.LogicParticipantsSelection,
+                MealFormParticipantValidation.minMinParticipants
             ]
         });
     }

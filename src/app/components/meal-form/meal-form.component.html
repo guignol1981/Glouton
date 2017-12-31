@@ -110,10 +110,13 @@
                                     <small id="minParticipantsHelper" class="form-text text-muted">The minimum
                                         participants you need to cook this meal
                                     </small>
-                                    <small *ngIf="!form.get('minParticipants').pristine && form.get('minParticipants').hasError('LogicParticipantsSelection')"
+                                    <small *ngIf="form.hasError('minParticipantsGreaterThanMaxParticipants')"
                                            class="form-text text-danger">Minimum participants should be lower or equal
                                         than
                                         max participants
+                                    </small>
+                                    <small *ngIf="form.hasError('minMinParticipantsLessThanOne')"
+                                           class="form-text text-danger">Minimum participants cannot be less than 1
                                     </small>
                                 </div>
                             </div>

@@ -39,8 +39,9 @@
                             Statuses:
                             <span *ngIf="meal.isPending()" class="badge badge-secondary">pending</span>
                             <span *ngIf="meal.asJoined(user)" class="badge badge-info">joined</span>
-                            <span *ngIf="meal.isFull()" class="badge badge-danger">full</span>
+                            <span *ngIf="meal.isFull()" class="badge badge-info">full</span>
                             <span *ngIf="meal.isConfirmed()" class="badge badge-success">confirmed</span>
+                            <span *ngIf="meal.isCanceled()" class="badge badge-danger">canceled</span>
                         </li>
                         <li class="list-group-item">
                             <button *ngIf="meal.canJoin(user)" (click)="joinMeal()" class="btn btn-sm btn-primary">Join</button>
