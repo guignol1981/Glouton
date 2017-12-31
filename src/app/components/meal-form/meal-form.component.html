@@ -74,33 +74,27 @@
                         <div class="row">
                             <div class="col form-group">
                                 <label for="limitDate">Date limit for subscription</label>
-                                <ng-datepicker id="limitDate"
+                                <ng-datepicker [options]="limitDateOptions" id="limitDate"
                                                formControlName="limitDate"
                                                aria-describedby="limiteDateHelper"></ng-datepicker>
                                 <small id="limiteDateHelper" class="form-text text-muted">The limit date to join or
                                     leave this meal
                                 </small>
-                                <small *ngIf="!form.get('limitDate').pristine && form.get('limitDate').hasError('LogicDatesSelection')"
-                                       class="form-text text-danger">Limit date should be lower or equal than delivery
+                                <small *ngIf="form.hasError('limitDateIsEqualOrGreaterThanDeliveryDate')"
+                                       class="form-text text-danger">Limit date should be lower than delivery
                                     date.
-                                </small>
-                                <small *ngIf="!form.get('limitDate').pristine && form.get('limitDate').hasError('DateLessOrEqualThanToday')"
-                                       class="form-text text-danger">Limit date should be later than today
                                 </small>
                             </div>
                             <div class="col form-group">
                                 <label for="deliveryDate">Delivery date</label>
-                                <ng-datepicker id="deliveryDate" formControlName="deliveryDate"
+                                <ng-datepicker [options]="deliveryDateOptions" id="deliveryDate" formControlName="deliveryDate"
                                                aria-describedby="deliveryDateHelper"></ng-datepicker>
                                 <small id="deliveryDateHelper" class="form-text text-muted">The date you will deliver
                                     this meal
                                 </small>
-                                <small *ngIf="!form.get('deliveryDate').pristine && form.get('deliveryDate').hasError('LogicDatesSelection')"
-                                       class="form-text text-danger">Delivery date should be greater or equal than limit
+                                <small *ngIf="form.hasError('limitDateIsEqualOrGreaterThanDeliveryDate')"
+                                       class="form-text text-danger">Delivery date should be greater than limit
                                     date.
-                                </small>
-                                <small *ngIf="!form.get('deliveryDate').pristine && form.get('deliveryDate').hasError('DateLessOrEqualThanToday')"
-                                       class="form-text text-danger">Delivery date should be later than today
                                 </small>
                             </div>
                         </div>

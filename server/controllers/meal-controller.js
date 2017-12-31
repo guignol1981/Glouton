@@ -1,6 +1,7 @@
 let Meal = require('../models/meal/meal');
 let User = require('../models/user/user');
 let Message = require('../models/message/message');
+let moment = require('moment');
 
 module.exports.get = function (req, res) {
 	let id = req.params.id;
@@ -67,8 +68,9 @@ module.exports.create = function (req, res) {
 	}
 	let errors = [];
 
-	if (newMeal.deliveryDate < newMeal.limitDate) {
-		errors.push('limit date should be lower or equal than delivery date');
+
+	if (newMeal.deliveryDate <= newMeal.limitDate) {
+		errors.push('limit date should be lower  than delivery date');
 	}
 
 	if (newMeal.minParticipants > newMeal.maxParticipants) {
