@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         if (this.authenticationService.isLoggedIn()) {
-            this.router.navigate(['dashboard']);
+            this.router.navigate(['list']);
             return;
         }
 
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
     onSubmit() {
         let user = <User>this.form.value;
         this.authenticationService.login(user)
-            .then(() => this.router.navigate(['dashboard']));
+            .then(() => this.router.navigate(['list']));
     }
 
     goToRegister() {

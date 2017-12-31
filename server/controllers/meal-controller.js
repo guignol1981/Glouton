@@ -50,8 +50,7 @@ module.exports.update = function (req, res) {
 
 module.exports.getLunchBox = function (req, res) {
 	let userId = req.payload._id;
-
-	Meal.getLunchBox(userId, (meals) => {
+	Meal.getLunchBox(moment(req.params.week), userId, (meals) => {
 		res.send(meals);
 	});
 };

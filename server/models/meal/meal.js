@@ -88,13 +88,17 @@ mealSchema.statics.getList = function(callback) {
 		.exec().then(meals => callback(meals));
 };
 
-mealSchema.statics.getLunchBox = function (userId, callback) {
+mealSchema.statics.getLunchBox = function (weekFirstDay, userId, callback) {
+	let weekLastDay = moment(weekFirstDay);
+	weekLastDay.endOf('week');
+	console.log(weekFirstDay);
 	Meal.find({
 			deliveryDate: {
-				"$gt": new Date()
+				"$gt": weekFirstDay.subtract(1, 'day').toDate(),
+				"$lt": weekLastDay.add(1, 'day').toDate(),
 			}
 		})
-		.where('status').in(['pending', 'confirmed'])
+		.where('status').in(['pending', 'confirmed', 'canceled'])
 		.populate('cook')
 		.populate('participants')
 		.exec().then(meals => {

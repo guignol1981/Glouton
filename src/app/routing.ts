@@ -13,12 +13,12 @@ import {CanActivateViaAuthGuardService} from "./services/can-activate-via-auth-g
 const appRoutes: Routes = [
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
-    {path: 'dashboard', component: DashboardComponent, canActivate: [CanActivateViaAuthGuardService]},
+    {path: 'list', component: DashboardComponent, canActivate: [CanActivateViaAuthGuardService]},
     {path: 'meal-form/:id', component: MealFormComponent, canActivate: [CanActivateViaAuthGuardService]},
     {path: 'profile', component: ProfileComponent, canActivate: [CanActivateViaAuthGuardService]},
     {path: 'lunch-box', component: LunchBoxComponent, canActivate: [CanActivateViaAuthGuardService]},
     {path: 'inbox', component: InboxComponent, canActivate: [CanActivateViaAuthGuardService]},
-    {path: 'meal-details/:id', component: MealDetailsComponent, canActivate: [CanActivateViaAuthGuardService]},
+    {path: 'lunch-details/:id', component: MealDetailsComponent, canActivate: [CanActivateViaAuthGuardService]},
     {
         path: '',
         redirectTo: '/login',

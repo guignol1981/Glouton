@@ -31,7 +31,7 @@ export class RegisterComponent implements OnInit {
         let user = <User>this.form.value;
         this.authenticationService.register(user)
             .then(
-                () => this.router.navigate(['dashboard']),
+                () => this.router.navigate(['list']),
                 error => {
                     alert(error);
                 }
