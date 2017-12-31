@@ -57,6 +57,14 @@ module.exports.create = function (req, res) {
 	//hack without this it will force the _id to null
 	delete req.body._id;
 	let newMeal = new Meal(req.body);
+	if (!newMeal.image) {
+		function getRandomInt(min, max) {
+			min = Math.ceil(min);
+			max = Math.floor(max);
+			return Math.floor(Math.random() * (max - min)) + min;
+		}
+		newMeal.image = `image-lunch-default-${getRandomInt(1, 5)}.jpeg`;
+	}
 	let errors = [];
 
 	if (newMeal.deliveryDate < newMeal.limitDate) {

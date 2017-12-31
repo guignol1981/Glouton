@@ -26,6 +26,7 @@ export class MealFormComponent implements OnInit {
     form: FormGroup;
     data: any;
     cropperSettings: CropperSettings;
+    useOwnPicture = false;
     public notificationOptions = {
         position: ["bottom", "left"],
         timeOut: 5000,
@@ -91,6 +92,11 @@ export class MealFormComponent implements OnInit {
         }, {validators: [MealFormDateValidation.LogicDatesSelection, MealFormParticipantValidation.LogicParticipantsSelection]});
     }
 
+    toggleUseOwnPicture() {
+        this.useOwnPicture = !this.useOwnPicture;
+        this.data.image = null;
+    }
+
     onSubmit(closeButton) {
         let me = this;
         let saveMeal = function (imageData) {
@@ -111,7 +117,7 @@ export class MealFormComponent implements OnInit {
                     closeButton.click();
                 });
         };
-        if (!me.edit) {
+        if (!me.edit && me.useOwnPicture) {
             me.mealImageService.postImage(me.data.image).subscribe(data => {
                 saveMeal(data);
             });
