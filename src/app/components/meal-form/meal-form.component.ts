@@ -133,6 +133,7 @@ export class MealFormComponent implements OnInit {
 
 
     close() {
+        this.useOwnPicture = false;
         if (this.cropper) {
             this.cropper.reset();
         }
