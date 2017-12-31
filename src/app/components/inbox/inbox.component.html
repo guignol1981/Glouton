@@ -26,8 +26,8 @@
                         </div>
                     </div>
                     <div class="collapse mt-1" [id]="message._id">
-                        <div class="card">
-                            <div class="card-body global-inner-shadow">
+                        <div class="card global-inner-shadow">
+                            <div class="card-body">
                                 <div [innerHtml]="message.template">{{message.template}}</div>
                             </div>
                             <div *ngIf="message.author" class="card-footer">
