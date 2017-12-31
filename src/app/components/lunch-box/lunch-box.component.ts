@@ -43,7 +43,7 @@ export class LunchBoxComponent implements OnInit {
     }
 
     goToListWithDateFiler(date) {
-        this.router.navigate(['list/filters?date=' + moment(date).toISOString()]);
+        this.router.navigate(['list/', {date: moment(date).toISOString()}]);
     }
 
     goToLunchDetails(id) {

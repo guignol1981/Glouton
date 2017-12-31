@@ -52,7 +52,7 @@ export class MealCardComponent implements OnInit {
     }
 
     goToMealDetails() {
-        this.router.navigate(['/meal-details/' + this.meal._id]);
+        this.router.navigate(['/lunch-details/' + this.meal._id]);
     }
 
 }

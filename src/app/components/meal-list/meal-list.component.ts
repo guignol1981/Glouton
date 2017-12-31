@@ -4,6 +4,8 @@ import {Meal} from "../../models/meal/meal";
 import {Subscription} from "rxjs/Subscription";
 import {UserService} from "../../models/user/user.service";
 import {User} from "../../models/user/user";
+import {ActivatedRoute} from "@angular/router";
+import * as moment from "moment";
 
 @Component({
     selector: 'app-meal-list',
@@ -13,15 +15,20 @@ import {User} from "../../models/user/user";
 export class MealListComponent implements OnInit, OnDestroy {
     meals: Meal[] = [];
     filteredMeals: Meal[] = [];
+    filters = ['all'];
     user: User;
     mealsSubscription: Subscription;
-    filters = ['all'];
 
     constructor(private userService: UserService,
-                private mealService: MealService) {
+                private mealService: MealService,
+                private activatedRoute: ActivatedRoute) {
     }
 
     ngOnInit() {
+        let dateParamFilter = this.activatedRoute.snapshot.params['date'];
+        if (dateParamFilter) {
+            this.toggleFilter(moment(dateParamFilter));
+        }
         this.userService.getConnectedUser().then(user => {
             this.user = user;
             this.mealsSubscription = this.mealService.mealsSubject.subscribe(data => {
@@ -100,6 +107,10 @@ export class MealListComponent implements OnInit, OnDestroy {
                 } else if (filter === 'by me' && meal.isCook(this.user)) {
                     this.filteredMeals = addMealToFilter(meal, this.filteredMeals);
                     return;
+                } else if (moment.isMoment(filter)) {
+                    if (moment(meal.deliveryDate).isSame(filter) && meal.canJoin(this.user)) {
+                        this.filteredMeals = addMealToFilter(meal, this.filteredMeals);
+                    }
                 }
             });
         });
