@@ -9,7 +9,7 @@ import {Router} from "@angular/router";
     styleUrls: ['./lunch-box.component.css']
 })
 export class LunchBoxComponent implements OnInit {
-    meals: Meal[];
+    meals: Meal[] = [];
 
     constructor(private mealService: MealService,
                 private router: Router) {

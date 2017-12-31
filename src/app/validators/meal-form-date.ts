@@ -7,12 +7,15 @@ export class MealFormDateValidation {
         let today = Date.now();
         let deliveryDateErrors = {};
         let limitDateErrors = {};
-
-        deliveryDateErrors['DateLessOrEqualThanToday'] = deliveryDateControl.value <= today;
-        limitDateErrors['DateLessOrEqualThanToday'] = limitDateControl.value <= today;
-        deliveryDateErrors['LogicDatesSelection'] = deliveryDateControl.value < limitDateControl.value;
-        limitDateErrors['LogicDatesSelection'] = deliveryDateControl.value < limitDateControl.value;
-        deliveryDateControl.setErrors(deliveryDateErrors);
-        limitDateControl.setErrors(limitDateErrors);
+        if (deliveryDateControl.value <= today || limitDateControl.value <= today || deliveryDateControl.value < limitDateControl.value) {
+            deliveryDateErrors['DateLessOrEqualThanToday'] = deliveryDateControl.value <= today;
+            limitDateErrors['DateLessOrEqualThanToday'] = limitDateControl.value <= today;
+            deliveryDateErrors['LogicDatesSelection'] = deliveryDateControl.value < limitDateControl.value;
+            limitDateErrors['LogicDatesSelection'] = deliveryDateControl.value < limitDateControl.value;
+            deliveryDateControl.setErrors(deliveryDateErrors);
+            limitDateControl.setErrors(limitDateErrors);
+        } else {
+            return null;
+        }
     }
 }

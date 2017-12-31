@@ -127,7 +127,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button [disabled]="!form.valid && !data.image" class="btn btn-primary">Submit</button>
+                            <button [disabled]="!form.valid || !data.image" class="btn btn-primary">Submit</button>
                             <button type="button" (click)="close()" class="btn btn-secondary" data-dismiss="modal">
                                 Close
                             </button>

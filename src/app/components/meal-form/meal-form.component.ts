@@ -89,6 +89,7 @@ export class MealFormComponent implements OnInit {
             minParticipants: new FormControl(this.meal.minParticipants, [Validators.required, Validators.min(1)]),
             maxParticipants: new FormControl(this.meal.maxParticipants, [Validators.required, Validators.min(1)])
         }, {validators: [MealFormDateValidation.LogicDatesSelection, MealFormParticipantValidation.LogicParticipantsSelection]});
+        this.form.valueChanges.subscribe(data => console.log(this.form.valid));
     }
 
     onSubmit(closeButton) {

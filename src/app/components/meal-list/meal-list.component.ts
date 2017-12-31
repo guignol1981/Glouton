@@ -65,9 +65,18 @@ export class MealListComponent implements OnInit, OnDestroy {
         return 'badge badge-secondary';
     }
 
+    updateMeal(meal: Meal) {
+        this.meals.forEach((item, index, array) => {
+            if (item._id === meal._id) {
+                array[index] = meal;
+            }
+        });
+        this.filterList();
+    }
+
     filterList() {
         this.filteredMeals = [];
-        let addMealToFilter = function(meal, filteredMeals) {
+        let addMealToFilter = function (meal, filteredMeals) {
             let index = filteredMeals.indexOf(meal);
             if (index === -1) {
                 filteredMeals.push(meal);

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewContainerRef} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewContainerRef} from '@angular/core';
 import {Meal} from "../../models/meal/meal";
 import {Router} from "@angular/router";
 import {User} from "../../models/user/user";
@@ -16,6 +16,8 @@ import {NotificationsService} from "angular2-notifications";
 export class MealCardComponent implements OnInit {
     @Input() meal: Meal;
     @Input() user: User;
+    @Output() updated: EventEmitter<Meal> = new EventEmitter<Meal>();
+
     public notificationOptions = {
         position: ["bottom", "left"],
         timeOut: 5000,
@@ -36,6 +38,7 @@ export class MealCardComponent implements OnInit {
             .then(data => {
                 this.meal = data;
                 this.notificationService.success('You joined the lunch proposition!');
+                this.updated.emit(this.meal);
             });
     }
 
@@ -44,6 +47,7 @@ export class MealCardComponent implements OnInit {
             .then(data => {
                 this.meal = data;
                 this.notificationService.success('You left the lunch proposition!');
+                this.updated.emit(this.meal);
             });
     }
 
