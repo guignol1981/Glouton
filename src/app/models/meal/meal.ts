@@ -1,4 +1,6 @@
 import {User} from "../user/user";
+import * as moment from "moment";
+
 export class Meal {
     constructor(public _id: string = null,
                 public title: string = '',
@@ -6,8 +8,8 @@ export class Meal {
                 public cook: User = new User(),
                 public participants: User[] = [],
                 public image: string = '',
-                public deliveryDate: Date = new Date(),
-                public limitDate: Date = new Date(),
+                public deliveryDate: Date = moment().startOf('day').add(1, 'day').toDate(),
+                public limitDate: Date = moment().startOf('day').toDate(),
                 public creationDate: Date = new Date(),
                 public minParticipants: Number = 1,
                 public maxParticipants: Number = 1,

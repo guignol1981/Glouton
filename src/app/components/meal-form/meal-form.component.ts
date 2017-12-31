@@ -10,6 +10,9 @@ import {MealFormDateValidation} from '../../validators/meal-form-date';
 import {MealFormParticipantValidation} from '../../validators/meal-form-participants';
 import {CropperSettings, ImageCropperComponent} from "ng2-img-cropper";
 import {NotificationsService} from "angular2-notifications";
+import {DatepickerOptions} from 'ng2-datepicker';
+import * as moment from "moment";
+
 
 @Component({
     selector: 'app-meal-form',
@@ -31,6 +34,14 @@ export class MealFormComponent implements OnInit {
         position: ["bottom", "left"],
         timeOut: 5000,
         lastOnBottom: true
+    };
+
+    deliveryDateOptions: DatepickerOptions = {
+        minDate: moment().startOf('day').add(1, 'day').startOf('day').toDate()
+    };
+
+    limitDateOptions: DatepickerOptions = {
+        minDate: moment().startOf('day').toDate()
     };
 
     constructor(private mealService: MealService,
@@ -89,7 +100,14 @@ export class MealFormComponent implements OnInit {
             limitDate: new FormControl(this.meal.limitDate, Validators.required),
             minParticipants: new FormControl(this.meal.minParticipants, [Validators.required, Validators.min(1)]),
             maxParticipants: new FormControl(this.meal.maxParticipants, [Validators.required, Validators.min(1)])
-        }, {validators: [MealFormDateValidation.LogicDatesSelection, MealFormParticipantValidation.LogicParticipantsSelection]});
+        }, {
+            validators: [
+                MealFormDateValidation.LimitDateShouldBeAtLeastToday,
+                MealFormDateValidation.LimitDateShouldBeLowerThanDeliveryDate,
+                MealFormDateValidation.deliveryDateShouldBeGreaterThanToday,
+                MealFormParticipantValidation.LogicParticipantsSelection
+            ]
+        });
     }
 
     toggleUseOwnPicture() {

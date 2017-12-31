@@ -1,6 +1,7 @@
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 let User = require('../user/user');
+let moment = require('moment');
 
 let mealSchema = new Schema({
 	title: String,
@@ -61,7 +62,7 @@ mealSchema.methods.removeParticipants = function (userId) {
 mealSchema.statics.getNewFailed = function (callback) {
 	this.find({
 		limitDate: {
-			"$lt": new Date()
+			"$lt": moment().startOf('day').subtract(1, 'second').toDate()
 		},
 		status: 'pending'
 	}).populate('cook').populate('participants').exec().then(meals => {
@@ -114,7 +115,7 @@ mealSchema.statics.getLunchBox = function (userId, callback) {
 mealSchema.statics.getNewConfirmed = function (callback) {
 	this.find({
 		limitDate: {
-			"$lt": new Date()
+			"$lt": moment().startOf('day').subtract(1, 'second').toDate()
 		},
 		status: 'pending'
 	}).populate('cook').populate('participants').exec().then(meals => {
