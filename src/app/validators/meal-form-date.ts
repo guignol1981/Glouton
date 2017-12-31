@@ -8,30 +8,11 @@ export class MealFormDateValidation {
         let deliveryDateErrors = {};
         let limitDateErrors = {};
 
-        if (deliveryDateControl.value <= today || limitDateControl.value <= today || deliveryDateControl.value <= limitDateControl.value) {
-            if (deliveryDateControl.value <= today) {
-                deliveryDateErrors['DateLessOrEqualThanToday'] = true;
-            } else {
-                deliveryDateErrors['DateLessOrEqualThanToday'] = false;
-            }
-
-            if (limitDateControl.value <= today) {
-                limitDateErrors['DateLessOrEqualThanToday'] = true;
-            } else {
-                limitDateErrors['DateLessOrEqualThanToday'] = false;
-            }
-
-            if (deliveryDateControl.value <= limitDateControl.value) {
-                deliveryDateErrors['LogicDatesSelection'] = true;
-                limitDateErrors['LogicDatesSelection'] = true;
-            } else {
-                deliveryDateErrors['LogicDatesSelection'] = false;
-                limitDateErrors['LogicDatesSelection'] = false;
-            }
-            deliveryDateControl.setErrors(deliveryDateErrors);
-            limitDateControl.setErrors(limitDateErrors);
-        } else {
-            return null;
-        }
+        deliveryDateErrors['DateLessOrEqualThanToday'] = deliveryDateControl.value <= today;
+        limitDateErrors['DateLessOrEqualThanToday'] = limitDateControl.value <= today;
+        deliveryDateErrors['LogicDatesSelection'] = deliveryDateControl.value < limitDateControl.value;
+        limitDateErrors['LogicDatesSelection'] = deliveryDateControl.value < limitDateControl.value;
+        deliveryDateControl.setErrors(deliveryDateErrors);
+        limitDateControl.setErrors(limitDateErrors);
     }
 }

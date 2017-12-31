@@ -37,7 +37,9 @@
                             <textarea class="form-control" id="description" formControlName="description"
                                       placeholder="Description" aria-describedby="descriptionHelper" cols="30"
                                       rows="5"></textarea>
-                            <small id="descriptionHelper" class="form-text text-muted">Describe your mean</small>
+                            <small id="descriptionHelper" class="form-text text-muted">Describe you lunch proposition in
+                                few words
+                            </small>
                             <small *ngIf="formControlIsInvalid('description')"
                                    class="form-text text-danger">The description should be 15 characters at least
                             </small>
@@ -45,7 +47,7 @@
                         <div *ngIf="! edit" class="form-group text-center">
                             <label class="fileContainer">
                                 <a href="">
-                                    Click here to upload an image!
+                                    upload lunch image
                                 </a>
                                 <input class="inputfile" id="custom-input" type="file"
                                        (change)="fileChangeListener($event)">
@@ -62,21 +64,6 @@
                         </div>
                         <div class="row">
                             <div class="col form-group">
-                                <label for="deliveryDate">Delivery date</label>
-                                <ng-datepicker id="deliveryDate" formControlName="deliveryDate"
-                                               aria-describedby="deliveryDateHelper"></ng-datepicker>
-                                <small id="deliveryDateHelper" class="form-text text-muted">The date you will deliver
-                                    this
-                                    meal
-                                </small>
-                                <small *ngIf="!form.get('deliveryDate').pristine && form.get('deliveryDate').hasError('LogicDatesSelection')"
-                                       class="form-text text-danger">Delivery date should be later than limit date.
-                                </small>
-                                <small *ngIf="!form.get('deliveryDate').pristine && form.get('deliveryDate').hasError('DateLessOrEqualThanToday')"
-                                       class="form-text text-danger">Delivery date should be later than today
-                                </small>
-                            </div>
-                            <div class="col form-group">
                                 <label for="limitDate">Date limit for subscription</label>
                                 <ng-datepicker id="limitDate"
                                                formControlName="limitDate"
@@ -85,10 +72,25 @@
                                     leave this meal
                                 </small>
                                 <small *ngIf="!form.get('limitDate').pristine && form.get('limitDate').hasError('LogicDatesSelection')"
-                                       class="form-text text-danger">Limit date should be lower than delivery date.
+                                       class="form-text text-danger">Limit date should be lower or equal than delivery date.
                                 </small>
                                 <small *ngIf="!form.get('limitDate').pristine && form.get('limitDate').hasError('DateLessOrEqualThanToday')"
                                        class="form-text text-danger">Limit date should be later than today
+                                </small>
+                            </div>
+                            <div class="col form-group">
+                                <label for="deliveryDate">Delivery date</label>
+                                <ng-datepicker id="deliveryDate" formControlName="deliveryDate"
+                                               aria-describedby="deliveryDateHelper"></ng-datepicker>
+                                <small id="deliveryDateHelper" class="form-text text-muted">The date you will deliver
+                                    this
+                                    meal
+                                </small>
+                                <small *ngIf="!form.get('deliveryDate').pristine && form.get('deliveryDate').hasError('LogicDatesSelection')"
+                                       class="form-text text-danger">Delivery date should be greater or equal than limit date.
+                                </small>
+                                <small *ngIf="!form.get('deliveryDate').pristine && form.get('deliveryDate').hasError('DateLessOrEqualThanToday')"
+                                       class="form-text text-danger">Delivery date should be later than today
                                 </small>
                             </div>
                         </div>
@@ -98,7 +100,9 @@
                                     <label for="minParticipants">Minimum of participants</label>
                                     <input type="number" class="form-control" id="minParticipants"
                                            formControlName="minParticipants"
-                                           aria-describedby="minParticipantsHelper">
+                                           aria-describedby="minParticipantsHelper"
+                                           [max]="form.get('maxParticipants').value"
+                                           min=1>
                                     <small id="minParticipantsHelper" class="form-text text-muted">The minimum
                                         participants you need to cook this meal
                                     </small>
@@ -114,7 +118,8 @@
                                     <label for="maxParticipants">maximum of participants</label>
                                     <input type="number" class="form-control" id="maxParticipants"
                                            formControlName="maxParticipants"
-                                           aria-describedby="maxParticipantsHelper">
+                                           aria-describedby="maxParticipantsHelper"
+                                           [min]="form.get('minParticipants').value">
                                     <small id="maxParticipantsHelper" class="form-text text-muted">The maximum
                                         participants for this meal
                                     </small>

@@ -36,6 +36,11 @@
                         profile
                     </a>
                 </li>
+                <li [class]="getNavItemClass(6)">
+                    <a (click)="setTab(6)" class="nav-link" [routerLink]="['/help']">
+                        help
+                    </a>
+                </li>
                 <li class="nav-item" (click)="logout()">
                     <a href="" class="nav-link">
                         logout

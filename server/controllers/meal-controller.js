@@ -59,8 +59,8 @@ module.exports.create = function (req, res) {
 	let newMeal = new Meal(req.body);
 	let errors = [];
 
-	if (newMeal.deliveryDate <= newMeal.limitDate) {
-		errors.push('limit date should be lower than delivery date');
+	if (newMeal.deliveryDate < newMeal.limitDate) {
+		errors.push('limit date should be lower or equal than delivery date');
 	}
 
 	if (newMeal.minParticipants > newMeal.maxParticipants) {

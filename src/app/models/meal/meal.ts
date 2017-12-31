@@ -9,8 +9,8 @@ export class Meal {
                 public deliveryDate: Date = new Date(),
                 public limitDate: Date = new Date(),
                 public creationDate: Date = new Date(),
-                public minParticipants: Number = null,
-                public maxParticipants: Number = null,
+                public minParticipants: Number = 1,
+                public maxParticipants: Number = 1,
                 public status: string = '') {
     }
 
