@@ -27,7 +27,6 @@ import {PrivateMessageComponent} from './components/private-message/private-mess
 import {NgDatepickerModule} from 'ng2-datepicker';
 import {ImageCropperComponent} from "ng2-img-cropper";
 import {SimpleNotificationsModule} from "angular2-notifications";
-import {ToolTipModule} from 'angular2-tooltip';
 
 @NgModule({
     declarations: [
