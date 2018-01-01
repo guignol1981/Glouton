@@ -18,7 +18,7 @@ export class MealListComponent implements OnInit, OnDestroy {
     filters = ['all'];
     user: User;
     mealsSubscription: Subscription;
-    dayFilter = moment();
+    dayFilter = null;
 
     constructor(private userService: UserService,
                 private mealService: MealService,
@@ -28,7 +28,9 @@ export class MealListComponent implements OnInit, OnDestroy {
     ngOnInit() {
         let dateParamFilter = this.activatedRoute.snapshot.params['date'];
         if (dateParamFilter) {
-            this.toggleFilter(moment(dateParamFilter));
+            this.filters = [];
+            this.dayFilter = moment(dateParamFilter);
+            this.filterList();
         }
         this.userService.getConnectedUser().then(user => {
             this.user = user;
@@ -115,12 +117,14 @@ export class MealListComponent implements OnInit, OnDestroy {
                 } else if (filter === 'by me' && meal.isCook(this.user)) {
                     this.filteredMeals = addMealToFilter(meal, this.filteredMeals);
                     return;
-                } else if (moment.isMoment(filter)) {
-                    if (moment(meal.deliveryDate).isSame(filter)) {
-                        this.filteredMeals = addMealToFilter(meal, this.filteredMeals);
-                    }
                 }
             });
+            if (this.dayFilter) {
+                console.log('test');
+                if (moment(meal.deliveryDate).isSame(this.dayFilter)) {
+                    this.filteredMeals = addMealToFilter(meal, this.filteredMeals);
+                }
+            }
         });
     }
 }
