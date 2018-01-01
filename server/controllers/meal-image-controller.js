@@ -19,6 +19,7 @@ module.exports.create = function (req, res) {
 
 		let imageTypeRegularExpression = /\/(.*?)$/;
 		let crypto = require('crypto');
+		var seed = crypto.randomBytes(20);
 		let uniqueSHA1String = crypto
 			.createHash('sha1')
 			.update(seed)
