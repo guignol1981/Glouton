@@ -15,7 +15,7 @@ import * as moment from "moment";
 export class MealListComponent implements OnInit, OnDestroy {
     meals: Meal[] = [];
     filteredMeals: Meal[] = [];
-    filters = [];
+    filters = ['all'];
     user: User;
     mealsSubscription: Subscription;
     dayFilter = moment();
