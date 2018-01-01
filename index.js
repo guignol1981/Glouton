@@ -13,9 +13,13 @@ require('./server/configs/passport');
 
 app.set('view engine', 'pug');
 
+
 mongoose.Promise = global.Promise;
-// mongoose.connect('mongodb://localhost/lunch-box', { useMongoClient: true });
-mongoose.connect('mongodb://root:root@ds143342.mlab.com:43342/lunch-box-devalto', { useMongoClient: true });
+if (process.env.DB) {
+	mongoose.connect(process.env.DB, { useMongoClient: true });
+} else {
+	mongoose.connect('mongodb://localhost/lunch-box', { useMongoClient: true });
+}
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
