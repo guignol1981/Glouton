@@ -13,7 +13,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     activeTab = 0;
     unseenMessageCount = 0;
     loggedInSubscription: Subscription;
-    isLoggedIn = false;
+    isLoggedIn: Boolean = false;
 
     constructor(public authenticationService: AuthenticationService,
                 private messageService: MessageService,

@@ -1,10 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewContainerRef} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Meal} from "../../models/meal/meal";
 import {Router} from "@angular/router";
 import {User} from "../../models/user/user";
 import {MealService} from "../../models/meal/meal.service";
 import {MealImageService} from "../../services/meal-image.service";
-import {ToastsManager} from "ng2-toastr";
 import {NotificationsService} from "angular2-notifications";
 
 

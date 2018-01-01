@@ -27,10 +27,10 @@ export class InboxComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.userService.getConnectedUser().then(user    => {
+        this.userService.getConnectedUser().then(user => {
             this.user = user;
             this.messageService.getAll().then(messages => {
-                this.messages = messages;
+                    this.messages = messages;
                 }
             );
         });
@@ -49,7 +49,7 @@ export class InboxComponent implements OnInit {
     }
 
     markAsSeen(message: Message) {
-        if (! message.seen) {
+        if (!message.seen) {
             message.seen = true;
             this.messageService.update(message).then();
         }
