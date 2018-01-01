@@ -25,8 +25,8 @@ import {InboxComponent} from './components/inbox/inbox.component';
 import {MessageService} from "./services/message.service";
 import {PrivateMessageComponent} from './components/private-message/private-message.component';
 import {NgDatepickerModule} from 'ng2-datepicker';
-import {ImageCropperComponent} from "ng2-img-cropper";
 import {SimpleNotificationsModule} from "angular2-notifications";
+import {ImageCropperModule} from "ng2-img-cropper";
 
 @NgModule({
     declarations: [
@@ -42,7 +42,6 @@ import {SimpleNotificationsModule} from "angular2-notifications";
         ProfileComponent,
         LunchBoxComponent,
         InboxComponent,
-        ImageCropperComponent,
         PrivateMessageComponent
     ],
     imports: [
@@ -50,6 +49,7 @@ import {SimpleNotificationsModule} from "angular2-notifications";
         ReactiveFormsModule,
         HttpModule,
         routing,
+        ImageCropperModule,
         BrowserAnimationsModule,
         ImageUploadModule.forRoot(),
         NgDatepickerModule,
