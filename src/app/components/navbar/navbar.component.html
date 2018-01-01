@@ -27,7 +27,7 @@
             <ul class="navbar-nav">
                 <li [class]="getNavItemClass(4)">
                     <a (click)="setTab(4); unseenMessageCount = 0" class="nav-link" [routerLink]="['/inbox']">
-                        Inbox
+                        notifications
                         <span *ngIf="unseenMessageCount > 0" class="badge badge-pill badge-warning">new</span>
                     </a>
                 </li>

@@ -18,6 +18,7 @@ export class MealListComponent implements OnInit, OnDestroy {
     filters = ['all'];
     user: User;
     mealsSubscription: Subscription;
+    dayFilter = moment();
 
     constructor(private userService: UserService,
                 private mealService: MealService,
@@ -48,13 +49,20 @@ export class MealListComponent implements OnInit, OnDestroy {
 
     toggleFilter(filter) {
         if (filter === 'all') {
-            this.filters = ['all'];
-        } else {
-            let index = this.filters.indexOf('all');
-            if (index > -1) {
-                this.filters.splice(index, 1);
+            this.filters = [filter];
+        } else if (filter === 'next-day' || filter === 'previous-day') {
+            if (filter === 'next-day') {
+                this.dayFilter = this.dayFilter.add(1, 'day').startOf('day');
+                this.filters = [this.dayFilter];
+            } else {
+                this.dayFilter = this.dayFilter.subtract(1, 'day').startOf('day');
+                this.filters = [this.dayFilter];
             }
-            index = this.filters.indexOf(filter);
+        } else {
+            this.filters = this.filters.filter(item => item !== 'all');
+            this.filters = this.filters.filter(item => !moment.isMoment(item));
+
+            let index = this.filters.indexOf(filter);
             if (index > -1) {
                 this.filters.splice(index, 1);
             } else {
@@ -108,7 +116,7 @@ export class MealListComponent implements OnInit, OnDestroy {
                     this.filteredMeals = addMealToFilter(meal, this.filteredMeals);
                     return;
                 } else if (moment.isMoment(filter)) {
-                    if (moment(meal.deliveryDate).isSame(filter) && meal.canJoin(this.user)) {
+                    if (moment(meal.deliveryDate).isSame(filter)) {
                         this.filteredMeals = addMealToFilter(meal, this.filteredMeals);
                     }
                 }

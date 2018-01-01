@@ -29,7 +29,13 @@ export class Meal {
     }
 
     canJoin(user: User) {
-        return !this.asJoined(user) && !this.isFull() && !this.isCook(user) && this.limitDate.getTime() >= moment().startOf('day').toDate().getTime();
+        return !this.asJoined(user)
+            &&
+            !this.isFull()
+            &&
+            !this.isCook(user)
+            &&
+            this.limitDate.getTime() >= moment().startOf('day').toDate().getTime();
     }
 
     canLeave(user: User) {
