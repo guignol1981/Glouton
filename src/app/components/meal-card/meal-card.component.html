@@ -1,6 +1,6 @@
 <div *ngIf="meal && user" class="card border-0 card-shadow">
     <simple-notifications [options]="notificationOptions"></simple-notifications>
-    <div class="meal-img">
+    <div class="meal-img m-1">
         <img class="card-img-top img-fluid"
              [src]="imageService.apiEndPoint + '/' + meal._id"
              alt="Card image cap">
@@ -15,7 +15,7 @@
             </div>
         </div>
     </div>
-    <div class="card-body">
+    <div class="card-body global-inner-shadow m-1">
         <ul class="list-group">
             <li class="list-group-item border-0 p-0">
                 <p class="card-text text-truncate font-weight-bold">{{meal.title}}</p>

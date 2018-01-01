@@ -106,7 +106,7 @@ module.exports.join = function (req, res) {
 								.then((cook) => {
 									Message.create({
 										recipient: cook._id,
-										title: `${user.name} has joined your meal ${meal.title}`,
+										title: `${user.name} has joined your lunch proposition ${meal.title}`,
 										type: 'message-meal-join',
 										category: 'success',
 										data: {
@@ -130,7 +130,19 @@ module.exports.leave = function (req, res) {
 		.exec().then(meal => {
 		meal.removeParticipants(userId);
 		meal.save().then(meal => {
-			Meal.populate(meal, {path: "participants"}).then(meal => res.send(meal));
+			User.findById(userId).exec().then(user => {
+				Message.create({
+					recipient: meal.cook._id,
+					title: `${user.name} has left your lunch proposition ${meal.title}`,
+					type: 'message-meal-left',
+					category: 'warning',
+					data: {
+						meal: meal,
+						joinedBy: user,
+					}
+				});
+				Meal.populate(meal, {path: "participants"}).then(meal => res.send(meal));
+			});
 		});
 	});
 };

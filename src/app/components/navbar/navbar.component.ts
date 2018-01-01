@@ -13,6 +13,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     activeTab = 0;
     unseenMessageCount = 0;
     loggedInSubscription: Subscription;
+    isLoggedIn = false;
 
     constructor(public authenticationService: AuthenticationService,
                 private messageService: MessageService,
@@ -21,10 +22,21 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.loggedInSubscription = this.authenticationService.isLoggedInSubject.subscribe(loggedIn => {
+            this.isLoggedIn = loggedIn;
             if (loggedIn) {
                 this.messageService.getUnseen().then(messages => this.unseenMessageCount = messages.length);
+                this.checkForNotifications();
             }
         });
+    }
+
+    checkForNotifications() {
+        let me = this;
+        setInterval(function () {
+            if (me.isLoggedIn) {
+                me.messageService.getUnseen().then(messages => me.unseenMessageCount = messages.length);
+            }
+        }, 5000);
     }
 
     ngOnDestroy() {

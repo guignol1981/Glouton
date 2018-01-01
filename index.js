@@ -14,7 +14,8 @@ require('./server/configs/passport');
 app.set('view engine', 'pug');
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/lunch-box', { useMongoClient: true });
+// mongoose.connect('mongodb://localhost/lunch-box', { useMongoClient: true });
+mongoose.connect('mongodb://root:root@ds143342.mlab.com:43342/lunch-box-devalto', { useMongoClient: true });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -34,7 +35,7 @@ app.use(function (err, req, res) {
 	}
 });
 
-//daily jobs at midnight and 1 minutes todo add monthly jobs
+//daily jobs at midnight and 1 minutes todo add weekly and monthly jobs
 schedule.scheduleJob({hour: 0, minute: 1}, function(){
 	scheduledJobs.execute();
 });
