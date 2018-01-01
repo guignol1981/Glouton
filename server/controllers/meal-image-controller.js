@@ -19,11 +19,7 @@ module.exports.create = function (req, res) {
 
 		let imageTypeRegularExpression = /\/(.*?)$/;
 		let crypto = require('crypto');
-		let seed = crypto.randomBytes(20);
-		let uniqueSHA1String = crypto
-			.createHash('sha1')
-			.update(seed)
-			.digest('hex');
+		let uniqueSHA1String = crypto.pbkdf2Sync('secret', 'salt', 100000, 512, 'sha512');
 
 		let base64Data = req.body.image;
 
