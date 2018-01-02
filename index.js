@@ -13,7 +13,6 @@ require('./server/configs/passport');
 
 app.set('view engine', 'pug');
 
-
 mongoose.Promise = global.Promise;
 if (process.env.DB) {
 	mongoose.connect(process.env.DB, { useMongoClient: true });

@@ -175,6 +175,7 @@ export class MealService {
             new Date(data.creationDate),
             data.minParticipants,
             data.maxParticipants,
+            data.contribution,
             data.status);
         return meal;
     }

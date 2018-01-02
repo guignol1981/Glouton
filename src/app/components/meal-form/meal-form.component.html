@@ -43,6 +43,16 @@
                                    class="form-text text-danger">The description should be 15 characters at least
                             </small>
                         </div>
+                        <div class="form-group">
+                            <label for="contribution">The contribution per person</label>
+                            <input type="number" class="form-control" id="contribution"
+                                   formControlName="contribution"
+                                   step="0.5"
+                                   aria-describedby="contributionHelper"
+                                   min="0">
+                            <small id="contributionHelper" class="form-text text-muted">The contribution asked per participants
+                            </small>
+                        </div>
                         <div *ngIf="! edit" class="form-group text-center">
                             <div>
                                 <button (click)="toggleUseOwnPicture()" class="btn btn-sm btn-info mt-1">
