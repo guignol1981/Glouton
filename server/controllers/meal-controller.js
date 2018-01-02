@@ -28,6 +28,7 @@ module.exports.update = function (req, res) {
 		meal.limitDate = req.body['limitDate'];
 		meal.minParticipants = req.body['minParticipants'];
 		meal.maxParticipants = req.body['maxParticipants'];
+		meal.contribution = req.body['contribution'];
 		meal.participants.forEach(participant => {
 			Message.create({
 				recipient: participant._id,

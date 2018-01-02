@@ -13,6 +13,7 @@ export class Meal {
                 public creationDate: Date = new Date(),
                 public minParticipants: Number = 1,
                 public maxParticipants: Number = 1,
+                public contribution: Number = 0,
                 public status: string = '') {
     }
 

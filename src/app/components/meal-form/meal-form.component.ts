@@ -96,6 +96,7 @@ export class MealFormComponent implements OnInit {
         this.form = new FormGroup({
             title: new FormControl(this.meal.title, [Validators.required, Validators.minLength(5)]),
             description: new FormControl(this.meal.description, [Validators.required, Validators.minLength(15)]),
+            contribution: new FormControl(this.meal.contribution, [Validators.required, Validators.min(0)]),
             deliveryDate: new FormControl(this.meal.deliveryDate, Validators.required),
             limitDate: new FormControl(this.meal.limitDate, Validators.required),
             minParticipants: new FormControl(this.meal.minParticipants, [Validators.required, Validators.min(1)]),
