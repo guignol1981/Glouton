@@ -27,6 +27,7 @@ import {PrivateMessageComponent} from './components/private-message/private-mess
 import {NgDatepickerModule} from 'ng2-datepicker';
 import {SimpleNotificationsModule} from "angular2-notifications";
 import {ImageCropperModule} from "ng2-img-cropper";
+import { HelpComponent } from './components/help/help.component';
 
 @NgModule({
     declarations: [
@@ -42,7 +43,8 @@ import {ImageCropperModule} from "ng2-img-cropper";
         ProfileComponent,
         LunchBoxComponent,
         InboxComponent,
-        PrivateMessageComponent
+        PrivateMessageComponent,
+        HelpComponent
     ],
     imports: [
         BrowserModule,
