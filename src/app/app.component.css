@@ -11,7 +11,7 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-.app::after {
+.app:after {
     content: "";
     background: url('../assets/bg2.jpg');
     opacity: 0.03;

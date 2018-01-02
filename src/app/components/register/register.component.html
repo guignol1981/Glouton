@@ -71,11 +71,11 @@
                                    aria-describedby="confirmPasswordHelper">
                             <small id="confirmPasswordHelper" class="form-text text-muted">Confirm your password</small>
                         </div>
-                        <div class="form-inline">
-                            <div class="form-group">
+                        <div class="row">
+                            <div class="col">
                                 <button [disabled]="!form.valid" class="btn btn-primary">Submit</button>
                             </div>
-                            <div class="form-group ml-3">
+                            <div class="col">
                                 <button (click)="goToLogin()" class="btn btn-secondary">Already a member</button>
                             </div>
                         </div>
