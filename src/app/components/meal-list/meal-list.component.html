@@ -1,5 +1,5 @@
 <app-meal-form #mealform></app-meal-form>
-<div *ngIf="meals.length > 0">
+<div>
     <div>
         <h2 class="font-weight-bold">Lunchs</h2>
         <button data-toggle="modal" data-target="#mealform" class="my-2 btn btn-sm btn-primary global-shadow">propose a lunch</button>
@@ -29,7 +29,7 @@
             <app-meal-card (updated)="updateMeal($event)" [user]="user" [meal]="meal"></app-meal-card>
         </div>
     </div>
-</div>
-<div *ngIf="filteredMeals.length === 0">
-    <h2 class="font-weight-bold text-center mt-5">Wow such empty</h2>
+    <div *ngIf="filteredMeals.length === 0">
+        <h2 class="font-weight-bold text-center mt-5">Wow such empty</h2>
+    </div>
 </div>
