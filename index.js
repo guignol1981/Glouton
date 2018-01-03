@@ -13,6 +13,11 @@ require('./server/configs/passport');
 
 app.set('view engine', 'pug');
 
+//keep heroku free dynos awake
+setInterval(function() {
+	http.get("http://lunch-box-devalto.herokuapp.com");
+}, 300000);
+
 mongoose.Promise = global.Promise;
 if (process.env.DB) {
 	mongoose.connect(process.env.DB, { useMongoClient: true });
