@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "lunch-box-devalto",
+  "private_key_id": "8fd7c7164877268c342f35f8e041aace74f39c9d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCyM5LgxxQExTKA\nNItyIW7wBcXa5j4EeJ7k5vB0QJL5LaABmfSC6NiIu+u2Aq1ySaBd6dz8hbLKxrDB\nkFLVEa/m3Ps7BfK2Xm56R9/MQ6DWWeuz1oZmLRV/CXZ3UvAMAjxB24h1hrfrpEN1\nn0jW9sgNNIDiWzVJlE+/kgZJ3Fl5CA94o11ogHB9TsZiAoGgKjwoNxTfYkrgrUqH\nxo4nRMzbs/gIaMN8gOXX5dL2jmxfR3P3Rc2vo259UwpY+EFUyI7xgCldCS1J6UGu\nEawXY0pihbZUQyI1jZ4LMubsfFQWg21qd3QHO+KxUcZcJz26JlhEIHJ5zynTgeYn\n+c4U+ZpVAgMBAAECggEAKUfYu9DqQoOjA/+IGR+FGT2hHKkvDy6ZEmosJCYMVgRb\nd1uAgK3rcVtlCmQa5WmIaJEDJA1dwmseKazi/2BKSRcCbOUfGV+NRK7vOVymPtmU\nSDQHLNa/Ts80ngY8vO9soY33UdBsPT5vcSk9wKxo4eQ6ghVCZiHhCn4LjmMo5+gS\ntmfNj1J898ggLirR0SihL+RgDNEaKfTfqXxyK5/44iuQCcO+BZ0/Rf7SZH13O7Fh\nVP1s50bC+QrIJ/sbwHK2RpWg6SSVa1w7I47opVQ9ZCqo+pMPTuodDzGLAuD2UQaf\nk7BT9QZKyIE0KcsPiUnAJvu1mSY9p4kBtZICKuo9wQKBgQDjJIlbQSQ8avG9F5QJ\nbeekEP1uB8hNUFXcV5U8EIzw/JCywHy+S7MV2w0mqq/tgsD05TVbNYno61loXNR1\nABFVAdBNlgtNwUhRvDt61up7NRh3vwGvddEuZbIWH2F0/fDi4fQmW1lHrxCF79Hc\n3yPlS7kttQ0WsvB5e0/AXCw2FQKBgQDI10yB7RVEXET/6QwXMi5R2ajinJ1Mz8oq\nAORWUNcfHLDDaPepwcgrb8HqOxF0OzOLu28NDPwfTJUO4buvo4Bfn3L1z/q7RJhP\n7K0OtaM+b9NaG1to6QQ0+inBjgK+C8VMn0DeFDEEyAVe4GsosIdJmUw/4pYKwBqx\nTHk5gq8jQQKBgH15knMZkhXaEf4eB0YKM3r7c7QTkn+7ECMvMp5CmkkJjDligcZx\ndNVu813XzmWK5GKkN4xSEAPd9r7jAO49AlYOMW6ao1XpnrSgIc9i55b2JrUHi7vM\nfqh9vxnfbeu92BLNNRz3O2OQ/rSuXSUBEwg4g2wPZtKSOKszBkRB5p5dAoGAR8+7\nmmU0CnpXbY1ddlnJ+Bg0a7qF//X4Giaxfi9vi79NcMFydG9GbEmMc3zlU8LrPlYp\ncegnqeVPEsAhxL5YY1h22W+g/h6bu1Ar3KuTj/qZ/ojzmUJf77VXAs8NKfi5dhkn\nL4DWuhfu26qwhh8AcI9wlRMmhPeFU8m9OpQAnUECgYEA4qzQvOQ+bcoBCq99fhVI\nUorlbBMlxEbUBqm9vrajpOy64jc6JpxC3efSfKD4lkLxTm08SdbhGuWYqUcl5ihY\nuOx7Y7kkth+Vz6VIjCTpQr5WR7/6RzIxJ9uTLO6Scc+LRIqoaMuDCSykLZTRqiYn\nJ28KBH/nX26iXdj1oAscgEM=\n-----END PRIVATE KEY-----\n",
+  "client_email": "admin-647@lunch-box-devalto.iam.gserviceaccount.com",
+  "client_id": "100493445484950091329",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/admin-647%40lunch-box-devalto.iam.gserviceaccount.com"
+}
