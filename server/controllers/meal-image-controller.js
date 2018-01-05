@@ -78,23 +78,31 @@ module.exports.get = function (req, res) {
     Meal.findById(req.params.id, (err, meal) => {
         let srcFilename = meal.image;
         let destFilename = 'server/files/' + meal.image;
-
         const options = {
             destination: 'server/files/' + meal.image,
         };
 
-        storage
-            .bucket('lunch-box')
-            .file(srcFilename)
-            .download(options)
-            .then(() => {
-                let img = fs.readFileSync(destFilename);
-                fs.unlinkSync(destFilename);
+        fs.readFile(destFilename, (err, img) => {
+            if (err) {
+                storage
+                    .bucket('lunch-box')
+                    .file(srcFilename)
+                    .download(options)
+                    .then(() => {
+                        let img = fs.readFileSync(destFilename);
+                        fs.unlinkSync(destFilename);
+                        res.writeHead(200, {'Content-Type': 'image/gif'});
+                        res.end(img, 'binary');
+                    })
+                    .catch(err => {
+                        console.error('ERROR:', err);
+                    });
+            } else {
                 res.writeHead(200, {'Content-Type': 'image/gif'});
                 res.end(img, 'binary');
-            })
-            .catch(err => {
-                console.error('ERROR:', err);
-            });
+            }
+        });
+
+
     });
 };
