@@ -11,16 +11,19 @@ let api = require('./server/routes/api');
 let scheduledJobs = require('./server/services/scheduled-jobs-service');
 require('./server/configs/passport');
 
+process.env.GOOGLE_APPLICATION_CREDENTIALS = path.join(__dirname, 'configs/lunch-box-devalto-8fd7c7164877.json');
+
+
 app.set('view engine', 'pug');
 
 //keep heroku free dynos awake
-setInterval(function() {
-	http.get("http://lunch-box-devalto.herokuapp.com");
+setInterval(function () {
+    http.get("http://lunch-box-devalto.herokuapp.com");
 }, 300000);
 
 mongoose.Promise = global.Promise;
 if (process.env.DB) {
-	mongoose.connect(process.env.DB, { useMongoClient: true });
+    mongoose.connect(process.env.DB, {useMongoClient: true});
 } else {
 	mongoose.connect('mongodb://localhost/lunch-box', { useMongoClient: true });
 }
@@ -33,21 +36,21 @@ app.use(passport.initialize());
 app.use('/api', api);
 
 app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname, 'dist/index.html'));
+    res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
 app.use(function (err, req, res) {
-	if (err.name === 'UnauthorizedError') {
-		res.status(401);
-		res.json({"message" : err.name + ": " + err.message});
-	}
+    if (err.name === 'UnauthorizedError') {
+        res.status(401);
+        res.json({"message": err.name + ": " + err.message});
+    }
 });
 
 //daily jobs at midnight and 1 minutes todo add weekly and monthly jobs
-schedule.scheduleJob({hour: 0, minute: 1}, function(){
-	scheduledJobs.execute();
+schedule.scheduleJob({hour: 0, minute: 1}, function () {
+    scheduledJobs.execute();
 });
 
 app.set('port', port);
 let server = http.createServer(app);
-server.listen(port, () =>  console.log(`LunchBox api running on localhost:${port}`));
+server.listen(port, () => console.log(`LunchBox api running on localhost:${port}`));
