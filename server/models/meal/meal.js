@@ -92,7 +92,6 @@ mealSchema.statics.getList = function(callback) {
 mealSchema.statics.getLunchBox = function (weekFirstDay, userId, callback) {
 	let weekLastDay = moment(weekFirstDay);
 	weekLastDay.endOf('week');
-	console.log(weekFirstDay);
 	Meal.find({
 			deliveryDate: {
 				"$gt": weekFirstDay.subtract(1, 'day').toDate(),
