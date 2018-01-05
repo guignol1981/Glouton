@@ -46,8 +46,6 @@ module.exports.create = function (req, res) {
         try {
             fs.writeFile(userUploadedImagePath, imageBuffer.data,
                 function () {
-
-                    console.log(userUploadedImagePath);
                     storage
                         .bucket(bucketName)
                         .upload(userUploadedImagePath)

@@ -120,7 +120,6 @@ export class MealListComponent implements OnInit, OnDestroy {
                 }
             });
             if (this.dayFilter) {
-                console.log('test');
                 if (moment(meal.deliveryDate).isSame(this.dayFilter)) {
                     this.filteredMeals = addMealToFilter(meal, this.filteredMeals);
                 }
