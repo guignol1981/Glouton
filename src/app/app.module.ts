@@ -28,6 +28,8 @@ import {NgDatepickerModule} from 'ng2-datepicker';
 import {SimpleNotificationsModule} from "angular2-notifications";
 import {ImageCropperModule} from "ng2-img-cropper";
 import { HelpComponent } from './components/help/help.component';
+import { AboutComponent } from './components/about/about.component';
+import {VersionService} from './models/version/version.service';
 
 @NgModule({
     declarations: [
@@ -44,7 +46,8 @@ import { HelpComponent } from './components/help/help.component';
         LunchBoxComponent,
         InboxComponent,
         PrivateMessageComponent,
-        HelpComponent
+        HelpComponent,
+        AboutComponent
     ],
     imports: [
         BrowserModule,
@@ -63,7 +66,8 @@ import { HelpComponent } from './components/help/help.component';
         UserService,
         CanActivateViaAuthGuardService,
         MealImageService,
-        MessageService
+        MessageService,
+        VersionService
     ],
     bootstrap: [AppComponent]
 })

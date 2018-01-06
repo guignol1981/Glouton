@@ -1,0 +1,28 @@
+<div class="container">
+    <h2 class="font-weight-bold">Versions</h2>
+    <ul class="list-group mt-3">
+        <li *ngFor="let version of versions" class="list-group-item">
+            <h3 class="font-weight-bold">
+                #{{version.versionNumber}}
+            </h3>
+            <ul class="list-group">
+                <h5>New features</h5>
+                <li *ngFor="let feature of version.features" class="list-group-item border-0">
+                    <i class="fa fa-check" aria-hidden="true"></i> {{feature}}
+                </li>
+            </ul>
+            <ul class="list-group">
+                <h5>Bug fixes</h5>
+                <li *ngFor="let fix of version.fixes" class="list-group-item border-0">
+                    <i class="fa fa-bug" aria-hidden="true"></i> {{fix}}
+                </li>
+            </ul>
+            <ul class="list-group">
+                <h5>Known issues</h5>
+                <li *ngFor="let knownIssue of version.knownIssues" class="list-group-item border-0">
+                    <i class="fa fa-eye" aria-hidden="true"></i> {{knownIssue}}
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
