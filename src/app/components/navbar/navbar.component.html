@@ -13,6 +13,7 @@
                     <a (click)="setTab(2)" class="nav-link" [routerLink]="['/lunch-box']">lunch box</a>
                 </li>
             </ul>
+            <div class="mx-auto"></div>
             <ul class="navbar-nav">
                 <li [class]="getNavItemClass(4)">
                     <a (click)="setTab(4)" class="nav-link" [routerLink]="['/inbox']">
@@ -28,6 +29,11 @@
                 <li [class]="getNavItemClass(6)">
                     <a (click)="setTab(6)" class="nav-link" [routerLink]="['/help']">
                         help
+                    </a>
+                </li>
+                <li [class]="getNavItemClass(7)">
+                    <a (click)="setTab(7)" class="nav-link" [routerLink]="['/about']">
+                        about
                     </a>
                 </li>
                 <li class="nav-item" (click)="logout()">

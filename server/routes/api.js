@@ -13,6 +13,7 @@ let ctrlAuth = require('../controllers/authentications');
 let ctrlMeal = require('../controllers/meal-controller');
 let ctrlMealImage = require('../controllers/meal-image-controller');
 let ctrlMessage = require('../controllers/message-controller');
+let ctrlVersion = require('../controllers/version-controller');
 
 //user
 router.post('/register', ctrlAuth.register);
@@ -38,4 +39,8 @@ router.delete('/messages/:id', auth, ctrlMessage.delete);
 router.post('/messages', auth, ctrlMessage.create);
 router.get('/messages', auth, ctrlMessage.getAll);
 router.get('/messages/unseen', auth, ctrlMessage.getUnseen);
+
+//version
+router.get('/versions', auth, ctrlVersion.getList);
+
 module.exports = router;
