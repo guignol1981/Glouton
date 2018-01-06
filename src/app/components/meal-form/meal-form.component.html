@@ -1,16 +1,16 @@
 <simple-notifications [options]="notificationOptions"></simple-notifications>
-<div class="modal fade" [id]="edit? 'mealformedit': 'mealform'" tabindex="-1" role="dialog"
-     [attr.aria-labelledby]="edit? 'mealModalLabelEdit': 'mealModalLabel'" aria-hidden="true">
+<div class="modal fade" [id]="editMode? 'mealformedit': 'mealform'" tabindex="-1" role="dialog"
+     [attr.aria-labelledby]="editMode? 'mealModalLabelEdit': 'mealModalLabel'" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <div *ngIf="edit">
+                <div *ngIf="editMode">
                     <h5 class="modal-title font-weight-bold" id="mealModalLabelEdit">Edit your meal</h5>
-                    <small class="form-text text-danger">
-                        If you edit your meal, all participants will be removed. We take care to inform them.
+                    <small *ngIf="meal && meal.participants.length > 0" class="form-text text-danger">
+                        Be careful, certain field will remove participants if edited. We will take care to notify them.
                     </small>
                 </div>
-                <div *ngIf="!edit">
+                <div *ngIf="!editMode">
                     <h5 class="modal-title font-weight-bold" id="mealModalLabel">Propose a lunch</h5>
                 </div>
                 <button (click)="close()" type="button" class="close" data-dismiss="modal" aria-label="Close"
@@ -50,10 +50,12 @@
                                    step="0.5"
                                    aria-describedby="contributionHelper"
                                    min="0">
-                            <small id="contributionHelper" class="form-text text-muted">The contribution asked per participants
+                            <small *ngIf="editMode && meal.participants.length > 0" id="contributionHelper"
+                                   class="form-text text-danger">
+                                editing this field will remove participants
                             </small>
                         </div>
-                        <div *ngIf="! edit" class="form-group text-center">
+                        <div *ngIf="! editMode" class="form-group text-center">
                             <div>
                                 <button (click)="toggleUseOwnPicture()" class="btn btn-sm btn-info mt-1">
                                     {{useOwnPicture ? 'use default picture' : 'use own picture'}}
@@ -86,8 +88,12 @@
                                 <ng-datepicker [options]="limitDateOptions" id="limitDate"
                                                formControlName="limitDate"
                                                aria-describedby="limiteDateHelper"></ng-datepicker>
-                                <small id="limiteDateHelper" class="form-text text-muted">The limit date to join or
-                                    leave this meal
+                                <small id="limiteDateHelper" class="form-text text-muted">Participants will have until
+                                    midnight to join in
+                                </small>
+                                <small *ngIf="editMode && meal.participants.length > 0" id="editLimitDateHelper"
+                                       class="form-text text-danger">
+                                    editing this field will remove participants
                                 </small>
                                 <small *ngIf="form.hasError('limitDateIsEqualOrGreaterThanDeliveryDate')"
                                        class="form-text text-danger">Limit date should be lower than delivery
@@ -96,10 +102,15 @@
                             </div>
                             <div class="col form-group">
                                 <label for="deliveryDate">Delivery date</label>
-                                <ng-datepicker [options]="deliveryDateOptions" id="deliveryDate" formControlName="deliveryDate"
+                                <ng-datepicker [options]="deliveryDateOptions" id="deliveryDate"
+                                               formControlName="deliveryDate"
                                                aria-describedby="deliveryDateHelper"></ng-datepicker>
                                 <small id="deliveryDateHelper" class="form-text text-muted">The date you will deliver
                                     this meal
+                                </small>
+                                <small *ngIf="editMode && meal.participants.length > 0" id="editDeliveryDateHelper"
+                                       class="form-text text-danger">
+                                    editing this field will remove participants
                                 </small>
                                 <small *ngIf="form.hasError('limitDateIsEqualOrGreaterThanDeliveryDate')"
                                        class="form-text text-danger">Delivery date should be greater than limit
@@ -143,7 +154,10 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button (click)="onSubmit(mealformclosebutton)" [disabled]="!form.valid || (!data.image && useOwnPicture)" class="btn btn-primary">Submit</button>
+                            <button (click)="onSubmit(mealformclosebutton)"
+                                    [disabled]="!form.valid || (!data.image && useOwnPicture)" class="btn btn-primary">
+                                Submit
+                            </button>
                             <button type="button" (click)="close()" class="btn btn-secondary" data-dismiss="modal">
                                 Close
                             </button>

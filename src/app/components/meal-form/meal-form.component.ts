@@ -20,7 +20,7 @@ import * as moment from 'moment';
     styleUrls: ['./meal-form.component.css']
 })
 export class MealFormComponent implements OnInit {
-    @Input() edit = false;
+    @Input() editMode = false;
     @Output() updated: EventEmitter<Meal> = new EventEmitter<Meal>();
     @ViewChild('cropper', undefined)
     cropper: ImageCropperComponent;
@@ -62,7 +62,7 @@ export class MealFormComponent implements OnInit {
 
         this.data = {};
 
-        if (!this.edit) {
+        if (!this.editMode) {
             this.meal = new Meal();
             this.userService.getConnectedUser().then(user => {
                 this.user = user;
@@ -83,10 +83,10 @@ export class MealFormComponent implements OnInit {
         let image: any = new Image();
         let file: File = $event.target.files[0];
         let myReader: FileReader = new FileReader();
-        let that = this;
+        let me = this;
         myReader.onloadend = function (loadEvent: any) {
             image.src = loadEvent.target.result;
-            that.cropper.setImage(image);
+            me.cropper.setImage(image);
         };
 
         myReader.readAsDataURL(file);
@@ -131,7 +131,7 @@ export class MealFormComponent implements OnInit {
 
             me.mealService.save(meal)
                 .then((updatedMeal) => {
-                    if (me.edit) {
+                    if (me.editMode) {
                         if (hasParticipants && updatedMeal.participants.length === 0) {
                             me.notificationService.warn('participants have been removed', 'we warned them!');
                         }
@@ -145,7 +145,7 @@ export class MealFormComponent implements OnInit {
                     closeButton.click();
                 });
         };
-        if (!me.edit && me.useOwnPicture) {
+        if (!me.editMode && me.useOwnPicture) {
             me.mealImageService.postImage(me.data.image).subscribe(data => {
                 saveMeal(data);
             });
