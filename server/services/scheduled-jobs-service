@@ -60,17 +60,6 @@ let updateMealStatus = function () {
 	console.log('updateMealStatus job done');
 };
 
-let minimumParticipantsReached = function () {
-
-};
-
-let maximumParticipantsReached = function () {
-
-};
-
-let removeUnlinkedImages = function () {
-
-};
 
 let suggestMealOnNothingPlannedDays = function () {
 

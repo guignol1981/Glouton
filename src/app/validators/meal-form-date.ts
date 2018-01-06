@@ -17,8 +17,8 @@ export class MealFormDateValidation {
     static LimitDateShouldBeLowerThanDeliveryDate(AC: AbstractControl) {
         let limitDatecontrol = AC.get('limitDate');
         let deliveryDateControl = AC.get('deliveryDate');
-        let deliveryDate = moment.utc(deliveryDateControl.value).startOf('day').format();
-        let limitDate = moment.utc(limitDatecontrol.value).startOf('day').format();
+        let deliveryDate = moment(deliveryDateControl.value).startOf('day').format();
+        let limitDate = moment(limitDatecontrol.value).startOf('day').format();
 
         if (limitDate < deliveryDate) {
             return null;

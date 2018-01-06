@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Headers, Http, Response} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
-import {AuthenticationService} from "./authentication.service";
+import {AuthenticationService} from './authentication.service';
 
 @Injectable()
 export class MealImageService {
