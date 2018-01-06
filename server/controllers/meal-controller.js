@@ -2,6 +2,7 @@ let Meal = require('../models/meal/meal');
 let User = require('../models/user/user');
 let Message = require('../models/message/message');
 let moment = require('moment');
+let dateHelper = require('../services/date-helper');
 
 module.exports.get = function (req, res) {
 	let id = req.params.id;
@@ -22,27 +23,43 @@ module.exports.update = function (req, res) {
 	let mealId = req.params.id;
 
 	Meal.findById(mealId).populate('cook').populate('participants').exec().then(meal => {
+		let removeParticipants = false;
+
+		if (
+			dateHelper.compareDates(meal.deliveryDate, req.body['deliveryDate']) !== 0
+			||
+			dateHelper.compareDates(meal.limitDate, req.body['limitDate'] !== 0
+			||
+			meal.contribution !== req.body['contribution']
+			)
+		) {
+			removeParticipants = true;
+		}
+
 		meal.title = req.body['title'];
 		meal.description = req.body['description'];
-		meal.deliveryDate = req.body['deliveryDate'];
-		meal.limitDate = req.body['limitDate'];
+		meal.deliveryDate = moment(req.body['deliveryDate']).startOf('day').toDate();
+		meal.limitDate = moment(req.body['limitDate']).startOf('day').toDate();
 		meal.minParticipants = req.body['minParticipants'];
 		meal.maxParticipants = req.body['maxParticipants'];
 		meal.contribution = req.body['contribution'];
-		meal.participants.forEach(participant => {
-			Message.create({
-				recipient: participant._id,
-				title: `${participant.name} Some modification has been made to the lunch proposition ${meal.title}`,
-				type: 'message-meal-rejected-from',
-				category: 'warning',
-				data: {
-					meal: meal
-				}
+
+		if (removeParticipants) {
+			meal.participants.forEach(participant => {
+				Message.create({
+					recipient: participant._id,
+					title: `${participant.name} Some modification has been made to the lunch proposition ${meal.title}`,
+					type: 'message-meal-rejected-from',
+					category: 'warning',
+					data: {
+						meal: meal
+					}
+				});
 			});
-		});
-		meal.participants = [];
-		meal.deliveryDate = moment(meal.deliveryDate).startOf('day').toDate();
-		meal.limitDate = moment(meal.limitDate).endOf('day').toDate();
+
+			meal.participants = [];
+		}
+
 		meal.save().then(updatedMeal => {
 			res.send(updatedMeal);
 		});

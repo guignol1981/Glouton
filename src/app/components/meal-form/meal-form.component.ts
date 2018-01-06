@@ -1,17 +1,17 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {MealService} from "../../models/meal/meal.service";
-import {Meal} from "../../models/meal/meal";
-import {AuthenticationService} from "../../services/authentication.service";
-import {User} from "../../models/user/user";
-import {MealImageService} from "../../services/meal-image.service";
-import {UserService} from "../../models/user/user.service";
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {MealService} from '../../models/meal/meal.service';
+import {Meal} from '../../models/meal/meal';
+import {AuthenticationService} from '../../services/authentication.service';
+import {User} from '../../models/user/user';
+import {MealImageService} from '../../services/meal-image.service';
+import {UserService} from '../../models/user/user.service';
 import {MealFormDateValidation} from '../../validators/meal-form-date';
 import {MealFormParticipantValidation} from '../../validators/meal-form-participants';
-import {CropperSettings, ImageCropperComponent} from "ng2-img-cropper";
-import {NotificationsService} from "angular2-notifications";
+import {CropperSettings, ImageCropperComponent} from 'ng2-img-cropper';
+import {NotificationsService} from 'angular2-notifications';
 import {DatepickerOptions} from 'ng2-datepicker';
-import * as moment from "moment";
+import * as moment from 'moment';
 
 
 @Component({
@@ -31,7 +31,7 @@ export class MealFormComponent implements OnInit {
     cropperSettings: CropperSettings;
     useOwnPicture = false;
     public notificationOptions = {
-        position: ["bottom", "left"],
+        position: ['bottom', 'left'],
         timeOut: 5000,
         lastOnBottom: true
     };
@@ -121,19 +121,27 @@ export class MealFormComponent implements OnInit {
         let me = this;
         let saveMeal = function (imageData) {
             let meal = <Meal>me.form.value;
+            let hasParticipants = me.meal.participants.length > 0;
+
             meal._id = me.meal._id;
             meal.image = imageData ? JSON.parse(imageData['_body']).image : meal.image;
             meal.participants = me.meal.participants;
             meal.cook = me.user;
+
+
             me.mealService.save(meal)
                 .then((updatedMeal) => {
                     if (me.edit) {
-                        me.notificationService.warn('participants have been removed', 'we warned them!');
+                        if (hasParticipants && updatedMeal.participants.length === 0) {
+                            me.notificationService.warn('participants have been removed', 'we warned them!');
+                        }
+
                         me.notificationService.success(`Lunch proposition updated!`);
-                        me.updated.emit(updatedMeal);
                     } else {
                         me.notificationService.success(`Lunch proposition created!`);
                     }
+
+                    me.updated.emit(updatedMeal);
                     closeButton.click();
                 });
         };
