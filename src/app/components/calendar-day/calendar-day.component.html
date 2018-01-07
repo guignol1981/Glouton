@@ -28,7 +28,7 @@
     </div>
     <div class="m-2 p-1 global-inner-shadow">
         <div *ngIf="activeTab === 'joined'">
-            <div class="" style="overflow: scroll; height: 100px;">
+            <div class="" style="overflow-y: scroll; overflow-x: hidden; height: 100px;">
                 <ul class="list-group">
                     <li *ngFor="let lunch of joinedLunchs">
                         <a class="btn btn-link" style="cursor: pointer" (click)="goToLunchDetails(lunch._id)">
@@ -39,7 +39,7 @@
             </div>
         </div>
         <div *ngIf="activeTab === 'proposed'">
-            <div class="" style="overflow: scroll; height: 100px;">
+            <div class="" style="overflow-y: scroll; overflow-x: hidden;  height: 100px;">
                 <ul class="list-group">
                     <li *ngFor="let lunch of proposedLunchs">
                         <a class="btn btn-link" style="cursor: pointer" (click)="goToLunchDetails(lunch._id)">
@@ -50,7 +50,7 @@
             </div>
         </div>
         <div *ngIf="activeTab === 'suggested'">
-            <div class="" style="overflow: scroll; height: 100px;">
+            <div class="" style="overflow-y: scroll; overflow-x: hidden;  height: 100px;">
                 <ul class="list-group">
                     <li *ngFor="let lunch of suggestedLunchs">
                         <a class="btn btn-link" style="cursor: pointer" (click)="goToLunchDetails(lunch._id)">
