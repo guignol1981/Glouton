@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MealService} from "../../models/meal/meal.service";
 import {Meal} from "../../models/meal/meal";
 import {ActivatedRoute, Params} from "@angular/router";
@@ -7,6 +7,7 @@ import {UserService} from "../../models/user/user.service";
 import {User} from "../../models/user/user";
 import {MealFormComponent} from "../meal-form/meal-form.component";
 import {NotificationsService} from "angular2-notifications";
+import * as moment from "moment";
 
 @Component({
     selector: 'app-meal-details',
@@ -22,7 +23,9 @@ export class MealDetailsComponent implements OnInit {
         timeOut: 5000,
         lastOnBottom: true
     };
-
+    weekdayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    weekDayName = '';
+    remaningTime;
 
     constructor(private mealService: MealService,
                 private activatedRoute: ActivatedRoute,
@@ -39,6 +42,8 @@ export class MealDetailsComponent implements OnInit {
                 this.mealService.get(mealId)
                     .then(data => {
                         this.meal = data;
+                        this.remaningTime = moment(this.meal.limitDate).fromNow().replace('in', '');
+                        this.weekDayName = this.weekdayNames[moment(this.meal.deliveryDate).weekday()];
                     });
             });
         });
