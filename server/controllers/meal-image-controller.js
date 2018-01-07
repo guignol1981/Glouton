@@ -2,7 +2,7 @@ let Meal = require('../models/meal/meal');
 let fs = require('fs');
 let Storage = require('@google-cloud/storage');
 let storage = new Storage();
-let bucketName = 'lunch-box';
+let bucketName = process.env.NODE_ENV === 'prod' ? 'lunch-box' : 'lunch-box-dev';
 
 module.exports.create = function (req, res) {
     try {
@@ -76,14 +76,14 @@ module.exports.get = function (req, res) {
     Meal.findById(req.params.id, (err, meal) => {
         let srcFilename = meal.image;
         let destFilename = 'server/files/' + meal.image;
-        const options = {
-            destination: 'server/files/' + meal.image,
+        let options = {
+            destination: destFilename
         };
 
         fs.readFile(destFilename, (err, img) => {
             if (err) {
                 storage
-                    .bucket('lunch-box')
+                    .bucket(bucketName)
                     .file(srcFilename)
                     .download(options)
                     .then(() => {

@@ -13,6 +13,10 @@ require('./server/configs/passport');
 
 process.env.GOOGLE_APPLICATION_CREDENTIALS = path.join(__dirname, 'configs/lunch-box-devalto-8fd7c7164877.json');
 
+if (! process.env.NODE_ENV) {
+    process.env.NODE_ENV = 'dev';
+}
+
 app.set('view engine', 'pug');
 
 //keep heroku free dynos awake
@@ -24,8 +28,6 @@ mongoose.Promise = global.Promise;
 if (process.env.DB) {
     mongoose.connect(process.env.DB, {useMongoClient: true});
 } else {
-    //let this commented this is a dev database for when i dont have access to mongod
-	// mongoose.connect('mongodb://root:root@ds123311.mlab.com:23311/angular2-deployment', { useMongoClient: true });
 	mongoose.connect('mongodb://localhost/lunch-box', { useMongoClient: true });
 }
 
