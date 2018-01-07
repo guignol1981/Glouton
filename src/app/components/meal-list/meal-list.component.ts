@@ -16,7 +16,6 @@ export class MealListComponent implements OnInit, OnDestroy {
     filters = ['all'];
     user: User;
     mealsSubscription: Subscription;
-    dayFilter = null;
 
     constructor(private userService: UserService,
                 private mealService: MealService) {

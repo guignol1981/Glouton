@@ -1,7 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import * as moment from 'moment';
 import {Meal} from '../../models/meal/meal';
 import {Router} from '@angular/router';
+import {MealFormComponent} from "../meal-form/meal-form.component";
+import {User} from "../../models/user/user";
 
 @Component({
     selector: 'app-calendar-day',
@@ -14,6 +15,8 @@ export class CalendarDayComponent implements OnInit {
     @Input() joinedLunchs: Meal[] = [];
     @Input() proposedLunchs: Meal[] = [];
     @Input() suggestedLunchs: Meal[] = [];
+    @Input() mealForm: MealFormComponent;
+    @Input() user: User;
     activeTab =  'joined';
 
     constructor(private router: Router) {
@@ -28,6 +31,11 @@ export class CalendarDayComponent implements OnInit {
 
     setTab(tabName) {
         this.activeTab = tabName;
+    }
+
+    proposeLunch(button) {
+        this.mealForm.initFromDate(this.weekday, this.user);
+        button.click();
     }
 
 }
