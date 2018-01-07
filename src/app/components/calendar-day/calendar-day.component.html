@@ -1,0 +1,64 @@
+<div class="card global-shadow">
+    <div class="card-header text-center">
+        <p class="font-weight-bold">
+            {{weekdayName}}
+        </p>
+        {{weekday.toDate() | date}}
+        <br>
+        <div class="mt-1">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a [class]="activeTab == 'joined' ? 'nav-link active clickable': 'nav-link clickable'"
+                       (click)="setTab('joined')">🍴 <br><span
+                            class="badge badge-secondary">{{joinedLunchs.length}}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a [class]="activeTab == 'proposed' ? 'nav-link active clickable': 'nav-link clickable'"
+                       (click)="setTab('proposed')">👨🏻‍🍳 <br><span class="badge badge-secondary">{{proposedLunchs.length}}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a [class]="activeTab == 'suggested' ? 'nav-link active clickable': 'nav-link clickable'"
+                       (click)="setTab('suggested')">🔎 <br><span class="badge badge-secondary">{{suggestedLunchs.length}}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="m-2 p-1 global-inner-shadow">
+        <div *ngIf="activeTab === 'joined'">
+            <div class="" style="overflow: scroll; height: 100px;">
+                <ul class="list-group">
+                    <li *ngFor="let lunch of joinedLunchs">
+                        <a class="btn btn-link" style="cursor: pointer" (click)="goToLunchDetails(lunch._id)">
+                            {{lunch.title}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div *ngIf="activeTab === 'proposed'">
+            <div class="" style="overflow: scroll; height: 100px;">
+                <ul class="list-group">
+                    <li *ngFor="let lunch of proposedLunchs">
+                        <a class="btn btn-link" style="cursor: pointer" (click)="goToLunchDetails(lunch._id)">
+                            {{lunch.title}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div *ngIf="activeTab === 'suggested'">
+            <div class="" style="overflow: scroll; height: 100px;">
+                <ul class="list-group">
+                    <li *ngFor="let lunch of suggestedLunchs">
+                        <a class="btn btn-link" style="cursor: pointer" (click)="goToLunchDetails(lunch._id)">
+                            {{lunch.title}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

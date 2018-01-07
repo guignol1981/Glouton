@@ -30,6 +30,7 @@ import {ImageCropperModule} from "ng2-img-cropper";
 import { HelpComponent } from './components/help/help.component';
 import { AboutComponent } from './components/about/about.component';
 import {VersionService} from './models/version/version.service';
+import { CalendarDayComponent } from './components/calendar-day/calendar-day.component';
 
 @NgModule({
     declarations: [
@@ -47,7 +48,8 @@ import {VersionService} from './models/version/version.service';
         InboxComponent,
         PrivateMessageComponent,
         HelpComponent,
-        AboutComponent
+        AboutComponent,
+        CalendarDayComponent
     ],
     imports: [
         BrowserModule,

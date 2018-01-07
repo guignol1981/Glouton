@@ -4,8 +4,6 @@ import {Meal} from "../../models/meal/meal";
 import {Subscription} from "rxjs/Subscription";
 import {UserService} from "../../models/user/user.service";
 import {User} from "../../models/user/user";
-import {ActivatedRoute} from "@angular/router";
-import * as moment from "moment";
 
 @Component({
     selector: 'app-meal-list',
@@ -21,17 +19,10 @@ export class MealListComponent implements OnInit, OnDestroy {
     dayFilter = null;
 
     constructor(private userService: UserService,
-                private mealService: MealService,
-                private activatedRoute: ActivatedRoute) {
+                private mealService: MealService) {
     }
 
     ngOnInit() {
-        let dateParamFilter = this.activatedRoute.snapshot.params['date'];
-        if (dateParamFilter) {
-            this.filters = [];
-            this.dayFilter = moment(dateParamFilter);
-            this.filterList();
-        }
         this.userService.getConnectedUser().then(user => {
             this.user = user;
             this.mealsSubscription = this.mealService.mealsSubject.subscribe(data => {
@@ -52,18 +43,8 @@ export class MealListComponent implements OnInit, OnDestroy {
     toggleFilter(filter) {
         if (filter === 'all') {
             this.filters = [filter];
-        } else if (filter === 'next-day' || filter === 'previous-day') {
-            if (filter === 'next-day') {
-                this.dayFilter = this.dayFilter.add(1, 'day').startOf('day');
-                this.filters = [this.dayFilter];
-            } else {
-                this.dayFilter = this.dayFilter.subtract(1, 'day').startOf('day');
-                this.filters = [this.dayFilter];
-            }
         } else {
             this.filters = this.filters.filter(item => item !== 'all');
-            this.filters = this.filters.filter(item => !moment.isMoment(item));
-
             let index = this.filters.indexOf(filter);
             if (index > -1) {
                 this.filters.splice(index, 1);
@@ -119,11 +100,6 @@ export class MealListComponent implements OnInit, OnDestroy {
                     return;
                 }
             });
-            if (this.dayFilter) {
-                if (moment(meal.deliveryDate).isSame(this.dayFilter)) {
-                    this.filteredMeals = addMealToFilter(meal, this.filteredMeals);
-                }
-            }
         });
     }
 }

@@ -102,17 +102,7 @@ mealSchema.statics.getLunchBox = function (weekFirstDay, userId, callback) {
 		.populate('cook')
 		.populate('participants')
 		.exec().then(meals => {
-			let lunchBox = [];
-
-			meals.forEach((meal) => {
-				meal.participants.forEach((participant) => {
-					if (participant.id == userId) {
-						lunchBox.push(meal);
-					}
-				});
-			});
-
-			callback(lunchBox);
+			callback(meals);
 		});
 };
 

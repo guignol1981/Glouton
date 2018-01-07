@@ -13,17 +13,6 @@
             <a href="javascript:void(0)" (click)="toggleFilter('by me')" [class]="getFilterClass('by me')">by me</a>
         </div>
     </div>
-    <!--|-->
-    <!--<div>-->
-    <!--<a href="javascript:void(0)" (click)="toggleFilter('previous-day')" [class]="getFilterClass('previous-day')"><i-->
-    <!--class="fa fa-arrow-left" aria-hidden="true"></i>-->
-    <!--</a>-->
-    <!--{{dayFilter.toDate().toString() | date}}-->
-    <!--<a href="javascript:void(0)" (click)="toggleFilter('next-day')" [class]="getFilterClass('next-day')"><i-->
-    <!--class="fa fa-arrow-right" aria-hidden="true"></i>-->
-    <!--</a>-->
-    <!--</div>-->
-    <!--<hr>-->
     <div class="row">
         <div *ngFor="let meal of filteredMeals" class="mt-3 col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
             <app-meal-card (updated)="updateMeal($event)" [user]="user" [meal]="meal"></app-meal-card>
