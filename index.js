@@ -45,7 +45,6 @@ app.use(function (err, req, res) {
     }
 });
 
-//daily jobs at midnight and 1 minutes todo add weekly and monthly jobs
 schedule.scheduleJob({hour: 0, minute: 1}, function () {
     scheduledJobs.execute();
 });
