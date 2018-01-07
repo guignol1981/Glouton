@@ -31,7 +31,7 @@
             <div class="" style="overflow-y: scroll; overflow-x: hidden; height: 100px;">
                 <ul class="list-group">
                     <li *ngFor="let lunch of joinedLunchs">
-                        <a class="btn btn-link" style="cursor: pointer" (click)="goToLunchDetails(lunch._id)">
+                        <a class="btn btn-link" style="cursor: pointer" href="javascript:void(0)" (click)="goToLunchDetails(lunch._id)">
                             {{lunch.title}}
                         </a>
                     </li>
@@ -42,7 +42,7 @@
             <div class="" style="overflow-y: scroll; overflow-x: hidden;  height: 100px;">
                 <ul class="list-group">
                     <li *ngFor="let lunch of proposedLunchs">
-                        <a class="btn btn-link" style="cursor: pointer" (click)="goToLunchDetails(lunch._id)">
+                        <a class="btn btn-link" style="cursor: pointer" href="javascript:void(0)" (click)="goToLunchDetails(lunch._id)">
                             {{lunch.title}}
                         </a>
                     </li>
@@ -53,7 +53,7 @@
             <div class="" style="overflow-y: scroll; overflow-x: hidden;  height: 100px;">
                 <ul class="list-group">
                     <li *ngFor="let lunch of suggestedLunchs">
-                        <a class="btn btn-link" style="cursor: pointer" (click)="goToLunchDetails(lunch._id)">
+                        <a class="btn btn-link" style="cursor: pointer" href="javascript:void(0)" (click)="goToLunchDetails(lunch._id)">
                             {{lunch.title}}
                         </a>
                     </li>

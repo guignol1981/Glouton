@@ -1,19 +1,9 @@
-<div *ngIf="meal && user" class="card border-0 card-shadow">
+<div *ngIf="meal && user" class="card border-0 card-shadow lunch-card">
     <simple-notifications [options]="notificationOptions"></simple-notifications>
     <div class="meal-img m-1">
         <img class="card-img-top img-fluid"
              [src]="imageService.apiEndPoint + '/' + meal._id"
              alt="Card image cap">
-        <div class="overlay">
-            <div class="text-center mt-4">
-                <span>
-                    <button *ngIf="meal.canJoin(user)" (click)="joinMeal()" class="btn btn-outline-light">Join</button>
-                    <button *ngIf="meal.canLeave(user)" (click)="leaveMeal()"
-                            class="btn btn-outline-light">Leave</button>
-                    <button (click)="goToMealDetails()" class="btn btn-outline-light">Details</button>
-                </span>
-            </div>
-        </div>
     </div>
     <div class="card-body global-inner-shadow m-1">
         <ul class="list-group">
@@ -31,5 +21,8 @@
                 <span *ngIf="meal.isCanceled()" class="badge badge-danger">confirmed</span>
             </li>
         </ul>
+    </div>
+    <div class="card-footer">
+        <a href="javascript:void(0)" (click)="goToMealDetails()" class="btn">Details</a>
     </div>
 </div>
