@@ -18,7 +18,7 @@
         </div>
         <div class="card col global-shadow">
             <ul class="list-group">
-                <li class="list-group-item border-0">
+                <li *ngIf="meal.isPending()" class="list-group-item border-0">
                     <div class="mt-3">
                         <button *ngIf="meal.canJoin(user)" (click)="joinMeal()" class="btn btn-sm btn-primary ">Join
                         </button>
