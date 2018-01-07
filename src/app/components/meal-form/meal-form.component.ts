@@ -13,7 +13,6 @@ import {NotificationsService} from 'angular2-notifications';
 import {DatepickerOptions} from 'ng2-datepicker';
 import * as moment from 'moment';
 
-
 @Component({
     selector: 'app-meal-form',
     templateUrl: './meal-form.component.html',
@@ -78,6 +77,14 @@ export class MealFormComponent implements OnInit {
         this.initForm();
     }
 
+    @Input()
+    initFromDate(date, user: User) {
+        this.user = user;
+        this.meal = new Meal();
+        this.meal.deliveryDate = date.toDate();
+        this.meal.limitDate = moment(date).subtract(1, 'day').toDate();
+        this.initForm();
+    }
 
     fileChangeListener($event) {
         let image: any = new Image();

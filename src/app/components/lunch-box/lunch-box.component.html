@@ -1,3 +1,4 @@
+<app-meal-form #mealform></app-meal-form>
 <div class="container mt-3">
     <h2 class="font-weight-bold">Your lunch-box</h2>
     <div>
@@ -15,7 +16,9 @@
                     [weekdayName]="weekdayNames[i]"
                     [joinedLunchs]="getJoinedLunchForDay(weekday)"
                     [proposedLunchs]="getProposedLunchForDay(weekday)"
-                    [suggestedLunchs]="getProposedLunchForDay(weekday)"></app-calendar-day>
+                    [suggestedLunchs]="getProposedLunchForDay(weekday)"
+                    [mealForm]="mealFormComponent"
+                    [user]="user"></app-calendar-day>
         </div>
     </div>
 </div>

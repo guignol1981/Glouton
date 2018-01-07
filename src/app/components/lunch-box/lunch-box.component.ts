@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MealService} from "../../models/meal/meal.service";
 import {Meal} from "../../models/meal/meal";
-import {Router} from "@angular/router";
 import * as moment from "moment";
 import {User} from "../../models/user/user";
 import {UserService} from "../../models/user/user.service";
+import {MealFormComponent} from "../meal-form/meal-form.component";
 
 @Component({
     selector: 'app-lunch-box',
@@ -12,11 +12,13 @@ import {UserService} from "../../models/user/user.service";
     styleUrls: ['./lunch-box.component.css']
 })
 export class LunchBoxComponent implements OnInit {
+    @ViewChild(MealFormComponent) mealFormComponent: MealFormComponent;
     meals: Meal[] = [];
     weekFirstDay = moment().startOf('week');
     weekdays = [];
     weekdayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     user: User;
+
     constructor(private mealService: MealService, private userService: UserService) {
     }
 
@@ -94,7 +96,7 @@ export class LunchBoxComponent implements OnInit {
         let dayLunch = [];
 
         this.meals.forEach(lunch => {
-            if (moment(lunch.deliveryDate).isSame(weekDay)) {
+            if (moment(lunch.deliveryDate).isSame(weekDay) && ! lunch.asJoined(this.user)) {
                 dayLunch.push(lunch);
             }
         });
