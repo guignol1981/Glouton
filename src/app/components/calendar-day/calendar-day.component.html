@@ -1,0 +1,44 @@
+<div class="card global-shadow">
+    <div class="card-header text-center">
+        <p class="font-weight-bold">
+            {{weekdayName}}
+        </p>
+        {{weekday.toDate() | date}}
+        <br>
+        <div class="mt-1">
+            <ul class="nav nav-tabs text-sm">
+                <li class="nav-item">
+                    <button class="nav-link active" href="#">🍴</button>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">👨🏻‍🍳</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">🍝</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="m-2 p-1 global-inner-shadow">
+        <div *ngIf="lunchForThisDay(weekday).length > 0">
+            <div class="" style="overflow: scroll; height: 100px;">
+                <ul class="list-group">
+                    <li *ngFor="let meal of lunchForThisDay(weekday)">
+                        <div *ngIf="isThisDay(meal, weekday)" [class]="getPlannedMealClass(meal)">
+                            <button class="btn btn-link" style="cursor: pointer" (click)="goToLunchDetails(meal._id)">
+                                {{meal.title}}
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div *ngIf="lunchForThisDay(weekday).length === 0" class="text-center">
+            <div class="" style="height: 100px;">
+                <button (click)="goToListWithDateFiler(weekday)" class="btn btn-secondary global-shadow mt-3">find
+                    something for this date
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

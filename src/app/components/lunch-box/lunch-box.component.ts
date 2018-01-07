@@ -38,29 +38,7 @@ export class LunchBoxComponent implements OnInit {
         ];
     }
 
-    isThisDay(meal: Meal, weekday): boolean {
-        return moment(meal.deliveryDate).day() === weekday.day();
-    }
 
-    goToListWithDateFiler(date) {
-        this.router.navigate(['list/', {date: moment(date).toISOString()}]);
-    }
-
-    goToLunchDetails(id) {
-        this.router.navigate(['lunch-details/' + id]);
-    }
-
-    lunchForThisDay(weekday): Meal[] {
-        let lunchs = [];
-
-        this.meals.forEach(meal => {
-            if (this.isThisDay(meal, weekday)) {
-                lunchs.push(meal);
-            }
-        });
-
-        return lunchs;
-    }
 
     getPlannedMealClass(meal: Meal): string {
         if (meal.isPending()) {
@@ -98,8 +76,5 @@ export class LunchBoxComponent implements OnInit {
         });
     }
 
-    goToMealDetails(meal: Meal) {
-        this.router.navigate(['lunch-details/' + meal._id]);
-    }
 
 }
