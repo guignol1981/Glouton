@@ -24,7 +24,9 @@ mongoose.Promise = global.Promise;
 if (process.env.DB) {
     mongoose.connect(process.env.DB, {useMongoClient: true});
 } else {
-	mongoose.connect('mongodb://root:root@ds123311.mlab.com:23311/angular2-deployment', { useMongoClient: true });
+    //let this commented this is a dev database for when i dont have access to mongod
+	// mongoose.connect('mongodb://root:root@ds123311.mlab.com:23311/angular2-deployment', { useMongoClient: true });
+	mongoose.connect('mongodb://localhost/lunch-box', { useMongoClient: true });
 }
 
 app.use(bodyParser.json());
