@@ -96,7 +96,7 @@ export class LunchBoxComponent implements OnInit {
         let dayLunch = [];
 
         this.meals.forEach(lunch => {
-            if (moment(lunch.deliveryDate).isSame(weekDay) && ! lunch.asJoined(this.user)) {
+            if (moment(lunch.deliveryDate).isSame(weekDay) && !lunch.asJoined(this.user) && !lunch.isCook(this.user)) {
                 dayLunch.push(lunch);
             }
         });
