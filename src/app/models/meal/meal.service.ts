@@ -5,6 +5,7 @@ import {User} from "../user/user";
 import {AuthenticationService} from "../../services/authentication.service";
 import {UserService} from "../user/user.service";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import * as moment from "moment";
 
 @Injectable()
 export class MealService {

@@ -6,38 +6,58 @@
         {{weekday.toDate() | date}}
         <br>
         <div class="mt-1">
-            <ul class="nav nav-tabs text-sm">
+            <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <button class="nav-link active" href="#">🍴</button>
+                    <a [class]="activeTab == 'joined' ? 'nav-link active clickable': 'nav-link clickable'"
+                       (click)="setTab('joined')">🍴 <br><span
+                            class="badge badge-secondary">{{joinedLunchs.length}}</span>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">👨🏻‍🍳</a>
+                    <a [class]="activeTab == 'proposed' ? 'nav-link active clickable': 'nav-link clickable'"
+                       (click)="setTab('proposed')">👨🏻‍🍳 <br><span class="badge badge-secondary">{{proposedLunchs.length}}</span>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">🍝</a>
+                    <a [class]="activeTab == 'suggested' ? 'nav-link active clickable': 'nav-link clickable'"
+                       (click)="setTab('suggested')">🔎 <br><span class="badge badge-secondary">{{suggestedLunchs.length}}</span>
+                    </a>
                 </li>
             </ul>
         </div>
     </div>
     <div class="m-2 p-1 global-inner-shadow">
-        <div *ngIf="lunchForThisDay(weekday).length > 0">
+        <div *ngIf="activeTab === 'joined'">
             <div class="" style="overflow: scroll; height: 100px;">
                 <ul class="list-group">
-                    <li *ngFor="let meal of lunchForThisDay(weekday)">
-                        <div *ngIf="isThisDay(meal, weekday)" [class]="getPlannedMealClass(meal)">
-                            <button class="btn btn-link" style="cursor: pointer" (click)="goToLunchDetails(meal._id)">
-                                {{meal.title}}
-                            </button>
-                        </div>
+                    <li *ngFor="let lunch of joinedLunchs">
+                        <a class="btn btn-link" style="cursor: pointer" (click)="goToLunchDetails(lunch._id)">
+                            {{lunch.title}}
+                        </a>
                     </li>
                 </ul>
             </div>
         </div>
-        <div *ngIf="lunchForThisDay(weekday).length === 0" class="text-center">
-            <div class="" style="height: 100px;">
-                <button (click)="goToListWithDateFiler(weekday)" class="btn btn-secondary global-shadow mt-3">find
-                    something for this date
-                </button>
+        <div *ngIf="activeTab === 'proposed'">
+            <div class="" style="overflow: scroll; height: 100px;">
+                <ul class="list-group">
+                    <li *ngFor="let lunch of proposedLunchs">
+                        <a class="btn btn-link" style="cursor: pointer" (click)="goToLunchDetails(lunch._id)">
+                            {{lunch.title}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div *ngIf="activeTab === 'suggested'">
+            <div class="" style="overflow: scroll; height: 100px;">
+                <ul class="list-group">
+                    <li *ngFor="let lunch of suggestedLunchs">
+                        <a class="btn btn-link" style="cursor: pointer" (click)="goToLunchDetails(lunch._id)">
+                            {{lunch.title}}
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

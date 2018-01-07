@@ -3,6 +3,8 @@ import {MealService} from "../../models/meal/meal.service";
 import {Meal} from "../../models/meal/meal";
 import {Router} from "@angular/router";
 import * as moment from "moment";
+import {User} from "../../models/user/user";
+import {UserService} from "../../models/user/user.service";
 
 @Component({
     selector: 'app-lunch-box',
@@ -14,15 +16,17 @@ export class LunchBoxComponent implements OnInit {
     weekFirstDay = moment().startOf('week');
     weekdays = [];
     weekdayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-    constructor(private mealService: MealService,
-                private router: Router) {
+    user: User;
+    constructor(private mealService: MealService, private userService: UserService) {
     }
 
     ngOnInit() {
-        this.updateWeekDays();
-        this.mealService.getLunchBox(this.weekFirstDay.toISOString()).then(data => {
-            this.meals = data;
+        this.userService.getConnectedUser().then(user => {
+            this.user = user;
+            this.mealService.getLunchBox(this.weekFirstDay.toISOString()).then(data => {
+                this.meals = data;
+                this.updateWeekDays();
+            });
         });
     }
 
@@ -36,20 +40,6 @@ export class LunchBoxComponent implements OnInit {
             moment(this.weekFirstDay).add(5, 'day'),
             moment(this.weekFirstDay).add(6, 'day')
         ];
-    }
-
-
-
-    getPlannedMealClass(meal: Meal): string {
-        if (meal.isPending()) {
-            return "list-group-item list-group-item-secondary";
-        } else if (meal.isConfirmed()) {
-            return "list-group-item list-group-item-success";
-        } else if (meal.isCanceled()) {
-            return 'list-group-item list-group-item-danger';
-        } else {
-            return "list-group-item list-group-item-secondary";
-        }
     }
 
     getNextWeek() {
@@ -76,5 +66,40 @@ export class LunchBoxComponent implements OnInit {
         });
     }
 
+    getJoinedLunchForDay(weekDay) {
+        let dayLunch = [];
+
+        this.meals.forEach(lunch => {
+            if (moment(lunch.deliveryDate).isSame(weekDay) && lunch.asJoined(this.user)) {
+                dayLunch.push(lunch);
+            }
+        });
+
+        return dayLunch;
+    }
+
+    getProposedLunchForDay(weekDay) {
+        let dayLunch = [];
+
+        this.meals.forEach(lunch => {
+            if (moment(lunch.deliveryDate).isSame(weekDay) && lunch.isCook(this.user)) {
+                dayLunch.push(lunch);
+            }
+        });
+
+        return dayLunch;
+    }
+
+    getSuggestedLunchForDay(weekDay) {
+        let dayLunch = [];
+
+        this.meals.forEach(lunch => {
+            if (moment(lunch.deliveryDate).isSame(weekDay)) {
+                dayLunch.push(lunch);
+            }
+        });
+
+        return dayLunch;
+    }
 
 }

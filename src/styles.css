@@ -30,3 +30,7 @@
     height: auto;
     opacity: 0.04;
 }
+
+.clickable {
+    cursor: pointer;
+}

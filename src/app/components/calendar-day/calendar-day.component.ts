@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import * as moment from 'moment';
-import {MealService} from '../../models/meal/meal.service';
 import {Meal} from '../../models/meal/meal';
 import {Router} from '@angular/router';
 
@@ -11,24 +10,24 @@ import {Router} from '@angular/router';
 })
 export class CalendarDayComponent implements OnInit {
     @Input() weekdayName: string;
-    @Input() weekday: moment;
-    joinedMeals: Meal[] = [];
-    proposedMeals: Meal[] = [];
-    suggestedMeals: Meal[] = [];
+    @Input() weekday;
+    @Input() joinedLunchs: Meal[] = [];
+    @Input() proposedLunchs: Meal[] = [];
+    @Input() suggestedLunchs: Meal[] = [];
+    activeTab =  'joined';
 
-
-    constructor(private mealService: MealService,
-                private router: Router) {
+    constructor(private router: Router) {
     }
 
     ngOnInit() {
-        this.mealService.getJoinedMealsForDate(this.weekday).then(meals => this.joinedMeals = meals);
-        this.mealService.getProposedMealsForDate(this.weekday).then(meals => this.proposedMeals = meals);
-        this.mealService.getSuggestedMealsForDate(this.weekday).then(meals => this.suggestedMeals = meals);
     }
 
     goToLunchDetails(id) {
         this.router.navigate(['lunch-details/' + id]);
+    }
+
+    setTab(tabName) {
+        this.activeTab = tabName;
     }
 
 }
