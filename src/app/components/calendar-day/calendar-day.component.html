@@ -31,7 +31,7 @@
             <div class="" style="overflow-y: scroll; overflow-x: hidden; height: 100px;">
                 <ul class="list-group">
                     <li *ngFor="let lunch of joinedLunchs">
-                        <ng-template #tipContentJoined><img style="height: 40px; width: 40px;" [src]="'api/images/meal/' + lunch._id" alt="loading"></ng-template>
+                        <ng-template #tipContentJoined><img style="height: 70px; width: 70px;" [src]="'api/images/meal/' + lunch._id" alt="loading"></ng-template>
                         <a class="btn btn-link" style="cursor: pointer" href="javascript:void(0)" (click)="goToLunchDetails(lunch._id)" [ngbTooltip]="tipContentJoined">
                             {{lunch.title}}
                         </a>
@@ -43,7 +43,7 @@
             <div class="" style="overflow-y: scroll; overflow-x: hidden;  height: 100px;">
                 <ul class="list-group">
                     <li *ngFor="let lunch of proposedLunchs">
-                        <ng-template #tipContentProposed><img style="height: 40px; width: 40px;" [src]="'api/images/meal/' + lunch._id" alt="loading"></ng-template>
+                        <ng-template #tipContentProposed><img style="height: 70px; width: 70px;" [src]="'api/images/meal/' + lunch._id" alt="loading"></ng-template>
                         <a class="btn btn-link" style="cursor: pointer" href="javascript:void(0)" (click)="goToLunchDetails(lunch._id)" [ngbTooltip]="tipContentProposed">
                             {{lunch.title}}
                         </a>
@@ -55,7 +55,7 @@
             <div class="" style="overflow-y: scroll; overflow-x: hidden;  height: 100px;">
                 <ul class="list-group">
                     <li *ngFor="let lunch of suggestedLunchs">
-                        <ng-template #tipContentSuggested><img style="height: 40px; width: 40px;" [src]="'api/images/meal/' + lunch._id" alt="loading"></ng-template>
+                        <ng-template #tipContentSuggested><img style="height: 70px; width: 70px;" [src]="'api/images/meal/' + lunch._id" alt="loading"></ng-template>
                         <a class="btn btn-link" style="cursor: pointer" href="javascript:void(0)" (click)="goToLunchDetails(lunch._id)" [ngbTooltip]="tipContentSuggested">
                             {{lunch.title}}
                         </a>
