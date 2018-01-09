@@ -1,10 +1,12 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {MealService} from "../../models/meal/meal.service";
-import {Meal} from "../../models/meal/meal";
-import * as moment from "moment";
-import {User} from "../../models/user/user";
-import {UserService} from "../../models/user/user.service";
-import {MealFormComponent} from "../meal-form/meal-form.component";
+import {Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {MealService} from '../../models/meal/meal.service';
+import {Meal} from '../../models/meal/meal';
+import * as moment from 'moment';
+import {User} from '../../models/user/user';
+import {UserService} from '../../models/user/user.service';
+import {MealFormComponent} from '../meal-form/meal-form.component';
+import {CalendarDayComponent} from '../calendar-day/calendar-day.component';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 @Component({
     selector: 'app-lunch-box',
@@ -18,6 +20,8 @@ export class LunchBoxComponent implements OnInit {
     weekdays = [];
     weekdayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     user: User;
+    globalFilter = 'joined';
+    globalFilterSubject = new BehaviorSubject<string>(this.globalFilter);
 
     constructor(private mealService: MealService, private userService: UserService) {
     }
@@ -103,5 +107,11 @@ export class LunchBoxComponent implements OnInit {
 
         return dayLunch;
     }
+
+    setGlobalFilter(filterName) {
+        this.globalFilter = filterName;
+        this.globalFilterSubject.next(this.globalFilter);
+    }
+
 
 }

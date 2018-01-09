@@ -1,15 +1,17 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Meal} from '../../models/meal/meal';
 import {Router} from '@angular/router';
-import {MealFormComponent} from "../meal-form/meal-form.component";
-import {User} from "../../models/user/user";
+import {MealFormComponent} from '../meal-form/meal-form.component';
+import {User} from '../../models/user/user';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
     selector: 'app-calendar-day',
     templateUrl: './calendar-day.component.html',
     styleUrls: ['./calendar-day.component.css']
 })
-export class CalendarDayComponent implements OnInit {
+export class CalendarDayComponent implements OnInit, OnDestroy {
     @Input() weekdayName: string;
     @Input() weekday;
     @Input() joinedLunchs: Meal[] = [];
@@ -17,12 +19,19 @@ export class CalendarDayComponent implements OnInit {
     @Input() suggestedLunchs: Meal[] = [];
     @Input() mealForm: MealFormComponent;
     @Input() user: User;
-    activeTab =  'joined';
+    @Input() globalFilterSubject: BehaviorSubject<string>;
+    globalFilterSubscription: Subscription;
+    activeTab = 'joined';
 
     constructor(private router: Router) {
     }
 
     ngOnInit() {
+        this.globalFilterSubscription = this.globalFilterSubject.subscribe(filter => this.activeTab = filter);
+    }
+
+    ngOnDestroy() {
+        this.globalFilterSubscription.unsubscribe();
     }
 
     goToLunchDetails(id) {

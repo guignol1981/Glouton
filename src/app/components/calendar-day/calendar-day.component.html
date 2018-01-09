@@ -9,18 +9,18 @@
             <ul class="nav nav-tabs">
                 <li class="nav-item" placement="top" ngbTooltip="Lunch you joined">
                     <a [class]="activeTab == 'joined' ? 'nav-link active clickable': 'nav-link clickable'"
-                       (click)="setTab('joined')">🍴 <br><span
+                       (click)="setTab('joined')">🍴<br><span
                             class="badge badge-secondary">{{joinedLunchs.length}}</span>
                     </a>
                 </li>
                 <li class="nav-item"  placement="top" ngbTooltip="Lunch you cook">
                     <a [class]="activeTab == 'proposed' ? 'nav-link active clickable': 'nav-link clickable'"
-                       (click)="setTab('proposed')">👨🏻‍🍳 <br><span class="badge badge-secondary">{{proposedLunchs.length}}</span>
+                       (click)="setTab('proposed')">👨🏻‍🍳<br><span class="badge badge-secondary">{{proposedLunchs.length}}</span>
                     </a>
                 </li>
                 <li class="nav-item" placement="top" ngbTooltip="Lunch suggestions">
                     <a [class]="activeTab == 'suggested' ? 'nav-link active clickable': 'nav-link clickable'"
-                       (click)="setTab('suggested')">🔎 <br><span class="badge badge-secondary">{{suggestedLunchs.length}}</span>
+                       (click)="setTab('suggested')">🔎<br><span class="badge badge-secondary">{{suggestedLunchs.length}}</span>
                     </a>
                 </li>
             </ul>
@@ -66,6 +66,6 @@
     </div>
     <div class="card-footer">
         <button hidden #mealFormClicker data-toggle="modal" data-target="#mealform"></button>
-        <button (click)="proposeLunch(mealFormClicker)" class="my-2 btn btn-sm btn-primary">propose lunch for this day</button>
+        <button placement="top" ngbTooltip="suggest a lunch for this day" (click)="proposeLunch(mealFormClicker)" class="my-2 btn btn-sm btn-primary"><i class="fa fa-plus" aria-hidden="true"></i></button>
     </div>
 </div>
