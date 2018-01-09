@@ -72,6 +72,7 @@ export class MealDetailsComponent implements OnInit {
 
     cancelMeal() {
         let hasParticipants = this.meal.participants.length > 0;
+        this.mealService.cancel(this.meal).then((meal) => {
             this.meal = meal;
             if (hasParticipants) {
                 this.notificationService.success(
