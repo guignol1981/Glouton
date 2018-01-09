@@ -29,6 +29,8 @@
                         <span *ngIf="meal.isCook(user)">
                                 <button (click)="editMeal(mealformeditbutton)"
                                         class="btn btn-secondary btn-sm ">edit</button>
+                                <button (click)="cancelMeal(mealformeditbutton)"
+                                        class="btn btn-danger btn-sm ">cancel</button>
                         </span>
                     </div>
                     <hr>

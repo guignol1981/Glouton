@@ -98,7 +98,7 @@ mealSchema.statics.getLunchBox = function (weekFirstDay, userId, callback) {
 				"$lt": weekLastDay.add(1, 'day').toDate(),
 			}
 		})
-		.where('status').in(['pending', 'confirmed', 'canceled'])
+		.where('status').in(['pending', 'confirmed'])
 		.populate('cook')
 		.populate('participants')
 		.exec().then(meals => {

@@ -26,6 +26,7 @@ router.get('/meals/:id', auth, ctrlMeal.get);
 router.put('/meals/:id', auth, ctrlMeal.update);
 router.put('/meals/join/:id', auth, ctrlMeal.join);
 router.put('/meals/leave/:id', auth, ctrlMeal.leave);
+router.put('/meals', auth, ctrlMeal.cancel);
 router.get('/meals', auth, ctrlMeal.getAll);
 router.post('/meals', auth, ctrlMeal.create);
 

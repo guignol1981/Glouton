@@ -1,13 +1,13 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MealService} from "../../models/meal/meal.service";
-import {Meal} from "../../models/meal/meal";
-import {ActivatedRoute, Params} from "@angular/router";
-import {MealImageService} from "../../services/meal-image.service";
-import {UserService} from "../../models/user/user.service";
-import {User} from "../../models/user/user";
-import {MealFormComponent} from "../meal-form/meal-form.component";
-import {NotificationsService} from "angular2-notifications";
-import * as moment from "moment";
+import {MealService} from '../../models/meal/meal.service';
+import {Meal} from '../../models/meal/meal';
+import {ActivatedRoute, Params} from '@angular/router';
+import {MealImageService} from '../../services/meal-image.service';
+import {UserService} from '../../models/user/user.service';
+import {User} from '../../models/user/user';
+import {MealFormComponent} from '../meal-form/meal-form.component';
+import {NotificationsService} from 'angular2-notifications';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-meal-details',
@@ -19,7 +19,7 @@ export class MealDetailsComponent implements OnInit {
     user: User;
     @ViewChild(MealFormComponent) mealFormComponent: MealFormComponent;
     public notificationOptions = {
-        position: ["bottom", "left"],
+        position: ['bottom', 'left'],
         timeOut: 5000,
         lastOnBottom: true
     };
@@ -68,6 +68,19 @@ export class MealDetailsComponent implements OnInit {
     editMeal(button) {
         this.mealFormComponent.initFromEdit(this.user, this.meal);
         button.click();
+    }
+
+    cancelMeal() {
+        let hasParticipants = this.meal.participants.length > 0;
+            this.meal = meal;
+            if (hasParticipants) {
+                this.notificationService.success(
+                    'The lunch proposition have been canceled, we notified the participants!'
+                );
+            } else {
+                this.notificationService.success('The lunch proposition have been canceled!');
+            }
+        });
     }
 
     onMealUpdated(meal: Meal) {
