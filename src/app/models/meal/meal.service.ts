@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {Http, Response, Headers} from "@angular/http";
-import {Meal} from "./meal";
-import {User} from "../user/user";
-import {AuthenticationService} from "../../services/authentication.service";
-import {UserService} from "../user/user.service";
-import {BehaviorSubject} from "rxjs/BehaviorSubject";
-import * as moment from "moment";
+import {Http, Response, Headers} from '@angular/http';
+import {Meal} from './meal';
+import {User} from '../user/user';
+import {AuthenticationService} from '../../services/authentication.service';
+import {UserService} from '../user/user.service';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import * as moment from 'moment';
 
 @Injectable()
 export class MealService {
@@ -77,6 +77,20 @@ export class MealService {
             return this.put(meal);
         }
         return this.post(meal);
+    }
+
+    cancel(meal: Meal): Promise<Meal> {
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + this.authenticationService.getToken()
+        });
+
+        return this.http.put(this.apiEndPoint, JSON.stringify(meal), {headers: headers})
+            .toPromise()
+            .then((response: Response) => {
+                return this._deserializeMeal(response.json());
+            })
+            .catch(this.handleError);
     }
 
     join(meal: Meal): Promise<Meal> {

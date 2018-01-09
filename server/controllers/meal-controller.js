@@ -102,6 +102,27 @@ module.exports.create = function (req, res) {
     });
 };
 
+module.exports.cancel = function (req, res) {
+    let mealId = req.body._id;
+
+    Meal.findById(mealId).populate('participants').exec().then(meal => {
+        meal.participants.forEach(participant => {
+            Message.create({
+                recipient: participant._id,
+                title: `${participant.name}, The lunch ${meal.title} was canceled by the cook`,
+                type: 'message-meal-canceled-by-cook',
+                category: 'warning',
+                data: {
+                    meal: meal
+                }
+            });
+        });
+        meal.participants = [];
+        meal.status = 'canceled';
+        meal.save().then(meal => res.send(meal));
+    });
+};
+
 module.exports.join = function (req, res) {
     let mealId = req.params.id;
     let userId = req.payload._id;

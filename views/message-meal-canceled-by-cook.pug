@@ -1,0 +1,10 @@
+div.message
+    img(src="../../assets/bg5.jpg" alt="Image Title")
+    p.font-weight-bold Hello #{recipient.name} !
+    p We are sorry to inform you that the meal proposition
+        a(href='/lunch-details/' + data.meal._id) &nbsp #{data.meal.title} &nbsp
+        | was canceled by the cook.
+    p if you already paid your contribution, be sure to get a refund.
+
+    p.font-italic Sincerly yours,
+    p The Lunch box team
