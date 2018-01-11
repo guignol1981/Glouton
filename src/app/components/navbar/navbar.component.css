@@ -1,3 +1,17 @@
 .navbar-shadow {
     box-shadow: 2px 2px 2px 0px #818182;
 }
+
+.logo {
+    position: absolute;
+    height: 100px;
+    left: 50%;
+    margin-left: -50px;
+    top: -3px;
+}
+
+.d-block.d-sm-none.logo {
+    height: 50px;
+    left: 95%;
+    top: 4px;
+}
