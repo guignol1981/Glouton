@@ -1,5 +1,6 @@
 import {User} from "../user/user";
 import * as moment from "moment";
+import {MealType} from "./meal-type.enum";
 
 export class Meal {
     constructor(public _id: string = null,
@@ -9,12 +10,14 @@ export class Meal {
                 public participants: User[] = [],
                 public image: string = '',
                 public deliveryDate: Date = moment().startOf('day').add(1, 'day').toDate(),
+                public deliveryHour: Number = 11,
                 public limitDate: Date = moment().startOf('day').toDate(),
                 public creationDate: Date = new Date(),
                 public minParticipants: Number = 1,
                 public maxParticipants: Number = 1,
                 public contribution: Number = 0,
-                public status: string = '') {
+                public status: string = '',
+                public type: MealType = MealType.Lunch) {
     }
 
     isConfirmed() {

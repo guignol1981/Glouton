@@ -51,6 +51,9 @@ export class MealListComponent implements OnInit, OnDestroy {
                 this.filters.push(filter);
             }
         }
+        if (this.filters.length === 0) {
+            this.filters = ['all'];
+        }
         this.filterList();
     }
 

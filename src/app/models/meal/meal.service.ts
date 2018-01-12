@@ -186,12 +186,14 @@ export class MealService {
             participants,
             data.image,
             new Date(data.deliveryDate),
+            data.deliveryHour,
             new Date(data.limitDate),
             new Date(data.creationDate),
             data.minParticipants,
             data.maxParticipants,
             data.contribution,
-            data.status);
+            data.status,
+            data.type);
         return meal;
     }
 

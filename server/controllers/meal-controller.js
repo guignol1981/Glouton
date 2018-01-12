@@ -40,9 +40,11 @@ module.exports.update = function (req, res) {
         meal.description = req.body['description'];
         meal.deliveryDate = moment(req.body['deliveryDate']).startOf('day').toDate();
         meal.limitDate = moment(req.body['limitDate']).endOf('day').toDate();
+        meal.deliveryHour = req.body['deliveryHour'];
         meal.minParticipants = req.body['minParticipants'];
         meal.maxParticipants = req.body['maxParticipants'];
         meal.contribution = req.body['contribution'];
+        meal.type = req.body['type'];
 
         if (removeParticipants) {
             meal.participants.forEach(participant => {

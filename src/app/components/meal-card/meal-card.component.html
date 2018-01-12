@@ -1,5 +1,11 @@
 <div *ngIf="meal && user" class="card border-0 card-shadow lunch-card clickable" (click)="goToMealDetails()">
-    <simple-notifications [options]="notificationOptions"></simple-notifications>
+    <div class="m-1">
+        <span *ngIf="meal.isPending()" class="badge badge-secondary">pending</span>
+        <span *ngIf="meal.asJoined(user)" class="badge badge-info">joined</span>
+        <span *ngIf="meal.isFull()" class="badge badge-info">full</span>
+        <span *ngIf="meal.isConfirmed()" class="badge badge-success">confirmed</span>
+        <span *ngIf="meal.isCanceled()" class="badge badge-danger">confirmed</span>
+    </div>
     <div class="meal-img m-1">
         <img class="card-img-top img-fluid"
              [src]="imageService.apiEndPoint + '/' + meal._id"
@@ -11,14 +17,9 @@
                 <p class="card-text text-truncate font-weight-bold">{{meal.title}}</p>
             </li>
             <li class="list-group-item border-0 p-0">
-                <p class="card-text">{{meal.deliveryDate | date}}</p>
-            </li>
-            <li class="list-group-item border-0 p-0">
-                <span *ngIf="meal.isPending()" class="badge badge-secondary">pending</span>
-                <span *ngIf="meal.asJoined(user)" class="badge badge-info">joined</span>
-                <span *ngIf="meal.isFull()" class="badge badge-info">full</span>
-                <span *ngIf="meal.isConfirmed()" class="badge badge-success">confirmed</span>
-                <span *ngIf="meal.isCanceled()" class="badge badge-danger">confirmed</span>
+                <span class="card-text">{{meal.deliveryDate | date}}</span>
+                <span class="badge badge-info float-right">{{meal.contribution |
+                    currency:'USD':true:'2.2-4'}}</span>
             </li>
         </ul>
     </div>

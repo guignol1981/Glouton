@@ -12,6 +12,7 @@ import {CropperSettings, ImageCropperComponent} from 'ng2-img-cropper';
 import {NotificationsService} from 'angular2-notifications';
 import {DatepickerOptions} from 'ng2-datepicker';
 import * as moment from 'moment';
+import {MealType} from "../../models/meal/meal-type.enum";
 
 @Component({
     selector: 'app-meal-form',
@@ -29,6 +30,8 @@ export class MealFormComponent implements OnInit {
     data: any;
     cropperSettings: CropperSettings;
     useOwnPicture = false;
+    mealType = MealType;
+
     public notificationOptions = {
         position: ['bottom', 'left'],
         timeOut: 5000,
@@ -105,9 +108,11 @@ export class MealFormComponent implements OnInit {
             description: new FormControl(this.meal.description, [Validators.required, Validators.minLength(15)]),
             contribution: new FormControl(this.meal.contribution, [Validators.required, Validators.min(0)]),
             deliveryDate: new FormControl(this.meal.deliveryDate, Validators.required),
+            deliveryHour: new FormControl(this.meal.deliveryHour, [Validators.required, Validators.min(0), Validators.max(24)]),
             limitDate: new FormControl(this.meal.limitDate, Validators.required),
             minParticipants: new FormControl(this.meal.minParticipants, [Validators.required, Validators.min(1)]),
-            maxParticipants: new FormControl(this.meal.maxParticipants, [Validators.required, Validators.min(1)])
+            maxParticipants: new FormControl(this.meal.maxParticipants, [Validators.required, Validators.min(1)]),
+            type: new FormControl(this.meal.type)
         }, {
             validators: [
                 MealFormDateValidation.LimitDateShouldBeAtLeastToday,
@@ -134,7 +139,6 @@ export class MealFormComponent implements OnInit {
             meal.image = imageData ? JSON.parse(imageData['_body']).image : meal.image;
             meal.participants = me.meal.participants;
             meal.cook = me.user;
-
 
             me.mealService.save(meal)
                 .then((updatedMeal) => {

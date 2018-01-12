@@ -8,6 +8,7 @@ import {User} from '../../models/user/user';
 import {MealFormComponent} from '../meal-form/meal-form.component';
 import {NotificationsService} from 'angular2-notifications';
 import * as moment from 'moment';
+import {MealType} from "../../models/meal/meal-type.enum";
 
 @Component({
     selector: 'app-meal-details',
@@ -26,6 +27,7 @@ export class MealDetailsComponent implements OnInit {
     weekdayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     weekDayName = '';
     remaningTime;
+    mealType = MealType;
 
     constructor(private mealService: MealService,
                 private activatedRoute: ActivatedRoute,

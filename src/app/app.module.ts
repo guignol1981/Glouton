@@ -32,6 +32,7 @@ import {AboutComponent} from './components/about/about.component';
 import {VersionService} from './models/version/version.service';
 import {CalendarDayComponent} from './components/calendar-day/calendar-day.component';
 import {NgbModule, NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
+import {KeysPipe} from "./pipes/keys-pipe";
 
 @NgModule({
     declarations: [
@@ -50,7 +51,8 @@ import {NgbModule, NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
         PrivateMessageComponent,
         HelpComponent,
         AboutComponent,
-        CalendarDayComponent
+        CalendarDayComponent,
+        KeysPipe
     ],
     imports: [
         BrowserModule,

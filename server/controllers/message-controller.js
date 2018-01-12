@@ -18,6 +18,11 @@ module.exports.getAll = function (req, res) {
 					message.template = str;
 				});
 			});
+
+			messages.sort(function(a,b){
+				return new Date(b.creationDate) - new Date(a.creationDate);
+			});
+
 			res.send(messages);
 		});
 };

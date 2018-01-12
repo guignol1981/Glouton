@@ -8,6 +8,7 @@ let mealSchema = new Schema({
 	description: String,
 	image: String,
 	deliveryDate: Date,
+	deliveryHour: {type: Number, default: 11},
 	limitDate: Date,
 	cook: {type: Schema.Types.ObjectId, ref: 'User'},
 	minParticipants: Number,
@@ -15,7 +16,8 @@ let mealSchema = new Schema({
 	participants: [{type: Schema.Types.ObjectId, ref: 'User'}],
 	creationDate: {type: Date, default: Date.now()},
 	contribution: {type: Number, default: 0},
-	status: {type: String, default: 'pending'}
+	status: {type: String, default: 'pending'},
+	type: {type: Number, default: 1},
 }, {usePushEach: true});
 
 mealSchema.methods.userIsCook = function (userId) {
@@ -78,12 +80,9 @@ mealSchema.statics.getNewFailed = function (callback) {
 };
 
 mealSchema.statics.getList = function(callback) {
-	Meal.find({
-			deliveryDate: {
-				"$gt": new Date()
-			}
-		})
+	Meal.find({})
 		.where('status').in(['pending', 'confirmed'])
+		.where('deliveryDate').gte(moment().startOf('day').toDate())
 		.populate('cook')
 		.populate('participants')
 		.exec().then(meals => callback(meals));

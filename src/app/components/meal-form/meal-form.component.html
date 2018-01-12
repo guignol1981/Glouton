@@ -119,6 +119,23 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="col form-group">
+                                <label for="deliveryHour">Delivery hour</label>
+                                <input type="number" step="1" min="0" max="24" class="form-control" id="deliveryHour" formControlName="deliveryHour">
+                                <small class="form-text form-muted">The hour the lunch will be delivered (0-24)</small>
+                            </div>
+                            <div class="col form-group">
+                                <label for="type">Type</label>
+                                <select formControlName="type" id="type" class="form-control custom-select"
+                                        aria-describedby="typeHelper">
+                                    <option *ngFor="let item of mealType | keys" [value]="item.key">
+                                        {{item.value}}
+                                    </option>
+                                </select>
+                                <small id="typeHelper" class="form-text text-muted">The type of the lunch</small>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col">
                                 <div class="form-group">
                                     <label for="minParticipants">Minimum of participants</label>
