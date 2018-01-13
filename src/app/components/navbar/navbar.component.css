@@ -1,12 +1,12 @@
 .navbar-shadow {
-    box-shadow: 2px 2px 2px 0px #818182;
+    box-shadow: 2px 2px 2px 0 #818182;
 }
 
 .logo {
     position: absolute;
-    height: 100px;
+    height: 90px;
     left: 50%;
-    margin-left: -50px;
+    margin-left: -45px;
     top: -3px;
 }
 
