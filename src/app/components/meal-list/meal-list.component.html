@@ -1,4 +1,4 @@
-<app-meal-form #mealform></app-meal-form>
+<app-meal-form *ngIf="user" #mealform></app-meal-form>
 <div>
     <div>
         <h2 class="font-weight-bold">Lunchs</h2>
@@ -6,11 +6,11 @@
         <div class="global-shadow">
             <a href="javascript:void(0)" (click)="toggleFilter('all')" [class]="getFilterClass('all')">all</a>
             |
-            <a href="javascript:void(0)" (click)="toggleFilter('joined')" [class]="getFilterClass('joined')">joined</a>
+            <a *ngIf="user" href="javascript:void(0)" (click)="toggleFilter('joined')" [class]="getFilterClass('joined')">joined</a>
             <a href="javascript:void(0)" (click)="toggleFilter('pending')"
                [class]="getFilterClass('pending')">pending</a>
             <a href="javascript:void(0)" (click)="toggleFilter('confirmed')" [class]="getFilterClass('confirmed')">confirmed</a>
-            <a href="javascript:void(0)" (click)="toggleFilter('by me')" [class]="getFilterClass('by me')">by me</a>
+            <a *ngIf="user" href="javascript:void(0)" (click)="toggleFilter('by me')" [class]="getFilterClass('by me')">by me</a>
         </div>
     </div>
     <div class="row">

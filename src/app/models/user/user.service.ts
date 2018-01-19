@@ -5,21 +5,25 @@ import {AuthenticationService} from "../../services/authentication.service";
 
 @Injectable()
 export class UserService {
-    user: User;
+    user: User = null;
 
     constructor(private http: Http,
                 private authenticationService: AuthenticationService) {
     }
 
     getConnectedUser(): Promise<User> {
-        let headers = new Headers({
-            Authorization: 'Bearer ' + this.authenticationService.getToken()
-        });
+        if (this.user) {
+            return new Promise<User>(resolve => this.user);
+        } else {
+            let headers = new Headers({
+                Authorization: 'Bearer ' + this.authenticationService.getToken()
+            });
 
-        return this.http.get('/api/profile', {headers: headers})
-            .toPromise()
-            .then((response: Response) => this._desirializeUser(response.json()))
-            .catch(this.handleError);
+            return this.http.get('/api/profile', {headers: headers})
+                .toPromise()
+                .then((response: Response) => this._desirializeUser(response.json()))
+                .catch(this.handleError);
+        }
     }
 
     private handleError(error: any) {

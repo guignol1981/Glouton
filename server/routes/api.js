@@ -21,13 +21,13 @@ router.post('/login', ctrlAuth.login);
 router.get('/profile', auth, ctrlProfile.profileRead);
 
 //meal
-router.get('/meals/lunch-box/:week', auth, ctrlMeal.getLunchBox);
-router.get('/meals/:id', auth, ctrlMeal.get);
+router.get('/meals/lunch-box/:week', ctrlMeal.getLunchBox);
+router.get('/meals/:id', ctrlMeal.get);
 router.put('/meals/:id', auth, ctrlMeal.update);
 router.put('/meals/join/:id', auth, ctrlMeal.join);
 router.put('/meals/leave/:id', auth, ctrlMeal.leave);
 router.put('/meals', auth, ctrlMeal.cancel);
-router.get('/meals', auth, ctrlMeal.getAll);
+router.get('/meals', ctrlMeal.getAll);
 router.post('/meals', auth, ctrlMeal.create);
 
 //images
@@ -42,6 +42,6 @@ router.get('/messages', auth, ctrlMessage.getAll);
 router.get('/messages/unseen', auth, ctrlMessage.getUnseen);
 
 //version
-router.get('/versions', auth, ctrlVersion.getList);
+router.get('/versions', ctrlVersion.getList);
 
 module.exports = router;

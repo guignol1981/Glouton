@@ -22,16 +22,17 @@ export class MealListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.userService.getConnectedUser().then(user => {
-            this.user = user;
-            this.mealsSubscription = this.mealService.mealsSubject.subscribe(data => {
-                this.meals = data;
-                this.filterList();
-            });
-            this.mealService.getList().then(data => {
-                this.meals = data;
-                this.filterList();
-            });
+        this.subscribeMeals();
+    }
+
+    subscribeMeals() {
+        this.mealsSubscription = this.mealService.mealsSubject.subscribe(data => {
+            this.meals = data;
+            this.filterList();
+        });
+        this.mealService.getList().then(data => {
+            this.meals = data;
+            this.filterList();
         });
     }
 
@@ -88,7 +89,7 @@ export class MealListComponent implements OnInit, OnDestroy {
                 if (filter === 'all') {
                     this.filteredMeals = addMealToFilter(meal, this.filteredMeals);
                     return;
-                } else if (filter === 'joined' && meal.asJoined(this.user)) {
+                } else if (filter === 'joined' && this.user && meal.asJoined(this.user)) {
                     this.filteredMeals = addMealToFilter(meal, this.filteredMeals);
                     return;
                 } else if (filter === 'confirmed' && meal.isConfirmed()) {
@@ -97,7 +98,7 @@ export class MealListComponent implements OnInit, OnDestroy {
                 } else if (filter === 'pending' && meal.isPending()) {
                     this.filteredMeals = addMealToFilter(meal, this.filteredMeals);
                     return;
-                } else if (filter === 'by me' && meal.isCook(this.user)) {
+                } else if (filter === 'by me' && this.user && meal.isCook(this.user)) {
                     this.filteredMeals = addMealToFilter(meal, this.filteredMeals);
                     return;
                 }
