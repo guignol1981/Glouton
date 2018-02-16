@@ -35,6 +35,8 @@ import {NgbModule, NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {KeysPipe} from "./pipes/keys-pipe";
 import { LandingComponent } from './components/landing/landing.component';
 import {GroupService} from "./services/group.service";
+import {BootstrapModalModule} from "ng2-bootstrap-modal";
+import { GroupFormComponent } from './components/group-form/group-form.component';
 
 @NgModule({
     declarations: [
@@ -55,7 +57,8 @@ import {GroupService} from "./services/group.service";
         AboutComponent,
         CalendarDayComponent,
         KeysPipe,
-        LandingComponent
+        LandingComponent,
+        GroupFormComponent
     ],
     imports: [
         BrowserModule,
@@ -68,7 +71,11 @@ import {GroupService} from "./services/group.service";
         NgDatepickerModule,
         NgbModule.forRoot(),
         NgbTooltipModule,
-        SimpleNotificationsModule.forRoot()
+        SimpleNotificationsModule.forRoot(),
+        BootstrapModalModule.forRoot({container: document.body})
+    ],
+    entryComponents: [
+        GroupFormComponent
     ],
     providers: [
         MealService,

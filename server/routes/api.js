@@ -47,5 +47,6 @@ router.get('/versions', auth, ctrlVersion.getList);
 
 //group
 router.get('/groups/:name', ctrlGroup.getByName);
+router.post('/groups', ctrlGroup.create);
 
 module.exports = router;
