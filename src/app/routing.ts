@@ -11,6 +11,7 @@ import {InboxComponent} from './components/inbox/inbox.component';
 import {HelpComponent} from './components/help/help.component';
 import {CanActivateViaAuthGuardService} from "./services/can-activate-via-auth-guard.service";
 import {AboutComponent} from './components/about/about.component';
+import {LandingComponent} from './components/landing/landing.component';
 
 const appRoutes: Routes = [
     {path: 'login', component: LoginComponent},
@@ -23,12 +24,13 @@ const appRoutes: Routes = [
     {path: 'help', component: HelpComponent, canActivate: [CanActivateViaAuthGuardService]},
     {path: 'about', component: AboutComponent, canActivate: [CanActivateViaAuthGuardService]},
     {path: 'lunch-details/:id', component: MealDetailsComponent, canActivate: [CanActivateViaAuthGuardService]},
+    {path: 'main', component: LandingComponent},
     {
         path: '',
-        redirectTo: '/login',
+        redirectTo: '/main',
         pathMatch: 'full'
     },
-    {path: '**', component: LoginComponent}
+    {path: '**', component: LandingComponent}
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes, {useHash: false});

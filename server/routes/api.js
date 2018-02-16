@@ -14,6 +14,7 @@ let ctrlMeal = require('../controllers/meal-controller');
 let ctrlMealImage = require('../controllers/meal-image-controller');
 let ctrlMessage = require('../controllers/message-controller');
 let ctrlVersion = require('../controllers/version-controller');
+let ctrlGroup = require('../controllers/group-controller');
 
 //user
 router.post('/register', ctrlAuth.register);
@@ -43,5 +44,8 @@ router.get('/messages/unseen', auth, ctrlMessage.getUnseen);
 
 //version
 router.get('/versions', auth, ctrlVersion.getList);
+
+//group
+router.get('/groups/:name', ctrlGroup.getByName);
 
 module.exports = router;

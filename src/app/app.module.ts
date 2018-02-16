@@ -33,6 +33,8 @@ import {VersionService} from './models/version/version.service';
 import {CalendarDayComponent} from './components/calendar-day/calendar-day.component';
 import {NgbModule, NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {KeysPipe} from "./pipes/keys-pipe";
+import { LandingComponent } from './components/landing/landing.component';
+import {GroupService} from "./services/group.service";
 
 @NgModule({
     declarations: [
@@ -52,7 +54,8 @@ import {KeysPipe} from "./pipes/keys-pipe";
         HelpComponent,
         AboutComponent,
         CalendarDayComponent,
-        KeysPipe
+        KeysPipe,
+        LandingComponent
     ],
     imports: [
         BrowserModule,
@@ -74,7 +77,8 @@ import {KeysPipe} from "./pipes/keys-pipe";
         CanActivateViaAuthGuardService,
         MealImageService,
         MessageService,
-        VersionService
+        VersionService,
+        GroupService
     ],
     bootstrap: [AppComponent]
 })
