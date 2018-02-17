@@ -1,7 +1,9 @@
 <div class="container">
     <div class="jumbotron">
-        <h1 *ngIf="! authenticationService.isLoggedIn()" class="display-4">Welcome to Lunch-Box!<img src="../../../assets/lunchswap.png" style="height: 75px;" alt=""></h1>
-        <p class="lead">Find your group or create a new one for you, your friends, coworker or anyone you want to share lunch with.</p>
+        <h1 *ngIf="! authenticationService.isLoggedIn()" class="display-4">Welcome to Lunch-Box!<img
+                src="../../../assets/lunchswap.png" style="height: 75px;" alt=""></h1>
+        <p class="lead">Find your group or create a new one for you, your friends, coworker or anyone you want to share
+            lunch with.</p>
         <hr class="my-4">
         <p class="lead">
             <button class="btn btn-primary" (click)="createGroup()">Create a group</button>
@@ -9,17 +11,35 @@
                 in
             </button>
         </p>
-        <form [formGroup]="form">
-            <div class="form-group">
-                <label for="name">Search</label>
-                <input id="name" type="text" class="form-control" formControlName="name">
-            </div>
-            <hr>
-            <ul class="list-group">
-                <li *ngFor="let foundGroup of foundGroups" class="list-group-item mt-1">
-                    {{foundGroup.name}}
-                </li>
-            </ul>
-        </form>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a [class]="getTabClass('search')" (click)="setTab('search')" href="javascript:void(0)">
+                    Search
+                </a>
+            </li>
+            <li class="nav-item">
+                <a [class]="getTabClass('map')" (click)="setTab('map')"
+                   href="javascript:void(0)">
+                    Map
+                </a>
+            </li>
+        </ul>
+        <hr>
+        <div *ngIf="activeTab === 'search'">
+            <form [formGroup]="form">
+                <div class="form-group">
+                    <input id="name" type="text" class="form-control" formControlName="name" autocomplete="off">
+                    <hr>
+                    <ul class="list-group">
+                        <li *ngFor="let foundGroup of foundGroups" class="list-group-item mt-1">
+                            {{foundGroup.name}}
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+        <div *ngIf="activeTab === 'map'">
+            <app-map></app-map>
+        </div>
     </div>
 </div>

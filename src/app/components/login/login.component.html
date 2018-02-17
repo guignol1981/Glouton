@@ -1,0 +1,71 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">{{view === 'sign-in'? 'Sign in': 'Register'}}</h4>
+        </div>
+        <div class="modal-body">
+            <div *ngIf="view === 'sign-in'">
+                <form [formGroup]="form">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input class="form-control" type="text" formControlName="email" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input class="form-control" type="password" formControlName="password" id="password">
+                    </div>
+                </form>
+            </div>
+            <div *ngIf="view === 'register'">
+                <form [formGroup]="form">
+                    <div class="form-group">
+                        <label for="name">Full name</label>
+                        <input type="text" class="form-control" id="name" formControlName="name"
+                               placeholder="full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" class="form-control" id="registeremail" formControlName="email"
+                               placeholder="email adress"
+                               aria-describedby="emailHelper">
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="registerpassword"
+                                       formControlName="password"
+                                       placeholder="password"
+                                       aria-describedby="passwordHelper">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirm password</label>
+                                <input type="password" class="form-control" id="confirmPassword"
+                                       formControlName="confirmPassword"
+                                       placeholder="password"
+                                       aria-describedby="confirmPasswordHelper">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="close()">Cancel</button>
+                <button *ngIf="view === 'sign-in'" type="button" class="btn btn-info" (click)="toggleRegister()">Become
+                    a member
+                </button>
+                <button *ngIf="view === 'register'" type="button" class="btn btn-info" (click)="toggleSignIn()">Already
+                    a member
+                </button>
+                <button *ngIf="view === 'register'" type="button" class="btn btn-primary" (click)="register()">
+                    Register
+                </button>
+                <button *ngIf="view === 'sign-in'" type="button" class="btn btn-primary" (click)="signIn()">Open a
+                    session
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

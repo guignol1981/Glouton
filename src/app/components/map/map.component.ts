@@ -24,17 +24,17 @@ export class MapComponent implements OnInit {
             });
         }
 
-        // this.groupService.getList().then((groups: Group[]) => {
-        //     groups.forEach(profile => {
-        //         this.markers.push({
-        //             lat: +profile.geoData.lat,
-        //             lng: +profile.geoData.lng,
-        //             label: profile.general.organizationName,
-        //             profileId: profile._id,
-        //             draggable: false
-        //         });
-        //     });
-        // });
+        this.groupService.getList().then((groups: Group[]) => {
+            groups.forEach(group => {
+                this.markers.push({
+                    lat: +group.geoData.lat,
+                    lng: +group.geoData.lng,
+                    label: group.name,
+                    groupId: group._id,
+                    draggable: false
+                });
+            });
+        });
     }
 
 }
@@ -43,6 +43,6 @@ interface Marker {
     lat: number;
     lng: number;
     label?: string;
-    profileId: string;
+    groupId: string;
     draggable: boolean;
 }

@@ -49,6 +49,7 @@ router.get('/versions', auth, ctrlVersion.getList);
 //group
 router.get('/groups/availability/:name', ctrlGroup.checkAvailability);
 router.get('/groups/:name', ctrlGroup.getByName);
+router.get('/groups', ctrlGroup.getList);
 router.post('/groups', auth, ctrlGroup.create);
 
 //map

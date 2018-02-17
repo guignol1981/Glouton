@@ -1,3 +1,22 @@
-<p>
-  map works!
-</p>
+<div class="container mt-3">
+  <agm-map
+          [latitude]="lat"
+          [longitude]="lng"
+          [zoom]="zoom"
+          [disableDefaultUI]="false"
+          [zoomControl]="false">
+
+    <agm-marker
+            *ngFor="let m of markers; let i = index"
+            [latitude]="m.lat"
+            [longitude]="m.lng"
+            [label]=""
+            [markerDraggable]="false">
+
+      <agm-info-window>
+        <strong><a [routerLink]="['/profile/' + m.groupId]">{{m.label}}</a></strong>
+      </agm-info-window>
+
+    </agm-marker>
+  </agm-map>
+</div>

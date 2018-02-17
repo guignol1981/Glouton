@@ -5,6 +5,7 @@ import {forEach} from "@angular/router/src/utils/collection";
 import {UserService} from "../models/user/user.service";
 import {User} from "../models/user/user";
 import {AuthenticationService} from "./authentication.service";
+import {GoogleMapService} from "./google-map.service";
 
 @Injectable()
 export class GroupService {
@@ -37,6 +38,19 @@ export class GroupService {
             .catch(this.handleError);
     }
 
+    getList(): Promise<Group[]> {
+        return this.http.get(this.apiEndPoint)
+            .toPromise()
+            .then((response: Response) => {
+                let groups = [];
+                response.json().data.forEach(data => {
+                    groups.push(this._deserializeGroup(data));
+                });
+                return groups;
+            })
+            .catch(this.handleError);
+    }
+
     getByName(name: string): Promise<Group[]> {
         return this.http.get(this.apiEndPoint + '/' + name)
             .toPromise()
@@ -54,14 +68,15 @@ export class GroupService {
         let members: User[] = [];
 
         data['members'].forEach(memberData => {
-            members.push(UserService.desirializeUser(data));
+            members.push(UserService.desirializeUser(memberData));
         });
 
         return new Group(
             data['_id'],
             data['name'],
             UserService.desirializeUser(data['owner']),
-            members
+            members,
+            GoogleMapService.deserializeGeoData(data['geoData'])
         );
     }
 

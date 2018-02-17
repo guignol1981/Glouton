@@ -16,6 +16,7 @@ import {NotificationsService} from "angular2-notifications";
 export class LandingComponent implements OnInit {
     form: FormGroup;
     foundGroups: Group[];
+    activeTab = 'search';
 
     constructor(private dialogService: DialogService,
                 private groupService: GroupService,
@@ -64,5 +65,13 @@ export class LandingComponent implements OnInit {
                     this.notificationService.success('Logged in!');
                 }
             });
+    }
+
+    getTabClass(tabName) {
+        return this.activeTab === tabName ? 'nav-link active' : 'nav-link';
+    }
+
+    setTab(tabName) {
+        this.activeTab = tabName;
     }
 }

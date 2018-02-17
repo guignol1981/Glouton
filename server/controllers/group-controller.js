@@ -44,5 +44,17 @@ module.exports.getByName = function(req, res) {
 			msg: 'Groups found!'
 		});
 	});
+};
 
+module.exports.getList = function(req, res) {
+	let name = req.params.name;
+
+	Group.find({})
+		.populate('geoData')
+		.exec().then(groups => {
+		res.send({
+			data: groups,
+			msg: 'Groups found!'
+		});
+	});
 };
