@@ -11,6 +11,13 @@ export class UserService {
                 private authenticationService: AuthenticationService) {
     }
 
+    public static desirializeUser(data: any): User {
+        return new User(data._id,
+            data.name,
+            data.email,
+            data.creationDate);
+    }
+
     getConnectedUser(): Promise<User> {
         let headers = new Headers({
             Authorization: 'Bearer ' + this.authenticationService.getToken()
@@ -18,20 +25,13 @@ export class UserService {
 
         return this.http.get('/api/profile', {headers: headers})
             .toPromise()
-            .then((response: Response) => this._desirializeUser(response.json()))
+            .then((response: Response) => UserService.desirializeUser(response.json()))
             .catch(this.handleError);
     }
 
     private handleError(error: any) {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);
-    }
-
-    private _desirializeUser(data: any): User {
-        return new User(data._id,
-            data.name,
-            data.email,
-            data.creationDate);
     }
 
 }

@@ -4,6 +4,7 @@ import {AppComponent} from './app.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {routing} from './routing';
+import {AgmCoreModule} from "@agm/core";
 import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {NavbarComponent} from './components/navbar/navbar.component';
 import {MealCardComponent} from './components/meal-card/meal-card.component';
@@ -37,6 +38,8 @@ import { LandingComponent } from './components/landing/landing.component';
 import {GroupService} from "./services/group.service";
 import {BootstrapModalModule} from "ng2-bootstrap-modal";
 import { GroupFormComponent } from './components/group-form/group-form.component';
+import { MapComponent } from './components/map/map.component';
+import {GoogleMapService} from "./services/google-map.service";
 
 @NgModule({
     declarations: [
@@ -58,7 +61,8 @@ import { GroupFormComponent } from './components/group-form/group-form.component
         CalendarDayComponent,
         KeysPipe,
         LandingComponent,
-        GroupFormComponent
+        GroupFormComponent,
+        MapComponent
     ],
     imports: [
         BrowserModule,
@@ -72,10 +76,12 @@ import { GroupFormComponent } from './components/group-form/group-form.component
         NgbModule.forRoot(),
         NgbTooltipModule,
         SimpleNotificationsModule.forRoot(),
-        BootstrapModalModule.forRoot({container: document.body})
+        BootstrapModalModule.forRoot({container: document.body}),
+        AgmCoreModule.forRoot({apiKey: 'AIzaSyDgQC2X_l3E6ol88MSuBGaAuZm-FjXRNXs'}),
     ],
     entryComponents: [
-        GroupFormComponent
+        GroupFormComponent,
+        LoginComponent
     ],
     providers: [
         MealService,
@@ -85,7 +91,8 @@ import { GroupFormComponent } from './components/group-form/group-form.component
         MealImageService,
         MessageService,
         VersionService,
-        GroupService
+        GroupService,
+        GoogleMapService
     ],
     bootstrap: [AppComponent]
 })

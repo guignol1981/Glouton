@@ -8,6 +8,11 @@ import {AuthenticationService} from "./services/authentication.service";
 })
 export class AppComponent {
     title = 'app';
+    public notificationOptions = {
+        position: ['bottom', 'left'],
+        timeOut: 5000,
+        lastOnBottom: true
+    };
 
     constructor(public authenticationService: AuthenticationService) {
     }

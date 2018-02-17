@@ -45,7 +45,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     logout() {
         this.authenticationService.logout();
-        this.router.navigate(['login']);
+        this.router.navigate(['groups']);
     }
 
     setTab(tabIndex) {

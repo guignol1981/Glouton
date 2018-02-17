@@ -14,20 +14,20 @@ import {AboutComponent} from './components/about/about.component';
 import {LandingComponent} from './components/landing/landing.component';
 
 const appRoutes: Routes = [
+    {path: 'lunch-details/:id', component: MealDetailsComponent, canActivate: [CanActivateViaAuthGuardService]},
+    {path: 'meal-form/:id', component: MealFormComponent, canActivate: [CanActivateViaAuthGuardService]},
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
-    {path: 'list', component: DashboardComponent, canActivate: [CanActivateViaAuthGuardService]},
-    {path: 'meal-form/:id', component: MealFormComponent, canActivate: [CanActivateViaAuthGuardService]},
+    {path: 'dashboard', component: DashboardComponent, canActivate: [CanActivateViaAuthGuardService]},
     {path: 'profile', component: ProfileComponent, canActivate: [CanActivateViaAuthGuardService]},
     {path: 'lunch-box', component: LunchBoxComponent, canActivate: [CanActivateViaAuthGuardService]},
     {path: 'inbox', component: InboxComponent, canActivate: [CanActivateViaAuthGuardService]},
     {path: 'help', component: HelpComponent, canActivate: [CanActivateViaAuthGuardService]},
     {path: 'about', component: AboutComponent, canActivate: [CanActivateViaAuthGuardService]},
-    {path: 'lunch-details/:id', component: MealDetailsComponent, canActivate: [CanActivateViaAuthGuardService]},
-    {path: 'main', component: LandingComponent},
+    {path: 'groups', component: LandingComponent},
     {
         path: '',
-        redirectTo: '/main',
+        redirectTo: '/groups',
         pathMatch: 'full'
     },
     {path: '**', component: LandingComponent}

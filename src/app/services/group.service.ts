@@ -2,18 +2,33 @@ import {Injectable} from '@angular/core';
 import {Http, Response, Headers} from "@angular/http";
 import {Group} from "../models/group/group";
 import {forEach} from "@angular/router/src/utils/collection";
+import {UserService} from "../models/user/user.service";
+import {User} from "../models/user/user";
+import {AuthenticationService} from "./authentication.service";
 
 @Injectable()
 export class GroupService {
     apiEndPoint = 'api/groups';
 
-    constructor(private http: Http) {
+    constructor(private http: Http,
+                private authenticationService: AuthenticationService) {
+    }
+
+    checkAvailability(name: string): Promise<boolean> {
+        return this.http.get(this.apiEndPoint + '/availability/' + name)
+            .toPromise()
+            .then((response: Response) => {
+                return response.json().data;
+            })
+            .catch(this.handleError);
     }
 
     create(group: Group): Promise<Group> {
         let headers = new Headers({
-            'Content-Type': 'application/json'
+            'Content-Type':  'application/json',
+            'Authorization': 'Bearer ' + this.authenticationService.getToken()
         });
+
         return this.http.post(this.apiEndPoint, JSON.stringify(group), {headers: headers})
             .toPromise()
             .then((response: Response) => {
@@ -36,11 +51,17 @@ export class GroupService {
     }
 
     _deserializeGroup(data: any): Group {
+        let members: User[] = [];
+
+        data['members'].forEach(memberData => {
+            members.push(UserService.desirializeUser(data));
+        });
+
         return new Group(
             data['_id'],
             data['name'],
-            data['members'],
-            data['authorizedEmails']
+            UserService.desirializeUser(data['owner']),
+            members
         );
     }
 

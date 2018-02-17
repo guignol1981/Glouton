@@ -9,6 +9,9 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li [class]="getNavItemClass(0)">
+                    <a (click)="setTab(0)" class="nav-link" [routerLink]="['/groups']">groups</a>
+                </li>
+                <li [class]="getNavItemClass(0)">
                     <a (click)="setTab(0)" class="nav-link" [routerLink]="['/dashboard']">explore</a>
                 </li>
                 <li [class]="getNavItemClass(2)">

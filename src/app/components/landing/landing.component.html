@@ -1,10 +1,13 @@
 <div class="container">
     <div class="jumbotron">
-        <h1 class="display-4">Welcome to Lunch-Box!<img src="../../../assets/lunchswap.png" style="height: 75px;" alt=""></h1>
+        <h1 *ngIf="! authenticationService.isLoggedIn()" class="display-4">Welcome to Lunch-Box!<img src="../../../assets/lunchswap.png" style="height: 75px;" alt=""></h1>
         <p class="lead">Find your group or create a new one for you, your friends, coworker or anyone you want to share lunch with.</p>
         <hr class="my-4">
         <p class="lead">
             <button class="btn btn-primary" (click)="createGroup()">Create a group</button>
+            <button *ngIf="! authenticationService.isLoggedIn()" class="btn btn-primary" (click)="createGroup()">Sign
+                in
+            </button>
         </p>
         <form [formGroup]="form">
             <div class="form-group">

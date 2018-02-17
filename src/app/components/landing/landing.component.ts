@@ -4,6 +4,9 @@ import {GroupService} from "../../services/group.service";
 import {DialogService} from "ng2-bootstrap-modal";
 import {GroupFormComponent} from "../group-form/group-form.component";
 import {Group} from "../../models/group/group";
+import {AuthenticationService} from "../../services/authentication.service";
+import {LoginComponent} from "../login/login.component";
+import {NotificationsService} from "angular2-notifications";
 
 @Component({
     selector: 'app-landing',
@@ -15,7 +18,9 @@ export class LandingComponent implements OnInit {
     foundGroups: Group[];
 
     constructor(private dialogService: DialogService,
-                private groupServivce: GroupService) {
+                private groupService: GroupService,
+                public authenticationService: AuthenticationService,
+                private notificationService: NotificationsService) {
     }
 
     ngOnInit() {
@@ -23,19 +28,41 @@ export class LandingComponent implements OnInit {
             name: new FormControl(null)
         });
         this.form.valueChanges.subscribe(data => {
-            this.groupServivce.getByName(data['name']).then(groups => {
+            this.groupService.getByName(data['name']).then(groups => {
                 this.foundGroups = groups;
             });
         });
     }
 
     createGroup() {
-        this.dialogService.addDialog(GroupFormComponent, null, {backdropColor: 'rgba(0, 0, 0, 0.5)'})
+        let me = this;
+        let createGroup = function() {
+            me.dialogService.addDialog(GroupFormComponent, null, {backdropColor: 'rgba(0, 0, 0, 0.5)'})
+                .subscribe((isConfirmed) => {
+                    if (isConfirmed) {
+                        me.notificationService.success('Group created!');
+                    }
+                });
+        };
+        if (this.authenticationService.isLoggedIn()) {
+            createGroup();
+        } else {
+            this.dialogService.addDialog(LoginComponent, {}, {backdropColor: 'rgba(0, 0, 0, 0.5)'})
+                .subscribe((isConfirmed) => {
+                    if (isConfirmed) {
+                        this.notificationService.success('Logged in!');
+                        createGroup();
+                    }
+                });
+        }
+    }
+
+    signIn() {
+        this.dialogService.addDialog(LoginComponent, {}, {backdropColor: 'rgba(0, 0, 0, 0.5)'})
             .subscribe((isConfirmed) => {
                 if (isConfirmed) {
-                    console.log('test');
+                    this.notificationService.success('Logged in!');
                 }
             });
     }
-
 }
