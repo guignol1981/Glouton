@@ -10,7 +10,7 @@ module.exports.get = function (req, res) {
 
     Meal.findById(id).populate('cook').populate('participants').exec()
         .then(meal => {
-            res.send(meal)
+            res.send(meal);
         });
 };
 
@@ -23,7 +23,6 @@ module.exports.getAll = function (req, res) {
         userGroups = ownedGroups;
         Group.getJoined(userId, (joinedGroups) => {
             userGroups.concat(joinedGroups);
-            console.log(userGroups);
 			Meal.getList(userGroups, meals => {
 				res.send(meals);
 			});

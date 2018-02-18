@@ -106,6 +106,24 @@ export class GroupService {
             .catch(this.handleError);
     }
 
+    getUserGroup(): Promise<Group[]> {
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.authenticationService.getToken()
+        });
+
+        return this.http.get(this.apiEndPoint + '/joined', {headers: headers})
+            .toPromise()
+            .then((response: Response) => {
+                let groups: Group[] = [];
+                response.json().data.forEach(groupData => {
+                    groups.push(this._deserializeGroup(groupData));
+                });
+                return groups;
+            })
+            .catch(this.handleError);
+    }
+
     _deserializeGroup(data: any): Group {
         let members: User[] = [];
 

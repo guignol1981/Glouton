@@ -1,9 +1,11 @@
 import {User} from "../user/user";
 import * as moment from "moment";
 import {MealType} from "./meal-type.enum";
+import {Group} from "../group/group";
 
 export class Meal {
     constructor(public _id: string = null,
+                public groups: Group[] = [],
                 public title: string = '',
                 public description: string = '',
                 public cook: User = new User(),

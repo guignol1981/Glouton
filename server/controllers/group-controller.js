@@ -60,6 +60,23 @@ module.exports.getList = function(req, res) {
 	});
 };
 
+module.exports.joined = function(req, res) {
+	let userId = req.payload._id;
+	let groups = [];
+
+	Group.getOwned(userId, (ownedGroups) => {
+		groups = ownedGroups;
+		Group.getJoined(userId, (joinedGroup) => {
+			groups.concat(joinedGroup);
+			console.log(groups);
+			res.send({
+				data: groups,
+				msg: 'Groups found'
+			});
+		});
+	});
+};
+
 module.exports.join = function(req, res) {
 
 };

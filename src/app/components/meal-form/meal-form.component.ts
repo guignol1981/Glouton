@@ -13,6 +13,8 @@ import {NotificationsService} from 'angular2-notifications';
 import {DatepickerOptions} from 'ng2-datepicker';
 import * as moment from 'moment';
 import {MealType} from "../../models/meal/meal-type.enum";
+import {GroupService} from "../../services/group.service";
+import {Group} from "../../models/group/group";
 
 @Component({
     selector: 'app-meal-form',
@@ -23,6 +25,7 @@ export class MealFormComponent implements OnInit {
     @Input() editMode = false;
     @Output() updated: EventEmitter<Meal> = new EventEmitter<Meal>();
     @ViewChild('cropper', undefined)
+    groups: Group[] = [];
     cropper: ImageCropperComponent;
     meal: Meal;
     user: User;
@@ -31,12 +34,6 @@ export class MealFormComponent implements OnInit {
     cropperSettings: CropperSettings;
     useOwnPicture = false;
     mealType = MealType;
-
-    public notificationOptions = {
-        position: ['bottom', 'left'],
-        timeOut: 5000,
-        lastOnBottom: true
-    };
 
     deliveryDateOptions: DatepickerOptions = {
         minDate: moment().startOf('day').add(1, 'day').startOf('day').toDate()
@@ -51,7 +48,8 @@ export class MealFormComponent implements OnInit {
                 public imageService: MealImageService,
                 public userService: UserService,
                 public mealImageService: MealImageService,
-                private notificationService: NotificationsService) {
+                private notificationService: NotificationsService,
+                private groupService: GroupService) {
     }
 
     ngOnInit() {
@@ -68,7 +66,11 @@ export class MealFormComponent implements OnInit {
             this.meal = new Meal();
             this.userService.getConnectedUser().then(user => {
                 this.user = user;
-                this.initForm();
+                this.getUserGroupsAsync().then((groups: Group[]) => {
+                    this.groups = groups;
+                    console.log(this.groups);
+                    this.initForm();
+                });
             });
         }
     }
@@ -77,7 +79,10 @@ export class MealFormComponent implements OnInit {
     initFromEdit(user: User, meal: Meal) {
         this.user = user;
         this.meal = meal;
-        this.initForm();
+        this.getUserGroupsAsync().then((groups: Group[]) => {
+            this.groups = groups;
+            this.initForm();
+        });
     }
 
     @Input()
@@ -86,7 +91,14 @@ export class MealFormComponent implements OnInit {
         this.meal = new Meal();
         this.meal.deliveryDate = date.toDate();
         this.meal.limitDate = moment(date).subtract(1, 'day').toDate();
-        this.initForm();
+        this.getUserGroupsAsync().then((groups: Group[]) => {
+            this.groups = groups;
+            this.initForm();
+        });
+    }
+
+    getUserGroupsAsync(): Promise<Group[]> {
+        return this.groupService.getUserGroup();
     }
 
     fileChangeListener($event) {
