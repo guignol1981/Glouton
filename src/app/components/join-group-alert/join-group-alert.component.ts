@@ -22,9 +22,18 @@ export class JoinGroupAlertComponent extends DialogComponent<JoinGroupAlertFormM
     }
 
     ngOnInit() {
+        document.getElementsByTagName('body')[0].classList.add('modal-open');
     }
 
-    onConfirm() {
+    join() {
+        // this.groupService.join(this.group).
+    }
+
+    leave() {
+
+    }
+
+    remove() {
 
     }
 

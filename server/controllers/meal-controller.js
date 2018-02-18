@@ -1,5 +1,6 @@
 let Meal = require('../models/meal/meal');
 let User = require('../models/user/user');
+let Group = require('../models/group/group');
 let Message = require('../models/message/message');
 let moment = require('moment');
 let dateHelper = require('../services/date-helper');
@@ -14,8 +15,19 @@ module.exports.get = function (req, res) {
 };
 
 module.exports.getAll = function (req, res) {
-    Meal.getList(meals => {
-        res.send(meals)
+    let userId = req.payload._id;
+
+    let userGroups = [];
+
+    Group.getOwned(userId, (ownedGroups) => {
+        userGroups = ownedGroups;
+        Group.getJoined(userId, (joinedGroups) => {
+            userGroups.concat(joinedGroups);
+            console.log(userGroups);
+			Meal.getList(userGroups, meals => {
+				res.send(meals);
+			});
+        });
     });
 };
 
@@ -78,7 +90,9 @@ module.exports.getLunchBox = function (req, res) {
 module.exports.create = function (req, res) {
     //hack without this it will force the _id to null
     delete req.body._id;
+
     let newMeal = new Meal(req.body);
+
     if (!newMeal.image) {
         let numberHelper = require('../services/number-helper');
         newMeal.image = `image-lunch-default-${numberHelper.getRandomInt(1, 8)}.jpeg`;

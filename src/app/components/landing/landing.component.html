@@ -7,7 +7,7 @@
         <hr class="my-4">
         <p class="lead">
             <button class="btn btn-primary" (click)="createGroup()">Create a group</button>
-            <button *ngIf="! authenticationService.isLoggedIn()" class="btn btn-primary" (click)="createGroup()">Sign
+            <button *ngIf="! authenticationService.isLoggedIn()" class="btn btn-primary" (click)="signIn()">Sign
                 in
             </button>
         </p>
@@ -20,7 +20,7 @@
             <li class="nav-item">
                 <a [class]="getTabClass('map')" (click)="setTab('map')"
                    href="javascript:void(0)">
-                    Map
+                    Near you
                 </a>
             </li>
         </ul>
@@ -32,14 +32,16 @@
                     <hr>
                     <ul class="list-group">
                         <li *ngFor="let foundGroup of foundGroups" class="list-group-item mt-1">
-                            {{foundGroup.name}}
+                            <a href="javascript:void(0)" (click)="onGroupClicked(foundGroup)">{{foundGroup.name}}</a>
+                            <hr>
+                            <p>{{foundGroup.description}}</p>
                         </li>
                     </ul>
                 </div>
             </form>
         </div>
         <div *ngIf="activeTab === 'map'">
-            <app-map></app-map>
+            <app-map (groupClicked)="onGroupClicked($event)"></app-map>
         </div>
     </div>
 </div>

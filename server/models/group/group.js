@@ -10,6 +10,18 @@ let groupSchema = new Schema({
 	geoData: {type: Schema.Types.ObjectId, ref: 'GeoData', default: new GeoData()}
 });
 
+groupSchema.statics.getOwned = function(userId, callback) {
+	Group.find({owner: userId}).exec().then(groups => {
+		callback(groups);
+	});
+};
+
+groupSchema.statics.getJoined = function(userId, callback) {
+	Group.find({members: userId}).exec().then(groups => {
+		callback(groups);
+	});
+};
+
 let Group = mongoose.model('Group', groupSchema);
 
 module.exports = Group;

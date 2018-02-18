@@ -7,6 +7,7 @@ import {Group} from "../../models/group/group";
 import {AuthenticationService} from "../../services/authentication.service";
 import {LoginComponent} from "../login/login.component";
 import {NotificationsService} from "angular2-notifications";
+import {JoinGroupAlertComponent} from "../join-group-alert/join-group-alert.component";
 
 @Component({
     selector: 'app-landing',
@@ -37,7 +38,7 @@ export class LandingComponent implements OnInit {
 
     createGroup() {
         let me = this;
-        let createGroup = function() {
+        let createGroup = function () {
             me.dialogService.addDialog(GroupFormComponent, null, {backdropColor: 'rgba(0, 0, 0, 0.5)'})
                 .subscribe((isConfirmed) => {
                     if (isConfirmed) {
@@ -48,23 +49,37 @@ export class LandingComponent implements OnInit {
         if (this.authenticationService.isLoggedIn()) {
             createGroup();
         } else {
-            this.dialogService.addDialog(LoginComponent, {}, {backdropColor: 'rgba(0, 0, 0, 0.5)'})
-                .subscribe((isConfirmed) => {
-                    if (isConfirmed) {
-                        this.notificationService.success('Logged in!');
-                        createGroup();
-                    }
-                });
+            this.signIn(createGroup, null);
         }
     }
 
-    signIn() {
+    signIn(callback, arg) {
         this.dialogService.addDialog(LoginComponent, {}, {backdropColor: 'rgba(0, 0, 0, 0.5)'})
             .subscribe((isConfirmed) => {
                 if (isConfirmed) {
                     this.notificationService.success('Logged in!');
+                    if (callback) {
+                        callback(arg);
+                    }
                 }
             });
+    }
+
+    onGroupClicked(group: Group) {
+        let me = this;
+        let popJoinGroupAlert = function (group) {
+            me.dialogService.addDialog(JoinGroupAlertComponent, {group: group}, {backdropColor: 'rgba(0, 0, 0, 0.5)'})
+                .subscribe((isConfirmed) => {
+                    if (isConfirmed) {
+                        console.log('ok');
+                    }
+                });
+        };
+        if (this.authenticationService.isLoggedIn()) {
+            popJoinGroupAlert(group);
+        } else {
+            this.signIn(popJoinGroupAlert, group);
+        }
     }
 
     getTabClass(tabName) {

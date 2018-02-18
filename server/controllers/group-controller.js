@@ -5,6 +5,7 @@ module.exports.create = function(req, res) {
 	let userId = req.payload['_id'];
 	let group = new Group(req.body);
 	let geoData = new GeoData(req.body['geoData']);
+
 	geoData.save();
 	group.name = group.name.toLowerCase();
 	group.owner = userId;
