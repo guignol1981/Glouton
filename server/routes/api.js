@@ -47,6 +47,9 @@ router.get('/messages/unseen', auth, ctrlMessage.getUnseen);
 router.get('/versions', auth, ctrlVersion.getList);
 
 //group
+router.put('/groups/join/:id', auth, ctrlGroup.join);
+router.put('/groups/leave/:id', auth, ctrlGroup.leave);
+router.put('/groups/remove/:id', auth, ctrlGroup.remove);
 router.get('/groups/availability/:name', ctrlGroup.checkAvailability);
 router.get('/groups/:name', ctrlGroup.getByName);
 router.get('/groups', ctrlGroup.getList);

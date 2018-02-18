@@ -1,0 +1,14 @@
+<div *ngIf="group" class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">{{group.name}}</h4>
+    </div>
+    <div class="modal-body">
+      <p>{{group.description}}</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="close()">Cancel</button>
+      <button class="btn btn-primary" (click)="onConfirm()">Ask to join</button>
+    </div>
+  </div>
+</div>

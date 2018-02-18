@@ -58,3 +58,15 @@ module.exports.getList = function(req, res) {
 		});
 	});
 };
+
+module.exports.join = function(req, res) {
+
+};
+
+module.exports.leave = function(req, res) {
+
+};
+
+module.exports.remove = function(req, res) {
+
+};

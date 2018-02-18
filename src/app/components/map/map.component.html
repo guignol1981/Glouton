@@ -14,7 +14,7 @@
             [markerDraggable]="false">
 
       <agm-info-window>
-        <strong><a [routerLink]="['/profile/' + m.groupId]">{{m.label}}</a></strong>
+        <strong><a href="javascript:void(0)" (click)="joinGroup(m.groupId)">{{m.label}}</a></strong>
       </agm-info-window>
 
     </agm-marker>

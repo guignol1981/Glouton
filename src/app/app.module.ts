@@ -34,12 +34,15 @@ import {VersionService} from './models/version/version.service';
 import {CalendarDayComponent} from './components/calendar-day/calendar-day.component';
 import {NgbModule, NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {KeysPipe} from "./pipes/keys-pipe";
-import { LandingComponent } from './components/landing/landing.component';
+import {LandingComponent} from './components/landing/landing.component';
 import {GroupService} from "./services/group.service";
 import {BootstrapModalModule} from "ng2-bootstrap-modal";
-import { GroupFormComponent } from './components/group-form/group-form.component';
-import { MapComponent } from './components/map/map.component';
+import {GroupFormComponent} from './components/group-form/group-form.component';
+import {MapComponent} from './components/map/map.component';
 import {GoogleMapService} from "./services/google-map.service";
+import {
+    JoinGroupAlertComponent,
+} from './components/join-group-alert/join-group-alert.component';
 
 @NgModule({
     declarations: [
@@ -62,7 +65,8 @@ import {GoogleMapService} from "./services/google-map.service";
         KeysPipe,
         LandingComponent,
         GroupFormComponent,
-        MapComponent
+        MapComponent,
+        JoinGroupAlertComponent
     ],
     imports: [
         BrowserModule,
@@ -81,7 +85,8 @@ import {GoogleMapService} from "./services/google-map.service";
     ],
     entryComponents: [
         GroupFormComponent,
-        LoginComponent
+        LoginComponent,
+        JoinGroupAlertComponent
     ],
     providers: [
         MealService,

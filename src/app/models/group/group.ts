@@ -5,6 +5,7 @@ export class Group {
 
     constructor(public _id: string = null,
                 public name: string = '',
+                public description: string = '',
                 public owner: User = null,
                 public members: User[] = [],
                 public geoData: GeoData = new GeoData()) {

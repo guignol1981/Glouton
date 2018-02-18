@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {GroupService} from "../../services/group.service";
 import {Group} from "../../models/group/group";
+import {JoinGroupAlertComponent} from "../join-group-alert/join-group-alert.component";
+import {DialogService} from "ng2-bootstrap-modal";
 
 @Component({
     selector: 'app-map',
@@ -8,12 +10,14 @@ import {Group} from "../../models/group/group";
     styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
+    groups: Group[] = [];
     markers: Marker[] = [];
     zoom = 12;
     lat = 0;
     lng = 0;
 
-    constructor(private groupService: GroupService) {
+    constructor(private groupService: GroupService,
+                private dialogService: DialogService) {
     }
 
     ngOnInit() {
@@ -25,6 +29,7 @@ export class MapComponent implements OnInit {
         }
 
         this.groupService.getList().then((groups: Group[]) => {
+            this.groups = groups;
             groups.forEach(group => {
                 this.markers.push({
                     lat: +group.geoData.lat,
@@ -35,6 +40,22 @@ export class MapComponent implements OnInit {
                 });
             });
         });
+    }
+
+    joinGroup(id) {
+        let groupToJoin = null;
+        this.groups.forEach(group => {
+            if (group._id === id) {
+                groupToJoin = group;
+            }
+        });
+
+        this.dialogService.addDialog(JoinGroupAlertComponent, {group: groupToJoin}, {backdropColor: 'rgba(0, 0, 0, 0.5)'})
+            .subscribe((isConfirmed) => {
+                if (isConfirmed) {
+                    console.log('ok');
+                }
+            });
     }
 
 }

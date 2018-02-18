@@ -26,11 +26,53 @@ export class GroupService {
 
     create(group: Group): Promise<Group> {
         let headers = new Headers({
-            'Content-Type':  'application/json',
+            'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + this.authenticationService.getToken()
         });
 
         return this.http.post(this.apiEndPoint, JSON.stringify(group), {headers: headers})
+            .toPromise()
+            .then((response: Response) => {
+                return this._deserializeGroup(response.json().data);
+            })
+            .catch(this.handleError);
+    }
+
+    join(group: Group): Promise<Group> {
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.authenticationService.getToken()
+        });
+
+        return this.http.put(this.apiEndPoint + '/join/' + group._id, {headers: headers})
+            .toPromise()
+            .then((response: Response) => {
+                return this._deserializeGroup(response.json().data);
+            })
+            .catch(this.handleError);
+    }
+
+    leave(group: Group): Promise<Group> {
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.authenticationService.getToken()
+        });
+
+        return this.http.put(this.apiEndPoint + '/leave/' + group._id, {headers: headers})
+            .toPromise()
+            .then((response: Response) => {
+                return this._deserializeGroup(response.json().data);
+            })
+            .catch(this.handleError);
+    }
+
+    remove(group: Group): Promise<Group> {
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.authenticationService.getToken()
+        });
+
+        return this.http.put(this.apiEndPoint + '/remove/' + group._id, {headers: headers})
             .toPromise()
             .then((response: Response) => {
                 return this._deserializeGroup(response.json().data);
@@ -74,6 +116,7 @@ export class GroupService {
         return new Group(
             data['_id'],
             data['name'],
+            data['description'],
             UserService.desirializeUser(data['owner']),
             members,
             GoogleMapService.deserializeGeoData(data['geoData'])

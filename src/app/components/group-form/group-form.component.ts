@@ -27,6 +27,7 @@ export class GroupFormComponent extends DialogComponent<null, boolean> implement
 
         this.form = new FormGroup({
             name: new FormControl(null, [Validators.required, Validators.minLength(5)]),
+            description: new FormControl(null, [Validators.required, Validators.minLength(5)]),
             address: new FormControl('', [Validators.required, Validators.minLength(3)]),
         });
 
