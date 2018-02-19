@@ -9,8 +9,8 @@
                     <label for="group">Group</label>
                     <select formControlName="group" id="group" class="form-control custom-select"
                             aria-describedby="groupHelper">
-                        <option *ngFor="let formGroup of formGroups" [value]="formGroup._id">
-                            {{formGroup.name}}
+                        <option *ngFor="let group of groups" [value]="group._id">
+                            {{group.name}}
                         </option>
                     </select>
                     <small id="groupHelper" class="form-text text-muted">Which group the lunch will be proposed in</small>
@@ -166,12 +166,12 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" (click)="close()" class="btn btn-secondary" data-dismiss="modal">
+                        Close
+                    </button>
                     <button (click)="onSubmit()"
                             [disabled]="!form.valid || (!data.image && useOwnPicture)" class="btn btn-primary">
                         Submit
-                    </button>
-                    <button type="button" (click)="close()" class="btn btn-secondary" data-dismiss="modal">
-                        Close
                     </button>
                 </div>
             </form>

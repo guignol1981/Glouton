@@ -1,5 +1,4 @@
 <div *ngIf="meal" class="container mt-3">
-    <button hidden data-toggle="modal" data-target="#mealformedit" #mealformeditbutton></button>
     <div class="row">
         <div class="col-8">
             <h2 class="font-weight-bold">{{meal.title}}</h2>
@@ -36,7 +35,7 @@
                         </button>
                         <app-private-message [author]="user" [recipient]="meal.cook"></app-private-message>
                         <span *ngIf="meal.isCook(user)">
-                                <button (click)="editMeal(mealformeditbutton)"
+                                <button (click)="editMeal()"
                                         class="btn btn-secondary btn-sm ">edit</button>
                                 <button (click)="cancelMeal(mealformeditbutton)"
                                         class="btn btn-danger btn-sm ">cancel</button>

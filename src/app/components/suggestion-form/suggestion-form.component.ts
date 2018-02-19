@@ -14,10 +14,10 @@ import {MealImageService} from "../../services/meal-image.service";
 import {NotificationsService} from "angular2-notifications";
 import {MealFormDateValidation} from "../../validators/meal-form-date";
 import {MealFormParticipantValidation} from "../../validators/meal-form-participants";
+import {GroupService} from "../../services/group.service";
 
 export interface SuggestionFormModel {
     meal: Meal;
-    groups: Group[];
     user: User;
     date: Date;
 }
@@ -28,12 +28,11 @@ export interface SuggestionFormModel {
     styleUrls: ['./suggestion-form.component.css']
 })
 export class SuggestionFormComponent extends DialogComponent<SuggestionFormModel, Meal> implements OnInit {
-    @ViewChild('cropper', undefined)
     groups: Group[];
-    formGroups: Group[];
     meal: Meal;
     date: Date;
     user: User;
+    @ViewChild('cropper', undefined)
     cropper: ImageCropperComponent;
     form: FormGroup;
     data: any;
@@ -55,21 +54,24 @@ export class SuggestionFormComponent extends DialogComponent<SuggestionFormModel
                 public authenticationService: AuthenticationService,
                 public imageService: MealImageService,
                 public mealImageService: MealImageService,
-                private notificationService: NotificationsService) {
+                private notificationService: NotificationsService,
+                private groupService: GroupService) {
         super(dialogService);
     }
 
     ngOnInit() {
-        document.getElementsByTagName('body')[0].classList.add('modal-open');
-        this.cropperSettings = new CropperSettings();
-        this.cropperSettings.width = 200;
-        this.cropperSettings.height = 200;
-        this.cropperSettings.croppedWidth = 300;
-        this.cropperSettings.croppedHeight = 300;
-        this.cropperSettings.noFileInput = true;
-        this.data = {};
-        this.initForm();
-        this.formGroups = this.groups;
+        this.groupService.getUserGroup().then((groups: Group[]) => {
+            this.groups = groups;
+            document.getElementsByTagName('body')[0].classList.add('modal-open');
+            this.cropperSettings = new CropperSettings();
+            this.cropperSettings.width = 200;
+            this.cropperSettings.height = 200;
+            this.cropperSettings.croppedWidth = 300;
+            this.cropperSettings.croppedHeight = 300;
+            this.cropperSettings.noFileInput = true;
+            this.data = {};
+            this.initForm();
+        });
     }
 
     initForm() {

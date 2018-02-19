@@ -9,6 +9,8 @@ import {MealFormComponent} from '../meal-form/meal-form.component';
 import {NotificationsService} from 'angular2-notifications';
 import * as moment from 'moment';
 import {MealType} from "../../models/meal/meal-type.enum";
+import {SuggestionFormComponent} from "../suggestion-form/suggestion-form.component";
+import {DialogService} from "ng2-bootstrap-modal";
 
 @Component({
     selector: 'app-meal-details',
@@ -28,7 +30,8 @@ export class MealDetailsComponent implements OnInit {
                 private activatedRoute: ActivatedRoute,
                 public imageService: MealImageService,
                 public userService: UserService,
-                private notificationService: NotificationsService) {
+                private notificationService: NotificationsService,
+                private dialogService: DialogService) {
     }
 
     ngOnInit() {
@@ -62,9 +65,13 @@ export class MealDetailsComponent implements OnInit {
             });
     }
 
-    editMeal(button) {
-        this.mealFormComponent.initFromEdit(this.user, this.meal);
-        button.click();
+    editMeal() {
+        this.dialogService.addDialog(SuggestionFormComponent, {
+            meal: this.meal, user: this.user, date: null
+        }, {backdropColor: 'rgba(0, 0, 0, 0.5)'})
+            .subscribe((meal: Meal) => {
+                this.meal = meal;
+            });
     }
 
     cancelMeal() {

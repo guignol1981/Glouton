@@ -68,9 +68,11 @@ export class MealListComponent implements OnInit, OnDestroy {
 
     getFilterClass(filter) {
         let index = this.filters.indexOf(filter);
+
         if (index > -1) {
-            return 'badge badge-primary';
+            return this.filterIsAGroup(filter) ? 'badge badge-info' : 'badge badge-primary';
         }
+
         return 'badge badge-secondary';
     }
 
@@ -132,7 +134,7 @@ export class MealListComponent implements OnInit, OnDestroy {
 
     suggest() {
         this.dialogService.addDialog(SuggestionFormComponent, {
-            meal: new Meal(), user: this.user, groups: this.groups, date: null
+            meal: new Meal(), user: this.user, date: null
         }, {backdropColor: 'rgba(0, 0, 0, 0.5)'})
             .subscribe((meal: Meal) => {
             });

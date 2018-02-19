@@ -9,6 +9,14 @@ let dateHelper = require('../services/date-helper');
         .then(meal => {
 module.exports.get = function(req, res) {
 	let id = req.params.id;
+
+	Meal.findById(id)
+		.populate('cook')
+		.populate('participants')
+		.exec()
+		.then(meal => {
+			res.send(meal);
+		});
 };
 
 
