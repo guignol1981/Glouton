@@ -68,7 +68,6 @@ module.exports.joined = function(req, res) {
 		groups = ownedGroups;
 		Group.getJoined(userId, (joinedGroup) => {
 			groups.concat(joinedGroup);
-			console.log(groups);
 			res.send({
 				data: groups,
 				msg: 'Groups found'

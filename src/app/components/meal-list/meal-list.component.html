@@ -10,6 +10,11 @@
                [class]="getFilterClass('pending')">pending</a>
             <a href="javascript:void(0)" (click)="toggleFilter('confirmed')" [class]="getFilterClass('confirmed')">confirmed</a>
             <a href="javascript:void(0)" (click)="toggleFilter('by me')" [class]="getFilterClass('by me')">by me</a>
+            |
+            <span *ngFor="let group of groups">
+                <a href="javascript:void(0)" (click)="toggleFilter(group.name)"
+                   [class]="getFilterClass(group.name)">{{group.name}}</a>
+            </span>
         </div>
     </div>
     <div class="row">

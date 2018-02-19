@@ -34,7 +34,6 @@ export class GroupFormComponent extends DialogComponent<null, boolean> implement
         this.form.valueChanges.subscribe(data => {
             if (this.form.get('name').valid) {
                 this.groupService.checkAvailability(data['name']).then(isAvailable => {
-                    console.log(isAvailable);
                     this.nameIsAvailable = isAvailable;
                 });
             }

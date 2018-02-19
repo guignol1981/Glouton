@@ -71,7 +71,6 @@ export class LandingComponent implements OnInit {
             me.dialogService.addDialog(JoinGroupAlertComponent, {group: group}, {backdropColor: 'rgba(0, 0, 0, 0.5)'})
                 .subscribe((isConfirmed) => {
                     if (isConfirmed) {
-                        console.log('ok');
                     }
                 });
         };

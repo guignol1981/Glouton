@@ -82,7 +82,7 @@ export class SuggestionFormComponent extends DialogComponent<SuggestionFormModel
             limitDate: new FormControl(this.meal.limitDate, Validators.required),
             minParticipants: new FormControl(this.meal.minParticipants, [Validators.required, Validators.min(1)]),
             maxParticipants: new FormControl(this.meal.maxParticipants, [Validators.required, Validators.min(1)]),
-            group: new FormControl(null),
+            group: new FormControl(this.meal.group ? this.meal.group._id : null, Validators.required),
             type: new FormControl(this.meal.type)
         }, {
             validators: [
@@ -93,8 +93,6 @@ export class SuggestionFormComponent extends DialogComponent<SuggestionFormModel
                 MealFormParticipantValidation.minMinParticipants
             ]
         });
-
-        this.form.valueChanges.subscribe(data => console.log(data['group']));
     }
 
     onSubmit() {
@@ -107,7 +105,6 @@ export class SuggestionFormComponent extends DialogComponent<SuggestionFormModel
             meal.image = imageData ? JSON.parse(imageData['_body']).image : meal.image;
             meal.participants = me.meal.participants;
             meal.cook = me.user;
-
             me.mealService.save(meal)
                 .then((updatedMeal) => {
                     if (hasParticipants && updatedMeal.participants.length === 0) {
@@ -116,8 +113,8 @@ export class SuggestionFormComponent extends DialogComponent<SuggestionFormModel
                     me.notificationService.success(`Lunch proposition saved!`);
 
                     document.getElementsByTagName('body')[0].classList.remove('modal-open');
-                    this.result = updatedMeal;
-                    this.close();
+                    me.result = updatedMeal;
+                    me.close();
                 });
         };
 

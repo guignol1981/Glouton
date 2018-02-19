@@ -87,6 +87,7 @@ mealSchema.statics.getList = function(groups, callback) {
 		.where('status').in(['pending', 'confirmed'])
 		.where('deliveryDate').gte(moment().startOf('day').toDate())
 		.populate('cook')
+		.populate('group')
 		.populate('participants')
 		.exec().then(meals => callback(meals));
 };

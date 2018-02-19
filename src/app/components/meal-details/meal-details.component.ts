@@ -19,11 +19,6 @@ export class MealDetailsComponent implements OnInit {
     meal: Meal;
     user: User;
     @ViewChild(MealFormComponent) mealFormComponent: MealFormComponent;
-    public notificationOptions = {
-        position: ['bottom', 'left'],
-        timeOut: 5000,
-        lastOnBottom: true
-    };
     weekdayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     weekDayName = '';
     remaningTime;

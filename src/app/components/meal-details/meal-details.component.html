@@ -1,6 +1,4 @@
-<simple-notifications [options]="notificationOptions"></simple-notifications>
 <div *ngIf="meal" class="container mt-3">
-    <app-meal-form [editMode]="true" (updated)="onMealUpdated($event)" #mealformedit></app-meal-form>
     <button hidden data-toggle="modal" data-target="#mealformedit" #mealformeditbutton></button>
     <div class="row">
         <div class="col-8">

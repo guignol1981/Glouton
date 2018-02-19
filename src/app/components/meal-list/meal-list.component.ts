@@ -21,12 +21,11 @@ export class MealListComponent implements OnInit, OnDestroy {
     filters = ['all'];
     user: User;
     mealsSubscription: Subscription;
-    groups: Group[];
+    groups: Group[] = [];
 
     constructor(private userService: UserService,
                 private mealService: MealService,
                 private dialogService: DialogService,
-                private notificationService: NotificationsService,
                 private groupService: GroupService) {
     }
 
@@ -93,6 +92,7 @@ export class MealListComponent implements OnInit, OnDestroy {
             }
             return filteredMeals;
         };
+
         this.meals.forEach(meal => {
             this.filters.forEach(filter => {
                 if (filter === 'all') {
@@ -110,20 +110,31 @@ export class MealListComponent implements OnInit, OnDestroy {
                 } else if (filter === 'by me' && meal.isCook(this.user)) {
                     this.filteredMeals = addMealToFilter(meal, this.filteredMeals);
                     return;
+                } else if (this.filterIsAGroup(filter) && meal.group.name === filter) {
+                    this.filteredMeals = addMealToFilter(meal, this.filteredMeals);
                 }
             });
         });
     }
 
+    filterIsAGroup(filter): boolean {
+        let isAGroup = false;
+
+        this.groups.forEach(group => {
+            if (group.name === filter) {
+                isAGroup = true;
+                return false;
+            }
+        });
+
+        return isAGroup;
+    }
+
     suggest() {
-        console.log(this.groups);
         this.dialogService.addDialog(SuggestionFormComponent, {
             meal: new Meal(), user: this.user, groups: this.groups, date: null
         }, {backdropColor: 'rgba(0, 0, 0, 0.5)'})
-            .subscribe((isConfirmed) => {
-                if (isConfirmed) {
-                    this.notificationService.success('Lunch saved!');
-                }
+            .subscribe((meal: Meal) => {
             });
     }
 }
