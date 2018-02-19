@@ -43,6 +43,7 @@ import {GoogleMapService} from "./services/google-map.service";
 import {
     JoinGroupAlertComponent,
 } from './components/join-group-alert/join-group-alert.component';
+import { SuggestionFormComponent } from './components/suggestion-form/suggestion-form.component';
 
 @NgModule({
     declarations: [
@@ -66,7 +67,8 @@ import {
         LandingComponent,
         GroupFormComponent,
         MapComponent,
-        JoinGroupAlertComponent
+        JoinGroupAlertComponent,
+        SuggestionFormComponent
     ],
     imports: [
         BrowserModule,
@@ -86,7 +88,8 @@ import {
     entryComponents: [
         GroupFormComponent,
         LoginComponent,
-        JoinGroupAlertComponent
+        JoinGroupAlertComponent,
+        SuggestionFormComponent
     ],
     providers: [
         MealService,

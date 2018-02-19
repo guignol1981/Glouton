@@ -5,7 +5,7 @@ import {Group} from "../group/group";
 
 export class Meal {
     constructor(public _id: string = null,
-                public groups: Group[] = [],
+                public group: Group = null,
                 public title: string = '',
                 public description: string = '',
                 public cook: User = new User(),

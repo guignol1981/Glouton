@@ -4,6 +4,11 @@ import {Meal} from "../../models/meal/meal";
 import {Subscription} from "rxjs/Subscription";
 import {UserService} from "../../models/user/user.service";
 import {User} from "../../models/user/user";
+import {DialogService} from "ng2-bootstrap-modal";
+import {SuggestionFormComponent} from "../suggestion-form/suggestion-form.component";
+import {NotificationsService} from "angular2-notifications";
+import {GroupService} from "../../services/group.service";
+import {Group} from "../../models/group/group";
 
 @Component({
     selector: 'app-meal-list',
@@ -16,12 +21,17 @@ export class MealListComponent implements OnInit, OnDestroy {
     filters = ['all'];
     user: User;
     mealsSubscription: Subscription;
+    groups: Group[];
 
     constructor(private userService: UserService,
-                private mealService: MealService) {
+                private mealService: MealService,
+                private dialogService: DialogService,
+                private notificationService: NotificationsService,
+                private groupService: GroupService) {
     }
 
     ngOnInit() {
+        this.groupService.getUserGroup().then(groups => this.groups = groups);
         this.userService.getConnectedUser().then(user => {
             this.user = user;
             this.mealsSubscription = this.mealService.mealsSubject.subscribe(data => {
@@ -103,5 +113,17 @@ export class MealListComponent implements OnInit, OnDestroy {
                 }
             });
         });
+    }
+
+    suggest() {
+        console.log(this.groups);
+        this.dialogService.addDialog(SuggestionFormComponent, {
+            meal: new Meal(), user: this.user, groups: this.groups, date: null
+        }, {backdropColor: 'rgba(0, 0, 0, 0.5)'})
+            .subscribe((isConfirmed) => {
+                if (isConfirmed) {
+                    this.notificationService.success('Lunch saved!');
+                }
+            });
     }
 }

@@ -62,27 +62,24 @@ export class MealFormComponent implements OnInit {
 
         this.data = {};
 
-        if (!this.editMode) {
-            this.meal = new Meal();
-            this.userService.getConnectedUser().then(user => {
-                this.user = user;
-                this.getUserGroupsAsync().then((groups: Group[]) => {
-                    this.groups = groups;
-                    console.log(this.groups);
-                    this.initForm();
-                });
-            });
-        }
+        // this.getUserGroupsAsync().then((groups: Group[]) => {
+        //     this.groups = groups;
+        //     if (!this.editMode) {
+        //         this.meal = new Meal();
+        //         this.userService.getConnectedUser().then(user => {
+        //             this.user = user;
+        //             this.initForm();
+        //         });
+        //     }
+        // });
+
     }
 
     @Input()
     initFromEdit(user: User, meal: Meal) {
         this.user = user;
         this.meal = meal;
-        this.getUserGroupsAsync().then((groups: Group[]) => {
-            this.groups = groups;
-            this.initForm();
-        });
+        this.initForm();
     }
 
     @Input()
@@ -91,13 +88,10 @@ export class MealFormComponent implements OnInit {
         this.meal = new Meal();
         this.meal.deliveryDate = date.toDate();
         this.meal.limitDate = moment(date).subtract(1, 'day').toDate();
-        this.getUserGroupsAsync().then((groups: Group[]) => {
-            this.groups = groups;
-            this.initForm();
-        });
+        this.initForm();
     }
 
-    getUserGroupsAsync(): Promise<Group[]> {
+    getUserGroupsAsync() {
         return this.groupService.getUserGroup();
     }
 
@@ -124,6 +118,7 @@ export class MealFormComponent implements OnInit {
             limitDate: new FormControl(this.meal.limitDate, Validators.required),
             minParticipants: new FormControl(this.meal.minParticipants, [Validators.required, Validators.min(1)]),
             maxParticipants: new FormControl(this.meal.maxParticipants, [Validators.required, Validators.min(1)]),
+            groups: new FormControl(this.meal.group ? this.meal.group._id :  null),
             type: new FormControl(this.meal.type)
         }, {
             validators: [

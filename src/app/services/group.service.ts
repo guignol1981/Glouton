@@ -15,6 +15,24 @@ export class GroupService {
                 private authenticationService: AuthenticationService) {
     }
 
+    public static deserializeGroup(data: any): Group {
+        let members: User[] = [];
+
+        data['members'].forEach(memberData => {
+            members.push(UserService.desirializeUser(memberData));
+        });
+
+        return new Group(
+            data['_id'],
+            data['name'],
+            data['description'],
+            UserService.desirializeUser(data['owner']),
+            members,
+            GoogleMapService.deserializeGeoData(data['geoData'])
+        );
+    }
+
+
     checkAvailability(name: string): Promise<boolean> {
         return this.http.get(this.apiEndPoint + '/availability/' + name)
             .toPromise()
@@ -33,7 +51,7 @@ export class GroupService {
         return this.http.post(this.apiEndPoint, JSON.stringify(group), {headers: headers})
             .toPromise()
             .then((response: Response) => {
-                return this._deserializeGroup(response.json().data);
+                return GroupService.deserializeGroup(response.json().data);
             })
             .catch(this.handleError);
     }
@@ -47,7 +65,7 @@ export class GroupService {
         return this.http.put(this.apiEndPoint + '/join/' + group._id, {headers: headers})
             .toPromise()
             .then((response: Response) => {
-                return this._deserializeGroup(response.json().data);
+                return GroupService.deserializeGroup(response.json().data);
             })
             .catch(this.handleError);
     }
@@ -61,7 +79,7 @@ export class GroupService {
         return this.http.put(this.apiEndPoint + '/leave/' + group._id, {headers: headers})
             .toPromise()
             .then((response: Response) => {
-                return this._deserializeGroup(response.json().data);
+                return GroupService.deserializeGroup(response.json().data);
             })
             .catch(this.handleError);
     }
@@ -75,7 +93,7 @@ export class GroupService {
         return this.http.put(this.apiEndPoint + '/remove/' + group._id, {headers: headers})
             .toPromise()
             .then((response: Response) => {
-                return this._deserializeGroup(response.json().data);
+                return GroupService.deserializeGroup(response.json().data);
             })
             .catch(this.handleError);
     }
@@ -86,7 +104,7 @@ export class GroupService {
             .then((response: Response) => {
                 let groups = [];
                 response.json().data.forEach(data => {
-                    groups.push(this._deserializeGroup(data));
+                    groups.push(GroupService.deserializeGroup(data));
                 });
                 return groups;
             })
@@ -99,7 +117,7 @@ export class GroupService {
             .then((response: Response) => {
                 let groups = [];
                 response.json().data.forEach(data => {
-                    groups.push(this._deserializeGroup(data));
+                    groups.push(GroupService.deserializeGroup(data));
                 });
                 return groups;
             })
@@ -117,28 +135,12 @@ export class GroupService {
             .then((response: Response) => {
                 let groups: Group[] = [];
                 response.json().data.forEach(groupData => {
-                    groups.push(this._deserializeGroup(groupData));
+                    groups.push(GroupService.deserializeGroup(groupData));
                 });
                 return groups;
             })
+
             .catch(this.handleError);
-    }
-
-    _deserializeGroup(data: any): Group {
-        let members: User[] = [];
-
-        data['members'].forEach(memberData => {
-            members.push(UserService.desirializeUser(memberData));
-        });
-
-        return new Group(
-            data['_id'],
-            data['name'],
-            data['description'],
-            UserService.desirializeUser(data['owner']),
-            members,
-            GoogleMapService.deserializeGeoData(data['geoData'])
-        );
     }
 
     private handleError(error: any) {

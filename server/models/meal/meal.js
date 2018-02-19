@@ -5,7 +5,7 @@ let Group = require('../group/group');
 let moment = require('moment');
 
 let mealSchema = new Schema({
-	groups: [{type: Schema.Types.ObjectId, ref: 'Group', require: true}],
+	group: {type: Schema.Types.ObjectId, ref: 'Group', require: true},
 	title: String,
 	description: String,
 	image: String,
@@ -83,7 +83,7 @@ mealSchema.statics.getNewFailed = function(callback) {
 
 mealSchema.statics.getList = function(groups, callback) {
 	Meal.find({})
-		.where('groups').in(groups)
+		.where('group').in(groups)
 		.where('status').in(['pending', 'confirmed'])
 		.where('deliveryDate').gte(moment().startOf('day').toDate())
 		.populate('cook')

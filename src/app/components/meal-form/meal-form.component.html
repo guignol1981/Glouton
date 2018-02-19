@@ -1,4 +1,4 @@
-<div class="modal fade" [id]="editMode? 'mealformedit': 'mealform'" tabindex="-1" role="dialog"
+<div *ngIf="groups" class="modal fade" [id]="editMode? 'mealformedit': 'mealform'" tabindex="-1" role="dialog"
      [attr.aria-labelledby]="editMode? 'mealModalLabelEdit': 'mealModalLabel'" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -20,6 +20,16 @@
             <div class="modal-body test">
                 <div *ngIf="form" class="container mt-3">
                     <form class="mt-3" [formGroup]="form">
+                        <div class="col form-group">
+                            <label for="groups">Groups</label>
+                            <select formControlName="groups" id="groups" class="form-control custom-select"
+                                    aria-describedby="groupsHelper">
+                                <option *ngFor="let group of groups">
+                                    {{group.name}}
+                                </option>
+                            </select>
+                            <small id="groupsHelper" class="form-text text-muted">Which group the lunch will be proposed in</small>
+                        </div>
                         <div class="form-group">
                             <label for="title">Title</label>
                             <input type="text" class="form-control" id="title" formControlName="title"
