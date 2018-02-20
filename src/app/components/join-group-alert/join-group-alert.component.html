@@ -8,6 +8,7 @@
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" (click)="close()">Cancel</button>
+      <button *ngIf="group.isMember(user) && !group.isOwner(user)" class="btn btn-primary" (click)="leave()">Leave</button>
       <button class="btn btn-primary" (click)="join()">Join</button>
     </div>
   </div>

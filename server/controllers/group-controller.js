@@ -1,5 +1,7 @@
 let Group = require('../models/group/group');
 let GeoData = require('../models/geo-data/geo-data');
+let Message = require('../models/message/message');
+let User = require('../models/user/user');
 
 module.exports.create = function(req, res) {
 	let userId = req.payload['_id'];
@@ -39,7 +41,10 @@ module.exports.checkAvailability = function(req, res) {
 module.exports.getByName = function(req, res) {
 	let name = req.params.name;
 
-	Group.find({name: {$regex: '.*' + name + '.*'}}).exec().then(groups => {
+	Group.find({name: {$regex: '.*' + name + '.*'}})
+		.populate('members')
+		.populate('pending')
+		.exec().then(groups => {
 		res.send({
 			data: groups,
 			msg: 'Groups found!'
@@ -48,8 +53,6 @@ module.exports.getByName = function(req, res) {
 };
 
 module.exports.getList = function(req, res) {
-	let name = req.params.name;
-
 	Group.find({})
 		.populate('geoData')
 		.exec().then(groups => {
@@ -76,8 +79,48 @@ module.exports.joined = function(req, res) {
 	});
 };
 
-module.exports.join = function(req, res) {
+module.exports.joinRequest = function(req, res) {
+	let userId = req.payload._id;
+	let groupId = req.params.id;
 
+	User.findById(userId).exec().then(user => {
+		Group.findById(groupId).populate('owner').exec().then(group => {
+			group.addPending(userId, (group, exist) => {
+				Message.create({
+					recipient: group.owner,
+					title: `${user.name} want to join ${group.name}`,
+					type: 'group-join-request',
+					category: 'info',
+					data: {
+						user: user,
+						group: group
+					}
+				});
+
+				res.send({
+					data: null,
+					msg: 'Request sent'
+				});
+			});
+		});
+	});
+};
+
+module.exports.confirmJoinRequest = function(req, res) {
+	let groupId = req.params['groupid'];
+	let userId = req.params['userid'];
+	let accept = req.params['accept'];
+
+	Group.findById(groupId).exec().then(group => {
+		group.removePending(userId, (group, exist) => {
+			group.addMember(userId, (group, exist) => {
+				res.status(exist ? 202 : 200).send({
+					data: group,
+					msg: exist ? 'User already joined group' : 'User joined group'
+				});
+			});
+		});
+	});
 };
 
 module.exports.leave = function(req, res) {

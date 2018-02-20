@@ -44,6 +44,7 @@ import {
     JoinGroupAlertComponent,
 } from './components/join-group-alert/join-group-alert.component';
 import { SuggestionFormComponent } from './components/suggestion-form/suggestion-form.component';
+import { ConfirmJoinRequestComponent } from './components/confirm-join-request/confirm-join-request.component';
 
 @NgModule({
     declarations: [
@@ -68,7 +69,8 @@ import { SuggestionFormComponent } from './components/suggestion-form/suggestion
         GroupFormComponent,
         MapComponent,
         JoinGroupAlertComponent,
-        SuggestionFormComponent
+        SuggestionFormComponent,
+        ConfirmJoinRequestComponent
     ],
     imports: [
         BrowserModule,

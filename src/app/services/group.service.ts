@@ -6,6 +6,7 @@ import {UserService} from "../models/user/user.service";
 import {User} from "../models/user/user";
 import {AuthenticationService} from "./authentication.service";
 import {GoogleMapService} from "./google-map.service";
+import {toPromise} from "rxjs/operator/toPromise";
 
 @Injectable()
 export class GroupService {
@@ -19,6 +20,7 @@ export class GroupService {
         let members: User[] = [];
 
         data['members'].forEach(memberData => {
+            console.log(memberData);
             members.push(UserService.desirializeUser(memberData));
         });
 
@@ -28,6 +30,7 @@ export class GroupService {
             data['description'],
             UserService.desirializeUser(data['owner']),
             members,
+            data['pending'],
             GoogleMapService.deserializeGeoData(data['geoData'])
         );
     }
@@ -56,16 +59,30 @@ export class GroupService {
             .catch(this.handleError);
     }
 
-    join(group: Group): Promise<Group> {
+    joinRequest(group: Group): Promise<Group> {
         let headers = new Headers({
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + this.authenticationService.getToken()
         });
 
-        return this.http.put(this.apiEndPoint + '/join/' + group._id, {headers: headers})
+        return this.http.put(this.apiEndPoint + '/join-request/' + group._id, JSON.stringify({}), {headers: headers})
             .toPromise()
             .then((response: Response) => {
                 return GroupService.deserializeGroup(response.json().data);
+            })
+            .catch(this.handleError);
+    }
+
+    confirmJoinRequest(groupId: string, userId: string, accept: string): Promise<number> {
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.authenticationService.getToken()
+        });
+
+        return this.http.get(this.apiEndPoint + '/confirm-join-request/' + groupId + '/' + userId + '/' + accept, {headers: headers})
+            .toPromise()
+            .then((response: Response) => {
+                return response.status;
             })
             .catch(this.handleError);
     }

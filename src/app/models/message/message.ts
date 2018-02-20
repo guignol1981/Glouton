@@ -1,5 +1,8 @@
 import {User} from "../user/user";
+import {SafeHtml, SafeScript} from "@angular/platform-browser";
 export class Message {
+    public sanitizedTemplate: SafeHtml = null;
+
     constructor(public _id: string = null,
                 public title: string = '',
                 public type: string = '',

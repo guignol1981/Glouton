@@ -104,7 +104,9 @@ mealSchema.statics.getLunchBox = function(weekFirstDay, userId, callback) {
 		.where('status').in(['pending', 'confirmed'])
 		.populate('cook')
 		.populate('participants')
+		.populate('group')
 		.exec().then(meals => {
+		console.log(meals);
 		callback(meals);
 	});
 };

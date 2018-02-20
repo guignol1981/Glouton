@@ -10,6 +10,7 @@ export class Group {
                 public description: string = '',
                 public owner: User = null,
                 public members: User[] = [],
+                public pending: string[] = [],
                 public geoData: GeoData = new GeoData()) {
     }
 
@@ -17,14 +18,14 @@ export class Group {
         return this.owner._id === user._id;
     }
 
-    canJoin(user: User) {
-        let index = this.members.indexOf(user);
-        return index === -1 && this.owner._id !== user._id;
+    isPending(user: User) {
+        let index = this.pending.indexOf(user._id);
+        return index > -1;
     }
 
-    canLeave(user: User) {
+    isMember(user: User) {
+        console.log(this.members);
         let index = this.members.indexOf(user);
-        return index !== -1 && this.owner._id !== user._id;
+        return index > -1;
     }
-
 }

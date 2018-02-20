@@ -8,6 +8,8 @@ import {AuthenticationService} from "../../services/authentication.service";
 import {LoginComponent} from "../login/login.component";
 import {NotificationsService} from "angular2-notifications";
 import {JoinGroupAlertComponent} from "../join-group-alert/join-group-alert.component";
+import {UserService} from "../../models/user/user.service";
+import {User} from "../../models/user/user";
 
 @Component({
     selector: 'app-landing',
@@ -21,6 +23,7 @@ export class LandingComponent implements OnInit {
 
     constructor(private dialogService: DialogService,
                 private groupService: GroupService,
+                private userService: UserService,
                 public authenticationService: AuthenticationService,
                 private notificationService: NotificationsService) {
     }
@@ -67,15 +70,17 @@ export class LandingComponent implements OnInit {
 
     onGroupClicked(group: Group) {
         let me = this;
-        let popJoinGroupAlert = function (group) {
-            me.dialogService.addDialog(JoinGroupAlertComponent, {group: group}, {backdropColor: 'rgba(0, 0, 0, 0.5)'})
+        let popJoinGroupAlert = function (group, user) {
+            me.dialogService.addDialog(JoinGroupAlertComponent, {user: user, group: group}, {backdropColor: 'rgba(0, 0, 0, 0.5)'})
                 .subscribe((isConfirmed) => {
                     if (isConfirmed) {
                     }
                 });
         };
         if (this.authenticationService.isLoggedIn()) {
-            popJoinGroupAlert(group);
+            this.userService.getConnectedUser().then((user: User) => {
+                popJoinGroupAlert(group, user);
+            })
         } else {
             this.signIn(popJoinGroupAlert, group);
         }

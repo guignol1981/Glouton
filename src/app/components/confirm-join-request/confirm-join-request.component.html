@@ -1,0 +1,8 @@
+<div class="container mt-3">
+  <div *ngIf="httpStatus && httpStatus == 200">
+    User had been added to group!
+  </div>
+  <div *ngIf="httpStatus && httpStatus == 202">
+    User already member of the group!
+  </div>
+</div>

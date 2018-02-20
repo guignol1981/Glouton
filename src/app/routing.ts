@@ -12,9 +12,15 @@ import {HelpComponent} from './components/help/help.component';
 import {CanActivateViaAuthGuardService} from "./services/can-activate-via-auth-guard.service";
 import {AboutComponent} from './components/about/about.component';
 import {LandingComponent} from './components/landing/landing.component';
+import {ConfirmJoinRequestComponent} from "./components/confirm-join-request/confirm-join-request.component";
 
 const appRoutes: Routes = [
     {path: 'lunch-details/:id', component: MealDetailsComponent, canActivate: [CanActivateViaAuthGuardService]},
+    {
+        path: 'confirm-join-request/:id/:user-id/:accept',
+        component: ConfirmJoinRequestComponent,
+        canActivate: [CanActivateViaAuthGuardService]
+    },
     {path: 'meal-form/:id', component: MealFormComponent, canActivate: [CanActivateViaAuthGuardService]},
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
