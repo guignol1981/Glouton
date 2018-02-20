@@ -59,8 +59,15 @@ groupSchema.methods.addMember = function(userId, callback) {
 	});
 };
 
-groupSchema.statics.addMember = function(userId, callback) {
+groupSchema.methods.removeMember = function(userId, callback) {
+	let index = this.members.indexOf(userId);
+	if (index > -1) {
+		this.members.splice(index, 1);
+	}
 
+	this.save().then(group => {
+		callback(group, index > -1);
+	});
 };
 
 groupSchema.statics.getOwned = function(userId, callback) {

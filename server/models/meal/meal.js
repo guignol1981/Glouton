@@ -106,7 +106,6 @@ mealSchema.statics.getLunchBox = function(weekFirstDay, userId, callback) {
 		.populate('participants')
 		.populate('group')
 		.exec().then(meals => {
-		console.log(meals);
 		callback(meals);
 	});
 };

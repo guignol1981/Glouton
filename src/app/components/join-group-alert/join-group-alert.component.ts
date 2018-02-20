@@ -30,16 +30,20 @@ export class JoinGroupAlertComponent extends DialogComponent<JoinGroupAlertFormM
 
     join() {
         this.groupService.joinRequest(this.group).then((group: Group) => {
-
+            this.group = group;
         });
     }
 
     leave() {
-
+        this.groupService.leave(this.group).then((group: Group) => {
+            this.group = group;
+        });
     }
 
     remove() {
+        this.groupService.remove(this.group).then(() => {
 
+        });
     }
 
 }

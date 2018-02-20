@@ -71,7 +71,10 @@ export class LandingComponent implements OnInit {
     onGroupClicked(group: Group) {
         let me = this;
         let popJoinGroupAlert = function (group, user) {
-            me.dialogService.addDialog(JoinGroupAlertComponent, {user: user, group: group}, {backdropColor: 'rgba(0, 0, 0, 0.5)'})
+            me.dialogService.addDialog(JoinGroupAlertComponent, {
+                user: user,
+                group: group
+            }, {backdropColor: 'rgba(0, 0, 0, 0.5)'})
                 .subscribe((isConfirmed) => {
                     if (isConfirmed) {
                     }
@@ -80,7 +83,7 @@ export class LandingComponent implements OnInit {
         if (this.authenticationService.isLoggedIn()) {
             this.userService.getConnectedUser().then((user: User) => {
                 popJoinGroupAlert(group, user);
-            })
+            });
         } else {
             this.signIn(popJoinGroupAlert, group);
         }

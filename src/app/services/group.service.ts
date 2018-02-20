@@ -20,7 +20,6 @@ export class GroupService {
         let members: User[] = [];
 
         data['members'].forEach(memberData => {
-            console.log(memberData);
             members.push(UserService.desirializeUser(memberData));
         });
 
@@ -93,7 +92,7 @@ export class GroupService {
             'Authorization': 'Bearer ' + this.authenticationService.getToken()
         });
 
-        return this.http.put(this.apiEndPoint + '/leave/' + group._id, {headers: headers})
+        return this.http.put(this.apiEndPoint + '/leave/' + group._id, {}, {headers: headers})
             .toPromise()
             .then((response: Response) => {
                 return GroupService.deserializeGroup(response.json().data);
@@ -107,7 +106,7 @@ export class GroupService {
             'Authorization': 'Bearer ' + this.authenticationService.getToken()
         });
 
-        return this.http.put(this.apiEndPoint + '/remove/' + group._id, {headers: headers})
+        return this.http.delete(this.apiEndPoint + '/remove/' + group._id, {headers: headers})
             .toPromise()
             .then((response: Response) => {
                 return GroupService.deserializeGroup(response.json().data);

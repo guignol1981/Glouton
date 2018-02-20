@@ -43,6 +43,7 @@ module.exports.getByName = function(req, res) {
 
 	Group.find({name: {$regex: '.*' + name + '.*'}})
 		.populate('members')
+		.populate('owner')
 		.populate('pending')
 		.exec().then(groups => {
 		res.send({
@@ -124,9 +125,27 @@ module.exports.confirmJoinRequest = function(req, res) {
 };
 
 module.exports.leave = function(req, res) {
+	let userId = req.payload._id;
+	let groupId = req.params.id;
 
+	Group.findById(groupId).exec().then(group => {
+		group.removeMember(userId, (group, exist) => {
+			res.send({
+				data: group,
+				msg: 'User left group'
+			});
+		});
+	});
 };
 
 module.exports.remove = function(req, res) {
+	let groupId = req.params.id;
 
+	Group.findById(groupId).exec().then(group => {
+		group.remove();
+		res.send({
+			data: null,
+			msg: 'Group removed'
+		})
+	});
 };

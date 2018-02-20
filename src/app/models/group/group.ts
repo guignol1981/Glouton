@@ -19,13 +19,24 @@ export class Group {
     }
 
     isPending(user: User) {
-        let index = this.pending.indexOf(user._id);
-        return index > -1;
+        let isPending = false;
+        this.pending.forEach(pending => {
+            if (pending === user._id) {
+                isPending = true;
+                return false;
+            }
+        });
+        return isPending;
     }
 
     isMember(user: User) {
-        console.log(this.members);
-        let index = this.members.indexOf(user);
-        return index > -1;
+        let isMember = false;
+        this.members.forEach(member => {
+            if (member._id === user._id) {
+                isMember = true;
+                return false;
+            }
+        });
+        return isMember;
     }
 }

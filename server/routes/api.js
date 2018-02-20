@@ -51,7 +51,7 @@ router.get('/groups/joined', auth, ctrlGroup.joined);
 router.put('/groups/join-request/:id', auth, ctrlGroup.joinRequest);
 router.get('/groups/confirm-join-request/:groupid/:userid/:accept', auth, ctrlGroup.confirmJoinRequest);
 router.put('/groups/leave/:id', auth, ctrlGroup.leave);
-router.put('/groups/remove/:id', auth, ctrlGroup.remove);
+router.delete('/groups/remove/:id', auth, ctrlGroup.remove);
 router.get('/groups/availability/:name', ctrlGroup.checkAvailability);
 router.get('/groups/:name', ctrlGroup.getByName);
 router.get('/groups', ctrlGroup.getList);

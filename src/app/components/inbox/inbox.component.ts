@@ -71,9 +71,4 @@ export class InboxComponent implements OnInit {
             }
         });
     }
-
-    test() {
-        console.log('test');
-    }
-
 }
