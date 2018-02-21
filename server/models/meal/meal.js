@@ -82,6 +82,11 @@ mealSchema.statics.getNewFailed = function(callback) {
 };
 
 mealSchema.statics.getList = function(groups, callback) {
+	// let groupIds = [];
+	// groups.forEach(group => {
+	// 	groupIds.push(group._id);
+	// });
+
 	Meal.find({})
 		.where('group').in(groups)
 		.where('status').in(['pending', 'confirmed'])

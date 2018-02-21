@@ -85,7 +85,11 @@ module.exports.joinRequest = function(req, res) {
 	let groupId = req.params.id;
 
 	User.findById(userId).exec().then(user => {
-		Group.findById(groupId).populate('owner').exec().then(group => {
+		Group.findById(groupId)
+			.populate('owner')
+			.populate('members')
+			.populate('pending')
+			.exec().then(group => {
 			group.addPending(userId, (group, exist) => {
 				Message.create({
 					recipient: group.owner,
@@ -98,10 +102,24 @@ module.exports.joinRequest = function(req, res) {
 					}
 				});
 
-				res.send({
-					data: null,
-					msg: 'Request sent'
+				res.status(exist ? 202 : 200).send({
+					data: group,
+					msg: exist ? 'Request already sent' : 'Request sent'
 				});
+			});
+		});
+	});
+};
+
+module.exports.cancelJoinRequest = function(req, res) {
+	let userId = req.payload._id;
+	let groupId = req.params.id;
+
+	Group.findById(groupId).exec().then(group => {
+		group.removePending(userId, (group, exist) => {
+			res.status(exist ? 200 : 202).send({
+				data: group,
+				msg: exist ? 'User removed from pending' : 'User not in pending'
 			});
 		});
 	});

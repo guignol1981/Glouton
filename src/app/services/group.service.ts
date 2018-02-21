@@ -18,9 +18,14 @@ export class GroupService {
 
     public static deserializeGroup(data: any): Group {
         let members: User[] = [];
+        let pending: User[] = [];
 
         data['members'].forEach(memberData => {
             members.push(UserService.desirializeUser(memberData));
+        });
+
+        data['pending'].forEach(pendingData => {
+            pending.push(UserService.desirializeUser(pendingData));
         });
 
         return new Group(
@@ -67,6 +72,20 @@ export class GroupService {
         return this.http.put(this.apiEndPoint + '/join-request/' + group._id, JSON.stringify({}), {headers: headers})
             .toPromise()
             .then((response: Response) => {
+                return GroupService.deserializeGroup(response.json().data);
+            })
+            .catch(this.handleError);
+    }
+
+    cancelJoinRequest(group: Group): Promise<Group> {
+        let headers = new Headers({
+           'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.authenticationService.getToken()
+        });
+
+        return this.http.put(this.apiEndPoint + '/cancel-join-request/' + group._id, JSON.stringify({}), {headers: headers})
+            .toPromise()
+            .then((response: Response ) => {
                 return GroupService.deserializeGroup(response.json().data);
             })
             .catch(this.handleError);

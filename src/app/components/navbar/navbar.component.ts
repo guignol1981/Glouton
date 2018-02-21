@@ -31,12 +31,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     checkForNotifications() {
-        let me = this;
-        setInterval(function () {
-            if (me.isLoggedIn) {
-                me.messageService.getUnseen().then(messages => me.unseenMessageCount = messages.length);
-            }
-        }, 5000);
+        this.messageService.getUnseen().then(messages => this.unseenMessageCount = messages.length);
     }
 
     ngOnDestroy() {

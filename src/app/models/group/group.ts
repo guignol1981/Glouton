@@ -10,7 +10,7 @@ export class Group {
                 public description: string = '',
                 public owner: User = null,
                 public members: User[] = [],
-                public pending: string[] = [],
+                public pending: User[] = [],
                 public geoData: GeoData = new GeoData()) {
     }
 
@@ -21,7 +21,7 @@ export class Group {
     isPending(user: User) {
         let isPending = false;
         this.pending.forEach(pending => {
-            if (pending === user._id) {
+            if (pending._id === user._id) {
                 isPending = true;
                 return false;
             }

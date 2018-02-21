@@ -4,6 +4,7 @@ import {isBoolean} from "util";
 import {DialogComponent, DialogService} from "ng2-bootstrap-modal";
 import {GroupService} from "../../services/group.service";
 import {User} from "../../models/user/user";
+import {NotificationsService} from "angular2-notifications";
 
 export interface JoinGroupAlertFormModel {
     user: User;
@@ -20,6 +21,7 @@ export class JoinGroupAlertComponent extends DialogComponent<JoinGroupAlertFormM
     group: Group;
 
     constructor(dialogService: DialogService,
+                notificationService: NotificationsService,
                 private groupService: GroupService) {
         super(dialogService);
     }
@@ -28,8 +30,14 @@ export class JoinGroupAlertComponent extends DialogComponent<JoinGroupAlertFormM
         document.getElementsByTagName('body')[0].classList.add('modal-open');
     }
 
-    join() {
+    joinRequest() {
         this.groupService.joinRequest(this.group).then((group: Group) => {
+            this.group = group;
+        });
+    }
+
+    cancelJoinRequest() {
+        this.groupService.cancelJoinRequest(this.group).then((group: Group) => {
             this.group = group;
         });
     }

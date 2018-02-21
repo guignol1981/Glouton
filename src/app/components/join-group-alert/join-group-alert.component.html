@@ -1,16 +1,23 @@
 <div *ngIf="group" class="modal-dialog">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h4 class="modal-title">{{group.name}}</h4>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">{{group.name}}</h4>
+        </div>
+        <div class="modal-body">
+            <p>{{group.description}}</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="close()">Cancel</button>
+            <button *ngIf="group.isMember(user) && !group.isOwner(user)" class="btn btn-warning" (click)="leave()">
+                Leave
+            </button>
+            <button *ngIf="! group.isMember(user) && !group.isOwner(user) && !group.isPending(user)"
+                    class="btn btn-primary" (click)="joinRequest()">Send join request
+            </button>
+            <button *ngIf="group.isOwner(user)" class="btn btn-danger" (click)="remove()">Delete</button>
+            <button *ngIf="group.isPending(user)" class="btn btn-info" (click)="cancelJoinRequest()">Cancel join
+                request
+            </button>
+        </div>
     </div>
-    <div class="modal-body">
-      <p>{{group.description}}</p>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" (click)="close()">Cancel</button>
-      <button *ngIf="group.isMember(user) && !group.isOwner(user)" class="btn btn-warning" (click)="leave()">Leave</button>
-      <button *ngIf="! group.isMember(user) && !group.isOwner(user) && !group.isPending(user)" class="btn btn-primary" (click)="join()">Join</button>
-      <button *ngIf="group.isOwner(user)" class="btn btn-danger" (click)="remove()">Delete</button>
-    </div>
-  </div>
 </div>
