@@ -77,7 +77,7 @@ groupSchema.statics.getOwned = function(userId, callback) {
 };
 
 groupSchema.statics.getJoined = function(userId, callback) {
-	Group.find({members: userId}).exec().then(groups => {
+	Group.find({members: {"$all": [userId]}}).exec().then(groups => {
 		callback(groups);
 	});
 };
