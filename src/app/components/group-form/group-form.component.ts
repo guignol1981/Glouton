@@ -9,7 +9,7 @@ import {GeoData} from "../../models/geo-data/geo-data";
 @Component({
     selector: 'app-group-form',
     templateUrl: './group-form.component.html',
-    styleUrls: ['./group-form.component.css']
+    styleUrls: ['./group-form.component.scss']
 })
 export class GroupFormComponent extends DialogComponent<null, boolean> implements OnInit {
     form: FormGroup;

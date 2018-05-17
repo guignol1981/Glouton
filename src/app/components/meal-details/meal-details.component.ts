@@ -15,7 +15,7 @@ import {DialogService} from "ng2-bootstrap-modal";
 @Component({
     selector: 'app-meal-details',
     templateUrl: './meal-details.component.html',
-    styleUrls: ['./meal-details.component.css', '../../app.component.css']
+    styleUrls: ['./meal-details.component.scss', '../../app.component.scss']
 })
 export class MealDetailsComponent implements OnInit {
     meal: Meal;

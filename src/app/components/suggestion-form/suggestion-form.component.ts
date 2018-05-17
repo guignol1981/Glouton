@@ -25,7 +25,7 @@ export interface SuggestionFormModel {
 @Component({
     selector: 'app-suggestion-form',
     templateUrl: './suggestion-form.component.html',
-    styleUrls: ['./suggestion-form.component.css']
+    styleUrls: ['./suggestion-form.component.scss']
 })
 export class SuggestionFormComponent extends DialogComponent<SuggestionFormModel, Meal> implements OnInit {
     groups: Group[];

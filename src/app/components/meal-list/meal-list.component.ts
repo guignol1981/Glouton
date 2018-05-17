@@ -13,7 +13,7 @@ import {Group} from "../../models/group/group";
 @Component({
     selector: 'app-meal-list',
     templateUrl: './meal-list.component.html',
-    styleUrls: ['./meal-list.component.css']
+    styleUrls: ['./meal-list.component.scss']
 })
 export class MealListComponent implements OnInit, OnDestroy {
     meals: Meal[] = [];

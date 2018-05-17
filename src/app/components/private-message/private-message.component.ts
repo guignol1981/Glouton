@@ -9,7 +9,7 @@ import {NotificationsService} from "angular2-notifications";
 @Component({
     selector: 'app-private-message',
     templateUrl: './private-message.component.html',
-    styleUrls: ['./private-message.component.css']
+    styleUrls: ['./private-message.component.scss']
 })
 export class PrivateMessageComponent implements OnInit {
     @Input() recipient: User;

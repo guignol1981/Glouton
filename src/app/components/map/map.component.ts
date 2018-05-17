@@ -7,7 +7,7 @@ import {DialogService} from "ng2-bootstrap-modal";
 @Component({
     selector: 'app-map',
     templateUrl: './map.component.html',
-    styleUrls: ['./map.component.css']
+    styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit {
     @Output() groupClicked: EventEmitter<Group> = new EventEmitter<Group>();

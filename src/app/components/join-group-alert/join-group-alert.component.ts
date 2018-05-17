@@ -14,7 +14,7 @@ export interface JoinGroupAlertFormModel {
 @Component({
     selector: 'app-join-group-alert',
     templateUrl: './join-group-alert.component.html',
-    styleUrls: ['./join-group-alert.component.css']
+    styleUrls: ['./join-group-alert.component.scss']
 })
 export class JoinGroupAlertComponent extends DialogComponent<JoinGroupAlertFormModel, boolean> implements OnInit {
     user: User;
@@ -50,7 +50,7 @@ export class JoinGroupAlertComponent extends DialogComponent<JoinGroupAlertFormM
 
     remove() {
         this.groupService.remove(this.group).then(() => {
-
+            this.close();
         });
     }
 

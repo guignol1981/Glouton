@@ -10,7 +10,7 @@ import {DomSanitizer} from "@angular/platform-browser";
 @Component({
     selector: 'app-inbox',
     templateUrl: './inbox.component.html',
-    styleUrls: ['./inbox.component.css']
+    styleUrls: ['./inbox.component.scss']
 })
 export class InboxComponent implements OnInit {
     messages: Message[];

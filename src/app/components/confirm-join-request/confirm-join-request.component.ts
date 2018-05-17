@@ -6,7 +6,7 @@ import {Group} from "../../models/group/group";
 @Component({
     selector: 'app-confirm-join-request',
     templateUrl: './confirm-join-request.component.html',
-    styleUrls: ['./confirm-join-request.component.css']
+    styleUrls: ['./confirm-join-request.component.scss']
 })
 export class ConfirmJoinRequestComponent implements OnInit {
     httpStatus: number;
