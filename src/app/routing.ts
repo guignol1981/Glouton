@@ -2,6 +2,7 @@ import {ModuleWithProviders} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {MealFormComponent} from './components/meal-form/meal-form.component';
+import {MealListComponent} from './components/meal-list/meal-list.component';
 import {MealDetailsComponent} from './components/meal-details/meal-details.component';
 import {LoginComponent} from './components/login/login.component';
 import {RegisterComponent} from './components/register/register.component';
@@ -24,7 +25,7 @@ const appRoutes: Routes = [
     {path: 'meal-form/:id', component: MealFormComponent, canActivate: [CanActivateViaAuthGuardService]},
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
-    {path: 'dashboard', component: DashboardComponent, canActivate: [CanActivateViaAuthGuardService]},
+    {path: 'explore', component: MealListComponent, canActivate: [CanActivateViaAuthGuardService]},
     {path: 'profile', component: ProfileComponent, canActivate: [CanActivateViaAuthGuardService]},
     {path: 'lunch-box', component: LunchBoxComponent, canActivate: [CanActivateViaAuthGuardService]},
     {path: 'inbox', component: InboxComponent, canActivate: [CanActivateViaAuthGuardService]},
