@@ -1,12 +1,9 @@
 let express = require('express');
 let router = express.Router();
-let jwt = require('express-jwt');
-let auth = jwt({
-	secret: 'MY_SECRET',
-	userProperty: 'payload'
-});
+let auth = require('express-jwt')({secret: 'my-secret', requestProperty: 'auth'});
 let multer = require('multer');
 let upload = multer({storage: multer.memoryStorage()});
+let passport = require('passport');
 
 let ctrlProfile = require('../controllers/profile');
 let ctrlAuth = require('../controllers/authentications');
@@ -16,6 +13,68 @@ let ctrlMessage = require('../controllers/message-controller');
 let ctrlVersion = require('../controllers/version-controller');
 let ctrlGroup = require('../controllers/group-controller');
 let ctrlGoogleMap = require('../controllers/google-map-controller');
+
+//auth
+router.post('/auth/facebook',
+	(req, res, next) => {
+		passport.authenticate('facebook-token', (err, user) => {
+			if (err && err.code === 11000) {
+				let msg = 'Something went wrong';
+
+				if (err.code === 11000) {
+					msg = 'This email is already used'
+				}
+				res.status(500).json({msg: msg});
+				return;
+			}
+
+			req.user = user;
+			next();
+		})(req, res, next);
+	},
+	ctrlAuth.prepareReqForToken,
+	ctrlAuth.generateToken,
+	ctrlAuth.sendToken);
+
+router.post('/auth/google',
+	(req, res, next) => {
+		passport.authenticate('google-token', (err, user) => {
+			if (err && err.code === 11000) {
+				let msg = 'Something went wrong';
+
+				if (err.code === 11000) {
+					msg = 'This email is already used'
+				}
+				res.status(500).json({msg: msg});
+				return;
+			}
+
+			req.user = user;
+			next();
+		})(req, res, next);
+	},
+	ctrlAuth.prepareReqForToken,
+	ctrlAuth.generateToken,
+	ctrlAuth.sendToken);
+
+router.post('/auth/local',
+	(req, res, next) => {
+		passport.authenticate('local', (err, user) => {
+			if (err) {
+				res.status(500).json({
+					msg: err.message,
+					data: false
+				});
+				return;
+			}
+
+			req.user = user;
+			next();
+		})(req, res, next);
+	},
+	ctrlAuth.prepareReqForToken,
+	ctrlAuth.generateToken,
+	ctrlAuth.sendToken);
 
 //user
 router.post('/register', ctrlAuth.register);

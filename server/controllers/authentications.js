@@ -2,6 +2,7 @@ let passport = require('passport');
 let mongoose = require('mongoose');
 let User = mongoose.model('User');
 let Message = require('../models/message/message');
+let jwt = require('jsonwebtoken');
 
 let sendJSONresponse = function (res, status, content) {
 	res.status(status);
@@ -72,5 +73,35 @@ module.exports.login = function (req, res) {
 			res.status(401).json(info);
 		}
 	})(req, res);
+};
 
+let createToken = function (auth) {
+	return jwt.sign({
+			id: auth.id
+		}, 'my-secret',
+		{
+			expiresIn: 60 * 120
+		});
+};
+
+module.exports.generateToken = function (req, res, next) {
+	req.token = createToken(req.auth);
+	next();
+};
+
+module.exports.sendToken = function (req, res) {
+	res.setHeader('x-auth-token', req.token);
+	res.status(200).send(req.auth);
+};
+
+module.exports.prepareReqForToken = function (req, res, next) {
+	if (!req.user) {
+		return res.send(401, 'User Not Authenticated');
+	}
+
+	req.auth = {
+		id: req.user.id
+	};
+
+	next();
 };

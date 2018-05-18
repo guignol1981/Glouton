@@ -11,10 +11,11 @@ export class UserService {
                 private authenticationService: AuthenticationService) {
     }
 
-    public static desirializeUser(data: any): User {
+    public static deserializeUser(data: any): User {
         return new User(data._id,
             data.name,
             data.email,
+            data.photoData,
             data.creationDate);
     }
 
@@ -25,7 +26,7 @@ export class UserService {
 
         return this.http.get('/api/profile', {headers: headers})
             .toPromise()
-            .then((response: Response) => UserService.desirializeUser(response.json()))
+            .then((response: Response) => UserService.deserializeUser(response.json()))
             .catch(this.handleError);
     }
 

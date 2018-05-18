@@ -173,6 +173,7 @@ export class MealService {
                 new User(participant._id,
                     participant.name,
                     participant.email,
+                    null,
                     new Date(participant.creationDate)
                 )
             );

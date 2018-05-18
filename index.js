@@ -9,7 +9,6 @@ let port = process.env.PORT || '3000';
 let schedule = require('node-schedule');
 let api = require('./server/routes/api');
 let scheduledJobs = require('./server/services/scheduled-jobs-service');
-require('./server/configs/passport');
 
 process.env.GOOGLE_APPLICATION_CREDENTIALS = path.join(__dirname, 'configs/lunch-box-devalto-8fd7c7164877.json');
 
@@ -18,6 +17,10 @@ if (! process.env.NODE_ENV) {
 }
 
 app.set('view engine', 'pug');
+
+require('./server/passport/facebook-strategy');
+require('./server/passport/google-strategy');
+require('./server/passport/local-strategy');
 
 //keep heroku free dynos awake
 setInterval(function () {

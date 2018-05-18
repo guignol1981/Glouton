@@ -34,19 +34,6 @@ export class AuthenticationService {
         }
     }
 
-    currentUser() {
-        if (this.isLoggedIn()) {
-            let token = this.getToken();
-            let payload = token.split('.')[1];
-            payload = atob(payload);
-            payload = JSON.parse(payload);
-            return {
-                email: payload['email'],
-                name: payload['name']
-            };
-        }
-    }
-
     register(user: User) {
         const headers = new Headers({
                 'Content-Type': 'application/json'

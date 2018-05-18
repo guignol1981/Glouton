@@ -13,13 +13,57 @@ let userSchema = new Schema({
 		type: String,
 		required: true
 	},
+	photoData: {
+		type: Schema.Types.Mixed,
+		required: true,
+		default: null
+	},
+	provider: {
+		type: {
+			id: String,
+			token: String,
+			source: String
+		},
+		select: false
+	},
 	creationDate: {
 		type: Date,
 		default: Date.now()
 	},
 	hash: String,
-	salt: String
+	salt: String,
+	emailVerified: {type: Boolean, default: false}
 });
+
+userSchema.statics.upsertSocialUser = function(accessToken, refreshToken, profile, callback) {
+	let that = this;
+
+	return this.findOne({
+		'provider.id': profile.id
+	}, function(err, user) {
+		if (!user) {
+			let newUser = new that({
+				name: profile.name.givenName,
+				email: profile.emails[0].value,
+				photoData: {
+					cloudStorageObject: null,
+					cloudStoragePublicUrl: profile.photos ? profile.photos[0].value : profile._json.picture
+				},
+				provider: {
+					id: profile.id,
+					token: accessToken,
+					source: profile.provider
+				},
+			});
+
+			newUser.save(function(err, savedUser) {
+				return callback(err, savedUser);
+			});
+		} else {
+			return callback(err, user);
+		}
+	});
+};
 
 userSchema.methods.setPassword = function(password) {
 	this.salt = crypto.randomBytes(16).toString('hex');

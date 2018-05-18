@@ -21,18 +21,18 @@ export class GroupService {
         let pending: User[] = [];
 
         data['members'].forEach(memberData => {
-            members.push(UserService.desirializeUser(memberData));
+            members.push(UserService.deserializeUser(memberData));
         });
 
         data['pending'].forEach(pendingData => {
-            pending.push(UserService.desirializeUser(pendingData));
+            pending.push(UserService.deserializeUser(pendingData));
         });
 
         return new Group(
             data['_id'],
             data['name'],
             data['description'],
-            UserService.desirializeUser(data['owner']),
+            UserService.deserializeUser(data['owner']),
             members,
             data['pending'],
             GoogleMapService.deserializeGeoData(data['geoData'])
