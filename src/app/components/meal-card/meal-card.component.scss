@@ -1,24 +1,13 @@
-img,
-.overlay {
-    transition: .3s all;
+.card-m {
+	width: 15rem;
 }
 
-.meal-img .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    color: #fff;
-    opacity: 0;
-}
+.card-hover {
+	transition: all .2s ease;
 
-.meal-img:hover .overlay {
-    opacity: 1;
-}
-
-.card-shadow {
-    box-shadow: 2px 2px 2px 0px #818182;
+	&:hover {
+		transform: translateY(-3px);
+		box-shadow: 2px 2px 2px 0px #818182;
+	}
 }
 
