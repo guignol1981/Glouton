@@ -1,0 +1,10 @@
+div.message
+    img(src="../../assets/bg1.jpg" alt="Image Title")
+    p.font-weight-bold Hello #{recipient.name} !
+    p #{data.user.name} want to join your group #{data.group.name}!
+    p
+        a(href='confirm-join-request/' + data.group._id + '/' + data.user._id + '/true' class='button') Accept &nbsp
+        a(href='confirm-join-request/' + data.group._id + '/' + data.user._id + '/false' class='button') Refuse &nbsp
+
+    p.font-italic Sincerly yours,
+    p The Lunch box team

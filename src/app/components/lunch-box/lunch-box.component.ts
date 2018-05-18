@@ -11,7 +11,7 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 @Component({
     selector: 'app-lunch-box',
     templateUrl: './lunch-box.component.html',
-    styleUrls: ['./lunch-box.component.css']
+    styleUrls: ['./lunch-box.component.scss']
 })
 export class LunchBoxComponent implements OnInit {
     @ViewChild(MealFormComponent) mealFormComponent: MealFormComponent;

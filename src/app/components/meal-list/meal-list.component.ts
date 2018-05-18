@@ -4,11 +4,16 @@ import {Meal} from "../../models/meal/meal";
 import {Subscription} from "rxjs/Subscription";
 import {UserService} from "../../models/user/user.service";
 import {User} from "../../models/user/user";
+import {DialogService} from "ng2-bootstrap-modal";
+import {SuggestionFormComponent} from "../suggestion-form/suggestion-form.component";
+import {NotificationsService} from "angular2-notifications";
+import {GroupService} from "../../services/group.service";
+import {Group} from "../../models/group/group";
 
 @Component({
     selector: 'app-meal-list',
     templateUrl: './meal-list.component.html',
-    styleUrls: ['./meal-list.component.css']
+    styleUrls: ['./meal-list.component.scss']
 })
 export class MealListComponent implements OnInit, OnDestroy {
     meals: Meal[] = [];
@@ -16,12 +21,16 @@ export class MealListComponent implements OnInit, OnDestroy {
     filters = ['all'];
     user: User;
     mealsSubscription: Subscription;
+    groups: Group[] = [];
 
     constructor(private userService: UserService,
-                private mealService: MealService) {
+                private mealService: MealService,
+                private dialogService: DialogService,
+                private groupService: GroupService) {
     }
 
     ngOnInit() {
+        this.groupService.getUserGroup().then(groups => this.groups = groups);
         this.userService.getConnectedUser().then(user => {
             this.user = user;
             this.mealsSubscription = this.mealService.mealsSubject.subscribe(data => {
@@ -59,9 +68,11 @@ export class MealListComponent implements OnInit, OnDestroy {
 
     getFilterClass(filter) {
         let index = this.filters.indexOf(filter);
+
         if (index > -1) {
-            return 'badge badge-primary';
+            return this.filterIsAGroup(filter) ? 'badge badge-info' : 'badge badge-primary';
         }
+
         return 'badge badge-secondary';
     }
 
@@ -83,6 +94,7 @@ export class MealListComponent implements OnInit, OnDestroy {
             }
             return filteredMeals;
         };
+
         this.meals.forEach(meal => {
             this.filters.forEach(filter => {
                 if (filter === 'all') {
@@ -100,8 +112,31 @@ export class MealListComponent implements OnInit, OnDestroy {
                 } else if (filter === 'by me' && meal.isCook(this.user)) {
                     this.filteredMeals = addMealToFilter(meal, this.filteredMeals);
                     return;
+                } else if (this.filterIsAGroup(filter) && meal.group.name === filter) {
+                    this.filteredMeals = addMealToFilter(meal, this.filteredMeals);
                 }
             });
         });
+    }
+
+    filterIsAGroup(filter): boolean {
+        let isAGroup = false;
+
+        this.groups.forEach(group => {
+            if (group.name === filter) {
+                isAGroup = true;
+                return false;
+            }
+        });
+
+        return isAGroup;
+    }
+
+    suggest() {
+        this.dialogService.addDialog(SuggestionFormComponent, {
+            meal: new Meal(), user: this.user, date: null
+        }, {backdropColor: 'rgba(0, 0, 0, 0.5)'})
+            .subscribe((meal: Meal) => {
+            });
     }
 }

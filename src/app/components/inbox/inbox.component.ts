@@ -5,11 +5,12 @@ import {UserService} from "../../models/user/user.service";
 import {User} from "../../models/user/user";
 import {PrivateMessageComponent} from "../private-message/private-message.component";
 import {NotificationsService} from "angular2-notifications";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-inbox',
     templateUrl: './inbox.component.html',
-    styleUrls: ['./inbox.component.css']
+    styleUrls: ['./inbox.component.scss']
 })
 export class InboxComponent implements OnInit {
     messages: Message[];
@@ -23,13 +24,17 @@ export class InboxComponent implements OnInit {
 
     constructor(private userService: UserService,
                 private messageService: MessageService,
-                private notificationService: NotificationsService) {
+                private notificationService: NotificationsService,
+                private domSanitizer: DomSanitizer) {
     }
 
     ngOnInit() {
         this.userService.getConnectedUser().then(user => {
             this.user = user;
             this.messageService.getAll().then(messages => {
+                    messages.forEach(message => {
+                        message.sanitizedTemplate = this.domSanitizer.bypassSecurityTrustHtml(message.template);
+                    });
                     this.messages = messages;
                 }
             );
@@ -66,5 +71,4 @@ export class InboxComponent implements OnInit {
             }
         });
     }
-
 }

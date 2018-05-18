@@ -4,6 +4,7 @@ import {AppComponent} from './app.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {routing} from './routing';
+import {AgmCoreModule} from "@agm/core";
 import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {NavbarComponent} from './components/navbar/navbar.component';
 import {MealCardComponent} from './components/meal-card/meal-card.component';
@@ -33,6 +34,18 @@ import {VersionService} from './models/version/version.service';
 import {CalendarDayComponent} from './components/calendar-day/calendar-day.component';
 import {NgbModule, NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {KeysPipe} from "./pipes/keys-pipe";
+import {LandingComponent} from './components/landing/landing.component';
+import {GroupService} from "./services/group.service";
+import {BootstrapModalModule} from "ng2-bootstrap-modal";
+import {GroupFormComponent} from './components/group-form/group-form.component';
+import {MapComponent} from './components/map/map.component';
+import {GoogleMapService} from "./services/google-map.service";
+import {
+    JoinGroupAlertComponent,
+} from './components/join-group-alert/join-group-alert.component';
+import { SuggestionFormComponent } from './components/suggestion-form/suggestion-form.component';
+import { ConfirmJoinRequestComponent } from './components/confirm-join-request/confirm-join-request.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 @NgModule({
     declarations: [
@@ -52,7 +65,14 @@ import {KeysPipe} from "./pipes/keys-pipe";
         HelpComponent,
         AboutComponent,
         CalendarDayComponent,
-        KeysPipe
+        KeysPipe,
+        LandingComponent,
+        GroupFormComponent,
+        MapComponent,
+        JoinGroupAlertComponent,
+        SuggestionFormComponent,
+        ConfirmJoinRequestComponent,
+        LoaderComponent
     ],
     imports: [
         BrowserModule,
@@ -65,7 +85,15 @@ import {KeysPipe} from "./pipes/keys-pipe";
         NgDatepickerModule,
         NgbModule.forRoot(),
         NgbTooltipModule,
-        SimpleNotificationsModule.forRoot()
+        SimpleNotificationsModule.forRoot(),
+        BootstrapModalModule.forRoot({container: document.body}),
+        AgmCoreModule.forRoot({apiKey: 'AIzaSyDgQC2X_l3E6ol88MSuBGaAuZm-FjXRNXs'}),
+    ],
+    entryComponents: [
+        GroupFormComponent,
+        LoginComponent,
+        JoinGroupAlertComponent,
+        SuggestionFormComponent
     ],
     providers: [
         MealService,
@@ -74,7 +102,9 @@ import {KeysPipe} from "./pipes/keys-pipe";
         CanActivateViaAuthGuardService,
         MealImageService,
         MessageService,
-        VersionService
+        VersionService,
+        GroupService,
+        GoogleMapService
     ],
     bootstrap: [AppComponent]
 })

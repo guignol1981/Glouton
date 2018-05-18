@@ -1,7 +1,7 @@
 <div *ngIf="authenticationService.isLoggedIn()">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-shadow fixed-top">
-        <img class="d-none d-sm-block logo" src="/assets/logo.png">
-        <img class="d-block d-sm-none logo" src="/assets/logo.png">
+    <nav class="my-navbar navbar navbar-expand-lg navbar-dark navbar-shadow fixed-top">
+        <img class="d-none d-sm-block logo" src="../../../assets/lunchswap.png" alt="logo img">
+        <img class="d-block d-sm-none logo" src="../../../assets/lunchswap.png" alt="logo img small">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -9,7 +9,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li [class]="getNavItemClass(0)">
-                    <a (click)="setTab(0)" class="nav-link" [routerLink]="['/dashboard']">explore</a>
+                    <a (click)="setTab(0)" class="nav-link" [routerLink]="['/groups']">groups</a>
+                </li>
+                <li [class]="getNavItemClass(0)">
+                    <a (click)="setTab(0)" class="nav-link" [routerLink]="['/explore']">explore</a>
                 </li>
                 <li [class]="getNavItemClass(2)">
                     <a (click)="setTab(2)" class="nav-link" [routerLink]="['/lunch-box']">lunch box</a>

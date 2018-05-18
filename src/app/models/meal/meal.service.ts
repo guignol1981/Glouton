@@ -6,6 +6,7 @@ import {AuthenticationService} from '../../services/authentication.service';
 import {UserService} from '../user/user.service';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import * as moment from 'moment';
+import {GroupService} from "../../services/group.service";
 
 @Injectable()
 export class MealService {
@@ -177,6 +178,7 @@ export class MealService {
             );
         });
         let meal = new Meal(data._id,
+            GroupService.deserializeGroup(data.group),
             data.title,
             data.description,
             new User(data.cook._id,

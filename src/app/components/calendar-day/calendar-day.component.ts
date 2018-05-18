@@ -9,7 +9,7 @@ import {Subscription} from 'rxjs/Subscription';
 @Component({
     selector: 'app-calendar-day',
     templateUrl: './calendar-day.component.html',
-    styleUrls: ['./calendar-day.component.css']
+    styleUrls: ['./calendar-day.component.scss']
 })
 export class CalendarDayComponent implements OnInit, OnDestroy {
     @Input() weekdayName: string;

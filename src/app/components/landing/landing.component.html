@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="jumbotron">
+        <h1 *ngIf="! authenticationService.isLoggedIn()" class="display-4">Welcome to Lunch-Box!<img
+                src="../../../assets/lunchswap.png" style="height: 75px;" alt=""></h1>
+        <p class="lead">Find your group or create a new one for you, your friends, coworker or anyone you want to share
+            lunch with.</p>
+        <hr class="my-4">
+        <p class="lead">
+            <button class="btn btn-primary" (click)="createGroup()">Create a group</button>
+            <button *ngIf="! authenticationService.isLoggedIn()" class="btn btn-primary" (click)="signIn()">Sign
+                in
+            </button>
+        </p>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a [class]="getTabClass('search')" (click)="setTab('search')" href="javascript:void(0)">
+                    Search
+                </a>
+            </li>
+            <li class="nav-item">
+                <a [class]="getTabClass('map')" (click)="setTab('map')"
+                   href="javascript:void(0)">
+                    Near you
+                </a>
+            </li>
+        </ul>
+        <hr>
+        <div *ngIf="activeTab === 'search'">
+            <form [formGroup]="form">
+                <div class="form-group">
+                    <input id="name" type="text" class="form-control" formControlName="name" autocomplete="off">
+                    <hr>
+                    <ul class="list-group">
+                        <li *ngFor="let foundGroup of foundGroups" class="list-group-item mt-1">
+                            <a href="javascript:void(0)" (click)="onGroupClicked(foundGroup)">{{foundGroup.name}}</a>
+                            <hr>
+                            <p>{{foundGroup.description}}</p>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+        <div *ngIf="activeTab === 'map'">
+            <app-map (groupClicked)="onGroupClicked($event)"></app-map>
+        </div>
+    </div>
+</div>

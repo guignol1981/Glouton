@@ -1,9 +1,11 @@
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 let User = require('../user/user');
+let Group = require('../group/group');
 let moment = require('moment');
 
 let mealSchema = new Schema({
+	group: {type: Schema.Types.ObjectId, ref: 'Group', require: true},
 	title: String,
 	description: String,
 	image: String,
@@ -20,11 +22,11 @@ let mealSchema = new Schema({
 	type: {type: Number, default: 1},
 }, {usePushEach: true});
 
-mealSchema.methods.userIsCook = function (userId) {
+mealSchema.methods.userIsCook = function(userId) {
 	return this.cook._id == userId;
 };
 
-mealSchema.methods.addParticipant = function (userId) {
+mealSchema.methods.addParticipant = function(userId) {
 	if (this.limitDate < moment().toDate()) {
 		throw 'its too late to join this meal';
 	}
@@ -48,7 +50,7 @@ mealSchema.methods.addParticipant = function (userId) {
 	this.participants.push(userId);
 };
 
-mealSchema.methods.removeParticipants = function (userId) {
+mealSchema.methods.removeParticipants = function(userId) {
 	if (this.limitDate < moment().toDate()) {
 		throw 'its too late to leave this meal';
 	}
@@ -62,7 +64,7 @@ mealSchema.methods.removeParticipants = function (userId) {
 	}
 };
 
-mealSchema.statics.getNewFailed = function (callback) {
+mealSchema.statics.getNewFailed = function(callback) {
 	this.find({
 		limitDate: {
 			"$lt": moment().toDate()
@@ -79,33 +81,41 @@ mealSchema.statics.getNewFailed = function (callback) {
 	});
 };
 
-mealSchema.statics.getList = function(callback) {
+mealSchema.statics.getList = function(groups, callback) {
+	// let groupIds = [];
+	// groups.forEach(group => {
+	// 	groupIds.push(group._id);
+	// });
+
 	Meal.find({})
+		.where('group').in(groups)
 		.where('status').in(['pending', 'confirmed'])
 		.where('deliveryDate').gte(moment().startOf('day').toDate())
 		.populate('cook')
+		.populate('group')
 		.populate('participants')
 		.exec().then(meals => callback(meals));
 };
 
-mealSchema.statics.getLunchBox = function (weekFirstDay, userId, callback) {
+mealSchema.statics.getLunchBox = function(weekFirstDay, userId, callback) {
 	let weekLastDay = moment(weekFirstDay);
 	weekLastDay.endOf('week');
 	Meal.find({
-			deliveryDate: {
-				"$gt": weekFirstDay.subtract(1, 'day').toDate(),
-				"$lt": weekLastDay.add(1, 'day').toDate(),
-			}
-		})
+		deliveryDate: {
+			"$gt": weekFirstDay.subtract(1, 'day').toDate(),
+			"$lt": weekLastDay.add(1, 'day').toDate(),
+		}
+	})
 		.where('status').in(['pending', 'confirmed'])
 		.populate('cook')
 		.populate('participants')
+		.populate('group')
 		.exec().then(meals => {
-			callback(meals);
-		});
+		callback(meals);
+	});
 };
 
-mealSchema.statics.getNewConfirmed = function (callback) {
+mealSchema.statics.getNewConfirmed = function(callback) {
 	this.find({
 		limitDate: {
 			"$lt": moment().toDate()

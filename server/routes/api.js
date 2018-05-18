@@ -14,6 +14,8 @@ let ctrlMeal = require('../controllers/meal-controller');
 let ctrlMealImage = require('../controllers/meal-image-controller');
 let ctrlMessage = require('../controllers/message-controller');
 let ctrlVersion = require('../controllers/version-controller');
+let ctrlGroup = require('../controllers/group-controller');
+let ctrlGoogleMap = require('../controllers/google-map-controller');
 
 //user
 router.post('/register', ctrlAuth.register);
@@ -43,5 +45,20 @@ router.get('/messages/unseen', auth, ctrlMessage.getUnseen);
 
 //version
 router.get('/versions', auth, ctrlVersion.getList);
+
+//group
+router.get('/groups/joined', auth, ctrlGroup.joined);
+router.put('/groups/join-request/:id', auth, ctrlGroup.joinRequest);
+router.put('/groups/cancel-join-request/:id', auth, ctrlGroup.cancelJoinRequest);
+router.get('/groups/confirm-join-request/:groupid/:userid/:accept', auth, ctrlGroup.confirmJoinRequest);
+router.put('/groups/leave/:id', auth, ctrlGroup.leave);
+router.delete('/groups/remove/:id', auth, ctrlGroup.remove);
+router.get('/groups/availability/:name', ctrlGroup.checkAvailability);
+router.get('/groups/:name', ctrlGroup.getByName);
+router.get('/groups', ctrlGroup.getList);
+router.post('/groups', auth, ctrlGroup.create);
+
+//map
+router.get('/google-map/:address', ctrlGoogleMap.getGeoData);
 
 module.exports = router;

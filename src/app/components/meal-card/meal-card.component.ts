@@ -10,7 +10,7 @@ import {NotificationsService} from "angular2-notifications";
 @Component({
     selector: 'app-meal-card',
     templateUrl: './meal-card.component.html',
-    styleUrls: ['./meal-card.component.css', '../../app.component.css']
+    styleUrls: ['./meal-card.component.scss', '../../app.component.scss']
 })
 export class MealCardComponent implements OnInit {
     @Input() meal: Meal;

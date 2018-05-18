@@ -1,0 +1,13 @@
+.card-m {
+	width: 15rem;
+}
+
+.card-hover {
+	transition: all .2s ease;
+
+	&:hover {
+		transform: translateY(-3px);
+		box-shadow: 2px 2px 2px 0px #818182;
+	}
+}
+

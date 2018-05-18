@@ -57,7 +57,7 @@ export class AuthenticationService {
             .post('/api/register', JSON.stringify(user), {headers: headers})
             .toPromise()
             .then((response: Response) => {
-                this.saveToken(response.json().token)
+                this.saveToken(response.json().token);
                 this.loggedIn = true;
                 this.isLoggedInSubject.next(this.loggedIn);
             })

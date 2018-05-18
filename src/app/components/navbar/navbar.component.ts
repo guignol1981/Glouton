@@ -7,7 +7,7 @@ import {Subscription} from "rxjs/Subscription";
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
-    styleUrls: ['./navbar.component.css']
+    styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit, OnDestroy {
     activeTab = 0;
@@ -31,12 +31,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     checkForNotifications() {
-        let me = this;
-        setInterval(function () {
-            if (me.isLoggedIn) {
-                me.messageService.getUnseen().then(messages => me.unseenMessageCount = messages.length);
-            }
-        }, 5000);
+        this.messageService.getUnseen().then(messages => this.unseenMessageCount = messages.length);
     }
 
     ngOnDestroy() {
@@ -45,7 +40,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     logout() {
         this.authenticationService.logout();
-        this.router.navigate(['login']);
+        this.router.navigate(['groups']);
     }
 
     setTab(tabIndex) {
