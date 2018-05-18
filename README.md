@@ -4,6 +4,11 @@ A Lunch sharing web applications by [Vincent Guillemette](https://github.com/gui
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0.
 
+## Development tools prerequisite
+
+ - nodemon: `npm install -g nodemon`
+ - ng: `npm install -g @angular/cli`
+
 ## Development
 
 Run `nodemon index.js` and `ng build --watch`.  Navigate to `http://localhost:3000/` You must have a Mongo instance running; 
