@@ -1,0 +1,11 @@
+div.message
+    img(src="../../assets/bg3.jpg" alt="Image Title")
+    p.font-weight-bold Hello #{recipient.name} !
+    p We are happy to inform you that the lunch proposition
+        a(href='/lunch-details/' + data.lunch._id) &nbsp #{data.lunch.title} &nbsp
+        | was confirmed!
+    p Participants are already notified about this!
+    p Please make sure to deliver on expected date
+
+    p.font-italic Sincerly yours,
+    p The Lunch box team

@@ -1,5 +1,5 @@
 let mongoose = require('mongoose');
-let User = require('../models/user/user');
+let User = require('../models/user');
 
 module.exports.profileRead = function (req, res) {
 	if (!req.payload._id) {

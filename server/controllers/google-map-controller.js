@@ -1,7 +1,7 @@
 var googleMapsClient = require('@google/maps').createClient({
 	key: 'AIzaSyDgQC2X_l3E6ol88MSuBGaAuZm-FjXRNXs'
 });
-let GeoData = require('../models/geo-data/geo-data');
+let GeoData = require('../models/geo-data');
 
 
 module.exports.getGeoData = function(req, res) {

@@ -1,20 +1,20 @@
-let Meal = require('../models/meal/meal');
-let User = require('../models/user/user');
-let Group = require('../models/group/group');
-let Message = require('../models/message/message');
+let Lunch = require('../models/lunch');
+let User = require('../models/user');
+let Group = require('../models/group');
+let Message = require('../models/message');
 let moment = require('moment');
 let dateHelper = require('../services/date-helper');
 
 module.exports.get = function(req, res) {
 	let id = req.params.id;
 
-	Meal.findById(id)
+	Lunch.findById(id)
 		.populate('cook')
 		.populate('group')
 		.populate('participants')
 		.exec()
-		.then(meal => {
-			res.send(meal);
+		.then(lunch => {
+			res.send(lunch);
 		});
 };
 
@@ -27,66 +27,66 @@ module.exports.getAll = function(req, res) {
 		userGroups = ownedGroups;
 		Group.getJoined(userId, (joinedGroups) => {
 			userGroups.concat(joinedGroups);
-			Meal.getList(userGroups, meals => {
-				res.send(meals);
+			Lunch.getList(userGroups, lunchs => {
+				res.send(lunchs);
 			});
 		});
 	});
 };
 
 module.exports.update = function(req, res) {
-	let mealId = req.params.id;
+	let lunchId = req.params.id;
 
-	Meal.findById(mealId).populate('cook').populate('participants').exec().then(meal => {
+	Lunch.findById(lunchId).populate('cook').populate('participants').exec().then(lunch => {
 		let removeParticipants = false;
 
 		if (
-			dateHelper.compareDates(meal.deliveryDate, req.body['deliveryDate']) !== 0
+			dateHelper.compareDates(lunch.deliveryDate, req.body['deliveryDate']) !== 0
 			||
-			dateHelper.compareDates(meal.limitDate, req.body['limitDate'] !== 0
+			dateHelper.compareDates(lunch.limitDate, req.body['limitDate'] !== 0
 				||
-				meal.contribution !== req.body['contribution']
+				lunch.contribution !== req.body['contribution']
 			)
 		) {
 			removeParticipants = true;
 		}
 
-		meal.title = req.body['title'];
-		meal.description = req.body['description'];
-		meal.deliveryDate = moment(req.body['deliveryDate']).startOf('day').toDate();
-		meal.limitDate = moment(req.body['limitDate']).endOf('day').toDate();
-		meal.deliveryHour = req.body['deliveryHour'];
-		meal.minParticipants = req.body['minParticipants'];
-		meal.maxParticipants = req.body['maxParticipants'];
-		meal.contribution = req.body['contribution'];
-		meal.type = req.body['type'];
+		lunch.title = req.body['title'];
+		lunch.description = req.body['description'];
+		lunch.deliveryDate = moment(req.body['deliveryDate']).startOf('day').toDate();
+		lunch.limitDate = moment(req.body['limitDate']).endOf('day').toDate();
+		lunch.deliveryHour = req.body['deliveryHour'];
+		lunch.minParticipants = req.body['minParticipants'];
+		lunch.maxParticipants = req.body['maxParticipants'];
+		lunch.contribution = req.body['contribution'];
+		lunch.type = req.body['type'];
 
 		if (removeParticipants) {
-			meal.participants.forEach(participant => {
+			lunch.participants.forEach(participant => {
 				Message.create({
 					recipient: participant._id,
-					title: `${participant.name} Some modification has been made to the lunch proposition ${meal.title}`,
-					type: 'message-meal-rejected-from',
+					title: `${participant.name} Some modification has been made to the lunch proposition ${lunch.title}`,
+					type: 'message-lunch-rejected-from',
 					category: 'warning',
 					data: {
-						meal: meal
+						lunch: lunch
 					}
 				});
 			});
 
-			meal.participants = [];
+			lunch.participants = [];
 		}
 
-		meal.save().then(updatedMeal => {
-			Meal.populate(updatedMeal, {path: "group"}).then(meal => res.send(meal));
+		lunch.save().then(updatedLunch => {
+			Lunch.populate(updatedLunch, {path: "group"}).then(lunch => res.send(lunch));
 		});
 	});
 };
 
 module.exports.getLunchBox = function(req, res) {
 	let userId = req.payload._id;
-	Meal.getLunchBox(moment(req.params.week), userId, (meals) => {
-		res.send(meals);
+	Lunch.getLunchBox(moment(req.params.week), userId, (lunchs) => {
+		res.send(lunchs);
 	});
 };
 
@@ -94,19 +94,19 @@ module.exports.create = function(req, res) {
 	//hack without this it will force the _id to null
 	delete req.body._id;
 
-	let newMeal = new Meal(req.body);
+	let newLunch = new Lunch(req.body);
 
-	if (!newMeal.image) {
+	if (!newLunch.image) {
 		let numberHelper = require('../services/number-helper');
-		newMeal.image = `image-lunch-default-${numberHelper.getRandomInt(1, 8)}.jpeg`;
+		newLunch.image = `image-lunch-default-${numberHelper.getRandomInt(1, 8)}.jpeg`;
 	}
 	let errors = [];
 
-	if (newMeal.deliveryDate <= newMeal.limitDate) {
+	if (newLunch.deliveryDate <= newLunch.limitDate) {
 		errors.push('limit date should be lower  than delivery date');
 	}
 
-	if (newMeal.minParticipants > newMeal.maxParticipants) {
+	if (newLunch.minParticipants > newLunch.maxParticipants) {
 		errors.push('min participants count should be lower or equal than maximum participants count');
 	}
 
@@ -115,64 +115,64 @@ module.exports.create = function(req, res) {
 		return;
 	}
 
-	newMeal.deliveryDate = moment(newMeal.deliveryDate).startOf('day').toDate();
-	newMeal.limitDate = moment(newMeal.limitDate).endOf('day').toDate();
-	newMeal.save().then(meal => {
-		Meal.populate(meal, {path: "cook"}).then(meal => {
-			Meal.populate(meal, {path: "group"}).then(meal => res.send(meal))
+	newLunch.deliveryDate = moment(newLunch.deliveryDate).startOf('day').toDate();
+	newLunch.limitDate = moment(newLunch.limitDate).endOf('day').toDate();
+	newLunch.save().then(lunch => {
+		Lunch.populate(lunch, {path: "cook"}).then(lunch => {
+			Lunch.populate(lunch, {path: "group"}).then(lunch => res.send(lunch))
 		});
 	});
 };
 
 module.exports.cancel = function(req, res) {
-	let mealId = req.body._id;
+	let lunchId = req.body._id;
 
-	Meal.findById(mealId).populate('participants').exec().then(meal => {
-		meal.participants.forEach(participant => {
+	Lunch.findById(lunchId).populate('participants').exec().then(lunch => {
+		lunch.participants.forEach(participant => {
 			Message.create({
 				recipient: participant._id,
-				title: `${participant.name}, The lunch ${meal.title} was canceled by the cook`,
-				type: 'message-meal-canceled-by-cook',
+				title: `${participant.name}, The lunch ${lunch.title} was canceled by the cook`,
+				type: 'message-lunch-canceled-by-cook',
 				category: 'warning',
 				data: {
-					meal: meal
+					lunch: lunch
 				}
 			});
 		});
-		meal.participants = [];
-		meal.status = 'canceled';
-		meal.save().then(meal => {
-			Meal.populate(meal, {path: "group"}).then(meal => res.send(meal));
+		lunch.participants = [];
+		lunch.status = 'canceled';
+		lunch.save().then(lunch => {
+			Lunch.populate(lunch, {path: "group"}).then(lunch => res.send(lunch));
 		});
 	});
 };
 
 module.exports.join = function(req, res) {
-	let mealId = req.params.id;
+	let lunchId = req.params.id;
 	let userId = req.payload._id;
 
-	Meal.findById(mealId)
+	Lunch.findById(lunchId)
 		.populate('cook')
 		.populate('participants').exec()
-		.then(meal => {
-			meal.addParticipant(userId);
-			meal.save()
-				.then(meal => {
+		.then(lunch => {
+			lunch.addParticipant(userId);
+			lunch.save()
+				.then(lunch => {
 					User.findById(userId).exec()
 						.then(user => {
-							User.findById(meal.cook).exec()
+							User.findById(lunch.cook).exec()
 								.then((cook) => {
 									Message.create({
 										recipient: cook._id,
-										title: `${user.name} has joined your lunch proposition ${meal.title}`,
-										type: 'message-meal-join',
+										title: `${user.name} has joined your lunch proposition ${lunch.title}`,
+										type: 'message-lunch-join',
 										category: 'success',
 										data: {
-											meal: meal,
+											lunch: lunch,
 											joinedBy: user,
 										}
 									});
-									Meal.populate(meal, {path: "participants"}).then(meal => res.send(meal));
+									Lunch.populate(lunch, {path: "participants"}).then(lunch => res.send(lunch));
 								});
 						});
 				});
@@ -180,26 +180,26 @@ module.exports.join = function(req, res) {
 };
 
 module.exports.leave = function(req, res) {
-	let mealId = req.params.id;
+	let lunchId = req.params.id;
 	let userId = req.payload._id;
 
-	Meal.findById(mealId)
+	Lunch.findById(lunchId)
 		.populate('cook')
-		.exec().then(meal => {
-		meal.removeParticipants(userId);
-		meal.save().then(meal => {
+		.exec().then(lunch => {
+		lunch.removeParticipants(userId);
+		lunch.save().then(lunch => {
 			User.findById(userId).exec().then(user => {
 				Message.create({
-					recipient: meal.cook._id,
-					title: `${user.name} has left your lunch proposition ${meal.title}`,
-					type: 'message-meal-left',
+					recipient: lunch.cook._id,
+					title: `${user.name} has left your lunch proposition ${lunch.title}`,
+					type: 'message-lunch-left',
 					category: 'warning',
 					data: {
-						meal: meal,
+						lunch: lunch,
 						joinedBy: user,
 					}
 				});
-				Meal.populate(meal, {path: "participants"}).then(meal => res.send(meal));
+				Lunch.populate(lunch, {path: "participants"}).then(lunch => res.send(lunch));
 			});
 		});
 	});

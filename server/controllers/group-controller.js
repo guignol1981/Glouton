@@ -1,7 +1,7 @@
-let Group = require('../models/group/group');
-let GeoData = require('../models/geo-data/geo-data');
-let Message = require('../models/message/message');
-let User = require('../models/user/user');
+let Group = require('../models/group');
+let GeoData = require('../models/geo-data');
+let Message = require('../models/message');
+let User = require('../models/user');
 
 module.exports.create = function(req, res) {
 	let userId = req.payload['_id'];

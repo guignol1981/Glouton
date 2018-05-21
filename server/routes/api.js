@@ -7,8 +7,8 @@ let passport = require('passport');
 
 let ctrlProfile = require('../controllers/profile');
 let ctrlAuth = require('../controllers/authentications');
-let ctrlMeal = require('../controllers/meal-controller');
-let ctrlMealImage = require('../controllers/meal-image-controller');
+let ctrlLunch = require('../controllers/lunch-controller');
+let ctrlLunchImage = require('../controllers/lunch-image-controller');
 let ctrlMessage = require('../controllers/message-controller');
 let ctrlVersion = require('../controllers/version-controller');
 let ctrlGroup = require('../controllers/group-controller');
@@ -81,19 +81,19 @@ router.post('/register', ctrlAuth.register);
 router.post('/login', ctrlAuth.login);
 router.get('/profile', auth, ctrlProfile.profileRead);
 
-//meal
-router.get('/meals/lunch-box/:week', auth, ctrlMeal.getLunchBox);
-router.get('/meals/:id', auth, ctrlMeal.get);
-router.put('/meals/:id', auth, ctrlMeal.update);
-router.put('/meals/join/:id', auth, ctrlMeal.join);
-router.put('/meals/leave/:id', auth, ctrlMeal.leave);
-router.put('/meals', auth, ctrlMeal.cancel);
-router.get('/meals', auth, ctrlMeal.getAll);
-router.post('/meals', auth, ctrlMeal.create);
+//lunch
+router.get('/lunchs/lunch-box/:week', auth, ctrlLunch.getLunchBox);
+router.get('/lunchs/:id', auth, ctrlLunch.get);
+router.put('/lunchs/:id', auth, ctrlLunch.update);
+router.put('/lunchs/join/:id', auth, ctrlLunch.join);
+router.put('/lunchs/leave/:id', auth, ctrlLunch.leave);
+router.put('/lunchs', auth, ctrlLunch.cancel);
+router.get('/lunchs', auth, ctrlLunch.getAll);
+router.post('/lunchs', auth, ctrlLunch.create);
 
 //images
-router.get('/images/meal/:id', ctrlMealImage.get);
-router.post('/images/meal', auth, upload.single('image'), ctrlMealImage.create);
+router.get('/images/lunch/:id', ctrlLunchImage.get);
+router.post('/images/lunch', auth, upload.single('image'), ctrlLunchImage.create);
 
 //messages
 router.put('/messages/:id', auth, ctrlMessage.update);

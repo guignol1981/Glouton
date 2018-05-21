@@ -1,7 +1,7 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {Meal} from '../../models/meal/meal';
+import {Lunch} from '../../models/lunch/lunch';
 import {Router} from '@angular/router';
-import {MealFormComponent} from '../meal-form/meal-form.component';
+import {LunchFormComponent} from '../lunch-form/lunch-form.component';
 import {User} from '../../models/user/user';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Subscription} from 'rxjs/Subscription';
@@ -14,10 +14,10 @@ import {Subscription} from 'rxjs/Subscription';
 export class CalendarDayComponent implements OnInit, OnDestroy {
     @Input() weekdayName: string;
     @Input() weekday;
-    @Input() joinedLunchs: Meal[] = [];
-    @Input() proposedLunchs: Meal[] = [];
-    @Input() suggestedLunchs: Meal[] = [];
-    @Input() mealForm: MealFormComponent;
+    @Input() joinedLunchs: Lunch[] = [];
+    @Input() proposedLunchs: Lunch[] = [];
+    @Input() suggestedLunchs: Lunch[] = [];
+    @Input() lunchForm: LunchFormComponent;
     @Input() user: User;
     @Input() globalFilterSubject: BehaviorSubject<string>;
     globalFilterSubscription: Subscription;
@@ -43,7 +43,7 @@ export class CalendarDayComponent implements OnInit, OnDestroy {
     }
 
     proposeLunch(button) {
-        this.mealForm.initFromDate(this.weekday, this.user);
+        this.lunchForm.initFromDate(this.weekday, this.user);
         button.click();
     }
 

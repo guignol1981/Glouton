@@ -1,4 +1,4 @@
-let Meal = require('../models/meal/meal');
+let Lunch = require('../models/lunch');
 let fs = require('fs');
 let Storage = require('@google-cloud/storage');
 let storage = new Storage();
@@ -73,9 +73,9 @@ module.exports.create = function (req, res) {
 };
 
 module.exports.get = function (req, res) {
-    Meal.findById(req.params.id, (err, meal) => {
-        let srcFilename = meal.image;
-        let destFilename = 'server/files/' + meal.image;
+    Lunch.findById(req.params.id, (err, lunch) => {
+        let srcFilename = lunch.image;
+        let destFilename = 'server/files/' + lunch.image;
         let options = {
             destination: destFilename
         };

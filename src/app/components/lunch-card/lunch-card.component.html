@@ -1,0 +1,26 @@
+<div *ngIf="lunch && user" class="card card-m card-hover" (click)="goToLunchDetails()">
+    <div class="m-1">
+        <span *ngIf="lunch.isPending()" class="badge badge-secondary">pending</span>
+        <span *ngIf="lunch.asJoined(user)" class="badge badge-info">joined</span>
+        <span *ngIf="lunch.isFull()" class="badge badge-info">full</span>
+        <span *ngIf="lunch.isConfirmed()" class="badge badge-success">confirmed</span>
+        <span *ngIf="lunch.isCanceled()" class="badge badge-danger">confirmed</span>
+    </div>
+    <img class="card-img-top img-fluid"
+         [src]="imageService.apiEndPoint + '/' + lunch._id"
+         alt="Card image cap">
+    <div class="card-body">
+        <ul class="list-group">
+            <li class="list-group-item border-0 p-0">
+                <p class="card-text text-truncate font-weight-bold">{{lunch.title}}</p>
+            </li>
+            <li class="list-group-item border-0 p-0">
+                <span class="card-text">{{lunch.deliveryDate | date}}</span>
+            </li>
+            <li class="list-group-item border-0 p-0">
+                <span class="badge badge-info float-right">{{lunch.contribution |
+                    currency:'USD':true:'1.2-2'}}</span>
+            </li>
+        </ul>
+    </div>
+</div>

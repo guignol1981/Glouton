@@ -1,5 +1,5 @@
 import {AbstractControl} from '@angular/forms';
-export class MealFormParticipantValidation {
+export class LunchFormParticipantValidation {
 
     static LogicParticipantsSelection(AC: AbstractControl) {
         let minParticipants = AC.get('minParticipants');

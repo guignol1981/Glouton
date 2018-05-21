@@ -1,10 +1,10 @@
 import {Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
-import {MealService} from '../../models/meal/meal.service';
-import {Meal} from '../../models/meal/meal';
+import {LunchService} from '../../models/lunch/lunch.service';
+import {Lunch} from '../../models/lunch/lunch';
 import * as moment from 'moment';
 import {User} from '../../models/user/user';
 import {UserService} from '../../models/user/user.service';
-import {MealFormComponent} from '../meal-form/meal-form.component';
+import {LunchFormComponent} from '../lunch-form/lunch-form.component';
 import {CalendarDayComponent} from '../calendar-day/calendar-day.component';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
@@ -14,8 +14,8 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
     styleUrls: ['./lunch-box.component.scss']
 })
 export class LunchBoxComponent implements OnInit {
-    @ViewChild(MealFormComponent) mealFormComponent: MealFormComponent;
-    meals: Meal[] = [];
+    @ViewChild(LunchFormComponent) lunchFormComponent: LunchFormComponent;
+    lunchs: Lunch[] = [];
     weekFirstDay = moment().startOf('week');
     weekdays = [];
     weekdayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -23,14 +23,14 @@ export class LunchBoxComponent implements OnInit {
     globalFilter = 'joined';
     globalFilterSubject = new BehaviorSubject<string>(this.globalFilter);
 
-    constructor(private mealService: MealService, private userService: UserService) {
+    constructor(private lunchService: LunchService, private userService: UserService) {
     }
 
     ngOnInit() {
         this.userService.getConnectedUser().then(user => {
             this.user = user;
-            this.mealService.getLunchBox(this.weekFirstDay.toISOString()).then(data => {
-                this.meals = data;
+            this.lunchService.getLunchBox(this.weekFirstDay.toISOString()).then(data => {
+                this.lunchs = data;
                 this.updateWeekDays();
             });
         });
@@ -50,32 +50,32 @@ export class LunchBoxComponent implements OnInit {
 
     getNextWeek() {
         this.weekFirstDay = this.weekFirstDay.add(1, 'week');
-        this.mealService.getLunchBox(this.weekFirstDay.toISOString()).then(data => {
+        this.lunchService.getLunchBox(this.weekFirstDay.toISOString()).then(data => {
             this.updateWeekDays();
-            this.meals = data;
+            this.lunchs = data;
         });
     }
 
     getPreviousWeek() {
         this.weekFirstDay = this.weekFirstDay.subtract(1, 'week');
-        this.mealService.getLunchBox(this.weekFirstDay.toISOString()).then(data => {
+        this.lunchService.getLunchBox(this.weekFirstDay.toISOString()).then(data => {
             this.updateWeekDays();
-            this.meals = data;
+            this.lunchs = data;
         });
     }
 
     getThisWeek() {
         this.weekFirstDay = moment().startOf('week');
-        this.mealService.getLunchBox(this.weekFirstDay.toISOString()).then(data => {
+        this.lunchService.getLunchBox(this.weekFirstDay.toISOString()).then(data => {
             this.updateWeekDays();
-            this.meals = data;
+            this.lunchs = data;
         });
     }
 
     getJoinedLunchForDay(weekDay) {
         let dayLunch = [];
 
-        this.meals.forEach(lunch => {
+        this.lunchs.forEach(lunch => {
             if (moment(lunch.deliveryDate).isSame(weekDay) && lunch.asJoined(this.user)) {
                 dayLunch.push(lunch);
             }
@@ -87,7 +87,7 @@ export class LunchBoxComponent implements OnInit {
     getProposedLunchForDay(weekDay) {
         let dayLunch = [];
 
-        this.meals.forEach(lunch => {
+        this.lunchs.forEach(lunch => {
             if (moment(lunch.deliveryDate).isSame(weekDay) && lunch.isCook(this.user)) {
                 dayLunch.push(lunch);
             }
@@ -99,7 +99,7 @@ export class LunchBoxComponent implements OnInit {
     getSuggestedLunchForDay(weekDay) {
         let dayLunch = [];
 
-        this.meals.forEach(lunch => {
+        this.lunchs.forEach(lunch => {
             if (moment(lunch.deliveryDate).isSame(weekDay) && !lunch.asJoined(this.user) && !lunch.isCook(this.user)) {
                 dayLunch.push(lunch);
             }

@@ -1,0 +1,8 @@
+div.message
+    img(src="../../assets/bg2.jpg" alt="Image Title")
+    p.font-weight-bold Hello #{recipient.name} !
+    p #{data.joinedBy.name} have left your lunch proposition
+        a(href='/lunch-details/' + data.lunch._id) &nbsp #{data.lunch.title}.
+
+    p.font-italic Sincerly yours,
+    p The Lunch box team

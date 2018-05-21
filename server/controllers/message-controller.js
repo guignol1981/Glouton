@@ -1,4 +1,4 @@
-let Message = require('../models/message/message');
+let Message = require('../models/message');
 
 module.exports.getAll = function (req, res) {
 	let userId = req.payload._id;

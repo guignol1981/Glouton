@@ -7,11 +7,11 @@ import {routing} from './routing';
 import {AgmCoreModule} from "@agm/core";
 import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {NavbarComponent} from './components/navbar/navbar.component';
-import {MealCardComponent} from './components/meal-card/meal-card.component';
-import {MealListComponent} from './components/meal-list/meal-list.component';
-import {MealFormComponent} from './components/meal-form/meal-form.component';
-import {MealService} from './models/meal/meal.service';
-import {MealDetailsComponent} from './components/meal-details/meal-details.component';
+import {LunchCardComponent} from './components/lunch-card/lunch-card.component';
+import {LunchListComponent} from './components/lunch-list/lunch-list.component';
+import {LunchFormComponent} from './components/lunch-form/lunch-form.component';
+import {LunchService} from './models/lunch/lunch.service';
+import {LunchDetailsComponent} from './components/lunch-details/lunch-details.component';
 import {RegisterComponent} from './components/register/register.component';
 import {LoginComponent} from './components/login/login.component';
 import {AuthenticationService} from './services/authentication.service';
@@ -20,7 +20,7 @@ import {UserService} from './models/user/user.service';
 import {CanActivateViaAuthGuardService} from './services/can-activate-via-auth-guard.service';
 import {LunchBoxComponent} from './components/lunch-box/lunch-box.component';
 import {ImageUploadModule} from 'angular2-image-upload';
-import {MealImageService} from './services/meal-image.service';
+import {LunchImageService} from './services/lunch-image.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {InboxComponent} from './components/inbox/inbox.component';
 import {MessageService} from './services/message.service';
@@ -43,7 +43,7 @@ import {GoogleMapService} from "./services/google-map.service";
 import {
     JoinGroupAlertComponent,
 } from './components/join-group-alert/join-group-alert.component';
-import { SuggestionFormComponent } from './components/suggestion-form/suggestion-form.component';
+import { LunchFormComponent } from './components/lunch-form/lunch-form.component';
 import { ConfirmJoinRequestComponent } from './components/confirm-join-request/confirm-join-request.component';
 import { LoaderComponent } from './components/loader/loader.component';
 
@@ -52,10 +52,10 @@ import { LoaderComponent } from './components/loader/loader.component';
         AppComponent,
         DashboardComponent,
         NavbarComponent,
-        MealCardComponent,
-        MealListComponent,
-        MealFormComponent,
-        MealDetailsComponent,
+        LunchCardComponent,
+        LunchListComponent,
+        LunchFormComponent,
+        LunchDetailsComponent,
         RegisterComponent,
         LoginComponent,
         ProfileComponent,
@@ -70,7 +70,7 @@ import { LoaderComponent } from './components/loader/loader.component';
         GroupFormComponent,
         MapComponent,
         JoinGroupAlertComponent,
-        SuggestionFormComponent,
+        LunchFormComponent,
         ConfirmJoinRequestComponent,
         LoaderComponent
     ],
@@ -93,14 +93,14 @@ import { LoaderComponent } from './components/loader/loader.component';
         GroupFormComponent,
         LoginComponent,
         JoinGroupAlertComponent,
-        SuggestionFormComponent
+        LunchFormComponent
     ],
     providers: [
-        MealService,
+        LunchService,
         AuthenticationService,
         UserService,
         CanActivateViaAuthGuardService,
-        MealImageService,
+        LunchImageService,
         MessageService,
         VersionService,
         GroupService,

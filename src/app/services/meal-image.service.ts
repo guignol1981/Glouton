@@ -4,8 +4,8 @@ import {Observable} from 'rxjs/Observable';
 import {AuthenticationService} from './authentication.service';
 
 @Injectable()
-export class MealImageService {
-    apiEndPoint = 'api/images/meal';
+export class LunchImageService {
+    apiEndPoint = 'api/images/lunch';
 
     constructor(private http: Http, private authenticationService: AuthenticationService) {
     }

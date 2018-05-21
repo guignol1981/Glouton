@@ -1,7 +1,7 @@
 import {AbstractControl} from '@angular/forms';
 import * as moment from "moment";
 
-export class MealFormDateValidation {
+export class LunchFormDateValidation {
 
     static LimitDateShouldBeAtLeastToday(AC: AbstractControl) {
         let limitDateControl = AC.get('limitDate');
